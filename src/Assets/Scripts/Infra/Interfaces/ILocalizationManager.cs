@@ -1,6 +1,6 @@
 public interface ILocalizationManager
 {
-    void LoadLocalizedText(string category);
+    void LoadLocalizedText(LocalizationCategory category);
     string GetLocalizedValue(LocalizationFields key);
     void SetLanguage(SupportedLanguages languageCode);
 }

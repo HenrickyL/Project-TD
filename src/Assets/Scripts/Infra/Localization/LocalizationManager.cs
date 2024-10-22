@@ -9,7 +9,7 @@ public class LocalizationManager : MonoBehaviour, ILocalizationManager
     private SupportedLanguages currentLanguage = SupportedLanguages.Portuguese;  // Idioma padrão
 
     // Carrega o texto localizado de uma categoria específica (Menus, Dialogues, etc.)
-    public void LoadLocalizedText(string category)
+    public void LoadLocalizedText(LocalizationCategory category)
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, "Localization", 
             currentLanguage.GetLanguageInfo().Code,

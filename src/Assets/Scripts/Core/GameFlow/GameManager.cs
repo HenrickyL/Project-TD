@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("LocalizationManager não encontrado!");
         }
         localizationManager.SetLanguage(SupportedLanguages.Portuguese); 
-        localizationManager.LoadLocalizedText("Menus");
+        localizationManager.LoadLocalizedText(LocalizationCategory.Menus);
         Debug.Log("Setup localizationManager");
     }
 }
