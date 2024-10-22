@@ -51,4 +51,13 @@ Explicação das Pastas:
         /SurvivalMode
     /Resources
         GameSettings.asset
+    /Localization
+        /en
+            Menus.json
+            Dialogues.json
+            Cutscenes.json
+        /pt
+            Menus.json
+            Dialogues.json
+            Cutscenes.json
 ```
