@@ -1,61 +1,53 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
-
+using UnityEngine;
+using Newtonsoft.Json;
+using System;
 public class LocalizationManager : MonoBehaviour, ILocalizationManager
 {
     private Dictionary<string, string> localizedText;
-    private string currentLanguage = "pt";  // Idioma padrão
+    private SupportedLanguages currentLanguage = SupportedLanguages.Portuguese;  // Idioma padrão
 
     // Carrega o texto localizado de uma categoria específica (Menus, Dialogues, etc.)
     public void LoadLocalizedText(string category)
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, currentLanguage, category + ".json");
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Localization", 
+            currentLanguage.GetLanguageInfo().Code,
+            category + ".json");
+
+        Debug.Log(filePath);
 
         if (File.Exists(filePath))
         {
             string dataAsJson = File.ReadAllText(filePath);
-            LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
-            localizedText = new Dictionary<string, string>();
-
-            foreach (var item in loadedData.items)
-            {
-                localizedText.Add(item.key, item.value);
+            localizedText = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataAsJson);
+            if (localizedText == null) { 
+                throw new Exception(ErrorMessages.LocalizationJsonInvalid);
             }
+
+            Debug.Log("Loaded Localization " + category + " in "+ currentLanguage.GetLanguageInfo().Code);
         }
         else
         {
-            Debug.LogError("Arquivo de localização não encontrado para a categoria: " + category);
+            string error = string.Format(ErrorMessages.LocalizationFileNotFound, category);
+            Debug.LogError(error);
+            throw new Exception(error);
         }
     }
 
-    // Retorna o valor traduzido associado à chave
-    public string GetLocalizedValue(string key)
+    public string GetLocalizedValue(LocalizationFields key)
     {
-        if (localizedText.ContainsKey(key))
+        string keyCode = key.GetDescription();
+        if (localizedText.ContainsKey(keyCode))
         {
-            return localizedText[key];
+            return localizedText[keyCode];
         }
-        return key; // Retorna a chave original se a tradução não for encontrada
+        return null;
     }
 
     // Permite alterar o idioma atual
-    public void SetLanguage(string languageCode)
+    public void SetLanguage(SupportedLanguages languageCode)
     {
         currentLanguage = languageCode;
     }
-}
-
-// Estrutura de dados usada para manipular o JSON de localização
-[System.Serializable]
-public class LocalizationData
-{
-    public LocalizationItem[] items;
-}
-
-[System.Serializable]
-public class LocalizationItem
-{
-    public string key;
-    public string value;
 }
