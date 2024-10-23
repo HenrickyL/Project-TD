@@ -5,14 +5,24 @@ using Newtonsoft.Json;
 using System;
 public class LocalizationManager : MonoBehaviour, ILocalizationManager
 {
+    private static Dictionary<LocalizationCategory, Dictionary<string, string>> localizedData;
+    private static SupportedLanguages currentLanguage = SupportedLanguages.Portuguese;  // Idioma padrão
+
     private Dictionary<string, string> localizedText;
-    private SupportedLanguages currentLanguage = SupportedLanguages.Portuguese;  // Idioma padrão
+
+    public static Dictionary<LocalizationCategory, Dictionary<string, string>>  GetLocalizedData() {
+        if (localizedData == null)
+            localizedData = new();
+        return localizedData;
+    }
 
     // Carrega o texto localizado de uma categoria específica (Menus, Dialogues, etc.)
     public void LoadLocalizedText(LocalizationCategory category)
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "Localization", 
-            currentLanguage.GetLanguageInfo().Code,
+
+        string currentLagCode = currentLanguage.GetLanguageInfo().Code;
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Localization",
+            currentLagCode,
             category + ".json");
 
         Debug.Log(filePath);
@@ -21,11 +31,14 @@ public class LocalizationManager : MonoBehaviour, ILocalizationManager
         {
             string dataAsJson = File.ReadAllText(filePath);
             localizedText = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataAsJson);
+            if(GetLocalizedData().ContainsKey(category))
+                localizedData.Remove(category);
+            localizedData.Add(category, localizedText);
             if (localizedText == null) { 
                 throw new Exception(ErrorMessages.LocalizationJsonInvalid);
             }
 
-            Debug.Log("Loaded Localization " + category + " in "+ currentLanguage.GetLanguageInfo().Code);
+            Debug.Log("Loaded Localization " + category + " in "+ currentLagCode);
         }
         else
         {

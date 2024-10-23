@@ -2,11 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private LocalizationManager localizationManager;
-
     private void Awake()
     {
-        this.SetupLocalizationManager();
     }
 
     private void Start()
@@ -22,19 +19,5 @@ public class GameManager : MonoBehaviour
         //currentState = newState;
         //currentState.Enter();
     }
-
-
-
-    /*--------------------------------*/
-
-    private void SetupLocalizationManager() {
-
-        if (localizationManager == null)
-        {
-            Debug.LogError("LocalizationManager não encontrado!");
-        }
-        localizationManager.SetLanguage(SupportedLanguages.Portuguese); 
-        localizationManager.LoadLocalizedText(LocalizationCategory.Menus);
-        Debug.Log("Setup localizationManager");
-    }
+    
 }

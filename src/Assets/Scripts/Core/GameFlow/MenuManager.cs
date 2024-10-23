@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class MenuManager : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class MenuManager : MonoBehaviour
     private Transform currentPanel;
 
     [SerializeField] private GameObject buttonPrefab;
+    [SerializeField] private SceneAsset gameScene;
 
     private void Awake()
     {
@@ -22,6 +25,7 @@ public class MenuManager : MonoBehaviour
 
     public void PlayGame() {
         Debug.Log("Play");
+        SceneManager.LoadScene(gameScene.name);
 
     }
 
@@ -50,7 +54,7 @@ public class MenuManager : MonoBehaviour
         {
             Debug.LogError("LocalizationManager não encontrado!");
         }
-        localizationManager.SetLanguage(SupportedLanguages.Portuguese);
+        localizationManager.SetLanguage(SupportedLanguages.English);
         localizationManager.LoadLocalizedText(LocalizationCategory.Menus);
         Debug.Log("Setup localizationManager");
     }

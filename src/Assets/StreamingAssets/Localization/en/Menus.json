@@ -1,0 +1,9 @@
+{
+  "start_game": "Play",
+  "options": "Options",
+  "quit": "Exit",
+  "resume": "Resume",
+  "main_menu": "Menu",
+  "pause": "Pause",
+  "quit_to_main_menu": "Exit to Menu"
+}

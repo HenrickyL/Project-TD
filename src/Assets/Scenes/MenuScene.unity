@@ -808,6 +808,7 @@ MonoBehaviour:
   panelMainMenu: {fileID: 710118397}
   panelOptions: {fileID: 1653084440}
   buttonPrefab: {fileID: 6748085143430582954, guid: e62b666f32f9aaf4393618df98628923, type: 3}
+  gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
 --- !u!1 &1532151062
 GameObject:
   m_ObjectHideFlags: 0
