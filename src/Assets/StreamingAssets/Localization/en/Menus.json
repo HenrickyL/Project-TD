@@ -1,9 +1,11 @@
 {
   "start_game": "Play",
   "options": "Options",
+  "back": "Back",
   "quit": "Exit",
   "resume": "Resume",
-  "main_menu": "Menu",
+  "main_menu": "Main Menu",
+  "option_menu": "Options",
   "pause": "Pause",
   "quit_to_main_menu": "Exit to Menu"
 }

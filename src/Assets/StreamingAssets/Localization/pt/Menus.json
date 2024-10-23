@@ -1,9 +1,11 @@
 {
   "start_game": "Jogar",
   "options": "Opções",
+  "back": "Voltar",
   "quit": "Sair",
   "resume": "Retomar",
-  "main_menu": "Menu Principal",
+  "main_menu": "Menu",
+  "option_menu": "Opções",
   "pause": "Pausar",
   "quit_to_main_menu": "Sair para o Menu Principal"
 }

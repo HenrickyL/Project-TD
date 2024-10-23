@@ -6,12 +6,16 @@ public enum LocalizationFields
     StartGame,
     [Description("options")]
     Options,
+    [Description("back")]
+    Back,
     [Description("quit")]
     Quit,
     [Description("resume")]
     Resume,
     [Description("main_menu")]
     MainMenu,
+    [Description("option_menu")]
+    OptionMenu,
     [Description("pause")]
     Pause,
     [Description("quit_to_main_menu")]
