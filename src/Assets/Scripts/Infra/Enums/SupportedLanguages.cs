@@ -6,7 +6,6 @@ public enum SupportedLanguages
     English,
     [LanguageInfo("pt", "Portuguese")]
     Portuguese
-
 }
 
 [AttributeUsage(AttributeTargets.Field)]

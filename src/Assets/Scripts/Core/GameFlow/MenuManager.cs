@@ -4,6 +4,12 @@ using TMPro;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using System.Collections.Generic;
+
+public record ItemTextLocation {
+    public TMP_Text Text { get; set; }
+    public LocalizationFields Field { get; set; }
+}
 
 public class MenuManager : MonoBehaviour
 {
@@ -15,8 +21,11 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private SceneAsset gameScene;
     [SerializeField] private TMP_Text menuTitleText;
+    [SerializeField] private TMP_Dropdown dropdown;
 
     private SupportedLanguages currentLanguage = SupportedLanguages.English;
+
+    private List<ItemTextLocation> listTexts = new();
 
 
     private void Awake()
@@ -48,6 +57,17 @@ public class MenuManager : MonoBehaviour
     {
         Debug.Log("Close");
         SwapMenu(true);
+    }
+    public void ChoseLanguage(int lang) {
+        currentLanguage = (SupportedLanguages)lang;
+        this.SetupLocalizationManager(currentLanguage);
+        Debug.Log("Change Lang");
+
+        listTexts.ForEach(x =>
+        {
+            x.Text.text = localizationManager.GetLocalizedValue(x.Field).ToUpper();
+        });
+
     }
 
     public void ExitGame()
@@ -87,6 +107,8 @@ public class MenuManager : MonoBehaviour
 
     }
 
+
+
     private void CreateOptionMenu() {
         LocalizationFields titleField = LocalizationFields.OptionMenu;
         LocalizationFields backField = LocalizationFields.Back;
@@ -95,14 +117,42 @@ public class MenuManager : MonoBehaviour
         titleText.text = localizationManager.GetLocalizedValue(titleField).ToUpper();
 
         Button backBt = panelOptions.GetComponentInChildren<Button>();
-        backBt.GetComponentInChildren<TMP_Text>().text = localizationManager.GetLocalizedValue(backField).ToUpper();
+        TMP_Text backBtText = backBt.GetComponentInChildren<TMP_Text>();
+        backBtText.text = localizationManager.GetLocalizedValue(backField).ToUpper();
 
         backBt.onClick.AddListener(CloseOptions);
+
+        List<string> options = new List<string>();
+        for (int i =0; i<= (int)SupportedLanguages.Portuguese; i++)
+        {
+            SupportedLanguages op = (SupportedLanguages)i;
+            options.Add(op.ToString());
+        }
+        dropdown.AddOptions(options);
+
+
+        listTexts.Add(new ItemTextLocation()
+        {
+            Text = titleText,
+            Field = titleField
+        });
+
+        listTexts.Add(new ItemTextLocation()
+        {
+            Text = backBtText,
+            Field = backField
+        });
     }
     private void CreateMenuButtons()
     {
         LocalizationFields titleFiels = LocalizationFields.MainMenu;
         menuTitleText.text = localizationManager.GetLocalizedValue(titleFiels).ToUpper();
+
+        listTexts.Add(new ItemTextLocation()
+        {
+            Text = menuTitleText,
+            Field = titleFiels
+        });
 
         // Defina os itens do menu com base no enum
         LocalizationFields[] menuItems = {
@@ -126,6 +176,13 @@ public class MenuManager : MonoBehaviour
             buttonText.text = localizationManager.GetLocalizedValue(menuItem).ToUpper();
 
             Button button = newButton.GetComponent<Button>();
+
+            listTexts.Add(new ItemTextLocation()
+            {
+                Text = buttonText,
+                Field = menuItem
+            });
+
             switch (menuItem)
             {
                 case LocalizationFields.StartGame:
