@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TMP_Text menuTitleText;
     [SerializeField] private TMP_Dropdown dropdown;
 
-    private SupportedLanguages currentLanguage = SupportedLanguages.English;
+    private SupportedLanguages currentLanguage = SupportedLanguages.Portuguese;
 
     private List<ItemTextLocation> listTexts = new();
 
