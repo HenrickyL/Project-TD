@@ -1,66 +1,76 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
-using System;
-public class LocalizationManager : MonoBehaviour, ILocalizationManager
+
+public static class LocalizationManager
 {
-    private static Dictionary<LocalizationCategory, Dictionary<string, string>> localizedData;
+    private static Dictionary<LocalizationCategory, Dictionary<string, string>> localizedData
+        = new Dictionary<LocalizationCategory, Dictionary<string, string>>();
+
     private static SupportedLanguages currentLanguage = SupportedLanguages.Portuguese;  // Idioma padrão
+    
 
-    private Dictionary<string, string> localizedText;
+    public static string GetLocalizedValue(LocalizationCategory category, LocalizationFields key)
+    {
+        if (localizedData.Count == 0) { 
+            LoadLocalizedText(category);
+        }
 
-    public static Dictionary<LocalizationCategory, Dictionary<string, string>>  GetLocalizedData() {
-        if (localizedData == null)
-            localizedData = new();
-        return localizedData;
+        if (localizedData.TryGetValue(category, out var localizedText))
+        {
+            string keyCode = key.GetDescription();
+            if (localizedText.TryGetValue(keyCode, out var value))
+            {
+                return value;
+            }
+        }
+        return null;
     }
 
-    // Carrega o texto localizado de uma categoria específica (Menus, Dialogues, etc.)
-    public void LoadLocalizedText(LocalizationCategory category)
+    public static void SetLanguage(SupportedLanguages language)
     {
+        if (currentLanguage != language)
+        {
+            currentLanguage = language;
+            localizedData.Clear();
+            Debug.Log($"Language set to {language}. Localization data cleared.");
+        }
+    }
 
-        string currentLagCode = currentLanguage.GetLanguageInfo().Code;
-        string filePath = Path.Combine(Application.streamingAssetsPath, "Localization",
-            currentLagCode,
-            category + ".json");
+    public static string GetLocalizadMenuValue(LocalizationFields key) {
+        return GetLocalizedValue(LocalizationCategory.Menus, key);
+    }
 
-        Debug.Log(filePath);
+
+
+    /*---------------------*/
+    private static void LoadLocalizedText(LocalizationCategory category)
+    {
+        string currentLangCode = currentLanguage.GetLanguageInfo().Code;
+        string filePath = Path.Combine(Application.streamingAssetsPath, "Localization", currentLangCode, category + ".json");
+
+        Debug.Log($"Loading localization file from: {filePath}");
 
         if (File.Exists(filePath))
         {
             string dataAsJson = File.ReadAllText(filePath);
-            localizedText = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataAsJson);
-            if(GetLocalizedData().ContainsKey(category))
-                localizedData.Remove(category);
-            localizedData.Add(category, localizedText);
-            if (localizedText == null) { 
-                throw new Exception(ErrorMessages.LocalizationJsonInvalid);
-            }
+            Dictionary<string, string> localizedText = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataAsJson);
 
-            Debug.Log("Loaded Localization " + category + " in "+ currentLagCode);
+            if (localizedText == null)
+                throw new Exception(ErrorMessages.LocalizationJsonInvalid);
+
+            // Substitui a categoria existente no cache
+            localizedData.Add(category, localizedText);
+
+            Debug.Log($"Loaded Localization {category} in {currentLangCode}");
         }
         else
         {
             string error = string.Format(ErrorMessages.LocalizationFileNotFound, category);
             Debug.LogError(error);
-            throw new Exception(error);
+            throw new FileNotFoundException(error);
         }
-    }
-
-    public string GetLocalizedValue(LocalizationFields key)
-    {
-        string keyCode = key.GetDescription();
-        if (localizedText.ContainsKey(keyCode))
-        {
-            return localizedText[keyCode];
-        }
-        return null;
-    }
-
-    // Permite alterar o idioma atual
-    public void SetLanguage(SupportedLanguages languageCode)
-    {
-        currentLanguage = languageCode;
     }
 }
