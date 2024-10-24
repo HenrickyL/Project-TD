@@ -10,11 +10,10 @@ public static class LocalizationManager
         = new Dictionary<LocalizationCategory, Dictionary<string, string>>();
 
     private static SupportedLanguages currentLanguage = SupportedLanguages.Portuguese;  // Idioma padrão
-    
 
     public static string GetLocalizedValue(LocalizationCategory category, LocalizationFields key)
     {
-        if (localizedData.Count == 0) { 
+        if (localizedData.Count == 0) {
             LoadLocalizedText(category);
         }
 
@@ -74,5 +73,23 @@ public static class LocalizationManager
             Debug.LogError(error);
             throw new FileNotFoundException(error);
         }
+    }
+
+    public static SupportedLanguages GetCurrentLanguage() {
+        return currentLanguage;
+    }
+
+    public static List<SupportedLanguages> GetOrderedLanguages(){
+        Array languages = Enum.GetValues(typeof(SupportedLanguages));
+        SupportedLanguages first = LocalizationManager.GetCurrentLanguage();
+
+        List<SupportedLanguages> options = new();
+        options.Add(first);
+
+        foreach (SupportedLanguages lang in languages)
+        {
+            if (lang != first) options.Add(lang);
+        }
+        return options;
     }
 }

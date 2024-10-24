@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class OptionsMenuUI : MonoBehaviour, IUISubMenu
 {
@@ -16,8 +18,8 @@ public class OptionsMenuUI : MonoBehaviour, IUISubMenu
     public void Initialize()
     {
         this.Hide();
-        CreateLanguageOptions(ChangeLanguage);
-        SetupBackButton(Hide);
+        CreateLanguageOptions();
+        SetupBackButton();
     }
 
     public void AddParent(IUIManager submenu)
@@ -29,31 +31,34 @@ public class OptionsMenuUI : MonoBehaviour, IUISubMenu
 
     public void ChangeLanguage(int lang)
     {
-        if (LocalizationManager.SetLanguage((SupportedLanguages)lang)) { 
+        var languages = LocalizationManager.GetOrderedLanguages();
+
+        if (LocalizationManager.SetLanguage(languages[lang])) { 
             parent.UpdateTexts();
             this.UpdateTexts();
+            CreateLanguageOptions();
         }
         Debug.Log("Changed Language");
     }
 
     /*--------------------------*/
 
-    private void CreateLanguageOptions(System.Action<int> onChangeLanguage)
+    private void CreateLanguageOptions()
     {
-        List<string> options = new List<string>();
-        for (int i = 0; i <= (int)SupportedLanguages.Portuguese; i++)
+        List<string> options = new();
+        foreach (SupportedLanguages lang in LocalizationManager.GetOrderedLanguages())
         {
-            SupportedLanguages op = (SupportedLanguages)i;
-            options.Add(op.ToString());
+            options.Add(lang.ToString());
         }
 
         languageDropdown.ClearOptions();
         languageDropdown.AddOptions(options);
-        languageDropdown.onValueChanged.AddListener(delegate { onChangeLanguage(languageDropdown.value); });
+        languageDropdown.onValueChanged.AddListener(delegate { ChangeLanguage(languageDropdown.value); });
     }
 
-    private void SetupBackButton(System.Action onClose)
+    private void SetupBackButton()
     {
+        System.Action onClose = this.Hide;
         Button backButton = panelOptions.GetComponentInChildren<Button>();
         backButton.onClick.AddListener(() => onClose.Invoke());
 
