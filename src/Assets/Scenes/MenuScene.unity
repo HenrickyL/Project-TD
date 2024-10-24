@@ -365,19 +365,7 @@ MonoBehaviour:
     m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1447657496}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: ChoseLanguage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &212169369
 MonoBehaviour:
@@ -965,6 +953,7 @@ MonoBehaviour:
   menuTitleText: {fileID: 842435196}
   buttonPrefab: {fileID: 6748085143430582954, guid: e62b666f32f9aaf4393618df98628923, type: 3}
   body: {fileID: 1081640461}
+  gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
 --- !u!1001 &725695652
 PrefabInstance:
   m_ObjectHideFlags: 0

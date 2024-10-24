@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class MainMenuUI : MonoBehaviour, IUIManager
 {
@@ -9,6 +10,7 @@ public class MainMenuUI : MonoBehaviour, IUIManager
     [SerializeField] private TMP_Text menuTitleText;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private Transform body;
+    [SerializeField] private SceneAsset gameScene;
 
     private IUISubMenu subMenu;
     private (LocalizationFields,Button)[] buttons;
@@ -25,13 +27,12 @@ public class MainMenuUI : MonoBehaviour, IUIManager
         submenu.AddParent(this);
     }
 
-
     /*--------------------------*/
 
     public void PlayGame()
     {
         Debug.Log("Play");
-        SceneManager.LoadScene("Level1"); // Carrega a cena de jogo
+        SceneManager.LoadScene(gameScene.name);
     }
 
     public void OpenOptions()
