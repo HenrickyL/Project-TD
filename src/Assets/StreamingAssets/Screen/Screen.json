@@ -1,0 +1,21 @@
+{
+    "supportedScreenSizes": [
+      {
+        "screenSize": "Small",
+        "resolution": "640x480"
+      },
+      {
+        "screenSize": "Medium",
+        "resolution": "1280x720"
+      },
+      {
+        "screenSize": "Large",
+        "resolution": "1920x1080"
+      },
+      {
+        "screenSize": "ExtraLarge",
+        "resolution": "3840x2160"
+      }
+    ]
+  }
+  

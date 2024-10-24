@@ -1,0 +1,4 @@
+public enum LocalizationCategory
+{
+    Menus
+}

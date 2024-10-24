@@ -14,7 +14,6 @@ Explicação das Pastas:
     /Scripts
         /Core
             /GameState
-                IGameState.cs
                 MenuState.cs
                 PlayState.cs
                 PauseState.cs
@@ -38,6 +37,12 @@ Explicação das Pastas:
             /Menus
                 MainMenu.cs
                 PauseMenu.cs
+    /Infra
+        /Interfaces
+            IGameState.cs
+            ILocationManager.cs
+        /Localization
+            LocationManager.cs
     /Prefabs
         /Towers
         /Enemies
@@ -51,4 +56,14 @@ Explicação das Pastas:
         /SurvivalMode
     /Resources
         GameSettings.asset
+    /Localization
+        /en
+            Menus.json
+            Dialogues.json
+            Cutscenes.json
+        /pt
+            Menus.json
+            Dialogues.json
+            Cutscenes.json
+
 ```
