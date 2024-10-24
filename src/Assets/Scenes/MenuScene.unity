@@ -920,6 +920,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 710118398}
+  - component: {fileID: 710118399}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -940,6 +941,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 842435195}
+  - {fileID: 1081640461}
   m_Father: {fileID: 615880955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -947,6 +949,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &710118399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710118397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c9431b233dcd2418dfd4bb12575c18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelMainMenu: {fileID: 710118397}
+  menuTitleText: {fileID: 842435196}
+  buttonPrefab: {fileID: 6748085143430582954, guid: e62b666f32f9aaf4393618df98628923, type: 3}
+  body: {fileID: 1081640461}
 --- !u!1001 &725695652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1364,6 +1382,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876087964}
   m_CullTransparentMesh: 1
+--- !u!1 &1081640460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1081640461}
+  m_Layer: 5
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1081640461
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081640460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 710118398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 800, y: 850}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1083159107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1995,13 +2048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa6de681d183fd45b64d474a23f9650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localizationManager: {fileID: 5013063887376731379, guid: 4fae381f9b4741448bf869eda9eaf2d1, type: 3}
-  panelMainMenu: {fileID: 710118397}
-  panelOptions: {fileID: 1653084440}
-  buttonPrefab: {fileID: 6748085143430582954, guid: e62b666f32f9aaf4393618df98628923, type: 3}
-  gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
-  menuTitleText: {fileID: 842435196}
-  dropdown: {fileID: 212169368}
+  mainMenuUI: {fileID: 710118399}
+  optionsMenuUI: {fileID: 1653084442}
 --- !u!1 &1532151062
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,13 +2209,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1653084441}
+  - component: {fileID: 1653084442}
   m_Layer: 5
   m_Name: OptionsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1653084441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2191,6 +2240,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1000, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1653084442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653084440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a638ee16deebb164091f3a825d1c8323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelOptions: {fileID: 1653084440}
+  languageDropdown: {fileID: 212169368}
+  titleText: {fileID: 467655481}
 --- !u!1 &1760159057
 GameObject:
   m_ObjectHideFlags: 0

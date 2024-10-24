@@ -29,14 +29,16 @@ public static class LocalizationManager
         return null;
     }
 
-    public static void SetLanguage(SupportedLanguages language)
+    public static bool SetLanguage(SupportedLanguages language)
     {
         if (currentLanguage != language)
         {
             currentLanguage = language;
             localizedData.Clear();
             Debug.Log($"Language set to {language}. Localization data cleared.");
+            return true;
         }
+        return false;
     }
 
     public static string GetLocalizadMenuValue(LocalizationFields key) {
