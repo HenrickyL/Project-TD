@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour //Singleton
         else { 
             Destroy(gameObject);
         }
+        Debug.Log("--->Awake GameManager");
     }
 
     /*-----------------------------*/
@@ -30,21 +31,24 @@ public class GameManager : MonoBehaviour //Singleton
     public void ChangeToGameState() {
         ChangeState(gameState);
     }
-
     public void ChangeToMenuState()
     {
         ChangeState(menuState);
     }
-    public void GoToMainMenu() { 
+    public void GoToMainMenu() {
+        ChangeToGameState();
+        UIManager.Instance.Hide();
         SceneManager.LoadScene(mainMenuScene.name);
     }
 
     /*-----------------------------*/
-
+    
     private void Start()
     {
-        gameState = new GameState();
-        menuState = new MenuState();
+        if (gameState == null)
+            gameState = new GameState();
+        if (menuState == null)
+            menuState = new MenuState();
         ChangeState(gameState);
     }
     private void Update()

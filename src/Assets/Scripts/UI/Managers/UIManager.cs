@@ -20,24 +20,30 @@ public class UIManager : MonoBehaviour, IUIManager
         if (Instance == null)
         {
             Instance = this;
+            Initialize();
         }
         else
         {
             Destroy(gameObject);
         }
+        Hide();
+    }
+
+    private void OnEnable()
+    {
+        canvas = GetComponentInParent<Canvas>();
     }
 
 
     private void Start()
     {
-        canvas = GetComponentInParent<Canvas>();
         Initialize();
     }
 
     public void Initialize()
     {
+        canvas = GetComponentInParent<Canvas>();
         CreateMenuButtons();
-        Hide();
     }
 
     public void Show()
