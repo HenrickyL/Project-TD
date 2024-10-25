@@ -20,7 +20,6 @@ public class UIManager : MonoBehaviour, IUIManager
         if (Instance == null)
         {
             Instance = this;
-            canvas = GetComponentInParent<Canvas>();
         }
         else
         {
@@ -31,6 +30,7 @@ public class UIManager : MonoBehaviour, IUIManager
 
     private void Start()
     {
+        canvas = GetComponentInParent<Canvas>();
         Initialize();
     }
 
