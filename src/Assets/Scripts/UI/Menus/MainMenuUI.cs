@@ -10,7 +10,6 @@ public class MainMenuUI : MonoBehaviour, IUIManager
     [SerializeField] private TMP_Text menuTitleText;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private Transform body;
-    [SerializeField] private SceneAsset gameScene;
 
     private IUISubMenu subMenu;
     private (LocalizationFields,Button)[] buttons;
@@ -32,7 +31,7 @@ public class MainMenuUI : MonoBehaviour, IUIManager
     public void PlayGame()
     {
         Debug.Log("Play");
-        SceneManager.LoadScene(gameScene.name);
+        SceneManager.LoadScene(ScenesEnum.GameScene.ToString());
     }
 
     public void OpenOptions()

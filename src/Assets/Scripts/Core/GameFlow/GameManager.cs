@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour //Singleton
 {
-    [SerializeField] private SceneAsset mainMenuScene;
     private IGameState currentState;
     public static GameManager Instance { get; private set; }
 
@@ -38,7 +37,7 @@ public class GameManager : MonoBehaviour //Singleton
     public void GoToMainMenu() {
         ChangeToGameState();
         UIManager.Instance.Hide();
-        SceneManager.LoadScene(mainMenuScene.name);
+        SceneManager.LoadScene(ScenesEnum.MainMenuScene.ToString());
     }
 
     /*-----------------------------*/
