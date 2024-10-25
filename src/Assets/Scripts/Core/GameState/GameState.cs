@@ -4,17 +4,27 @@ public class GameState : IGameState
 {
     public void Enter()
     {
-        Debug.Log("Entering Game State");
         Time.timeScale = 1;  // Retoma o tempo normal do jogo
+        UIManager.Instance.Hide();
+        Debug.Log("Entering Game State");
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Exiting Game State");
     }
 
-    public void Update()
+    public void UpdateGame()
     {
-        throw new System.NotImplementedException();
+        KeyOpenResumeMenu();
+    }
+
+    /*--------------------------------*/
+    private void KeyOpenResumeMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.ChangeToMenuState();
+        }
     }
 }

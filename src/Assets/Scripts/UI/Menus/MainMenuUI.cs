@@ -33,6 +33,7 @@ public class MainMenuUI : MonoBehaviour, IUIManager
     {
         Debug.Log("Play");
         SceneManager.LoadScene(gameScene.name);
+        GameManager.Instance.ChangeToGameState();
     }
 
     public void OpenOptions()

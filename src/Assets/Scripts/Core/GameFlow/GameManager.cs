@@ -1,23 +1,61 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour //Singleton
 {
+    [SerializeField] private SceneAsset mainMenuScene;
+    private IGameState currentState;
+    public static GameManager Instance { get; private set; }
+
+    private GameState gameState;
+    private MenuState menuState;
+    
+
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            // Mantém o GameManager ao mudar de cena
+            DontDestroyOnLoad(gameObject);
+        }
+        else { 
+            Destroy(gameObject);
+        }
     }
+
+    /*-----------------------------*/
+
+    public void ChangeToGameState() {
+        ChangeState(gameState);
+    }
+
+    public void ChangeToMenuState()
+    {
+        ChangeState(menuState);
+    }
+    public void GoToMainMenu() { 
+        SceneManager.LoadScene(mainMenuScene.name);
+    }
+
+    /*-----------------------------*/
 
     private void Start()
     {
-        // Start the game in the MenuState
-        //ChangeState(new MenuState());
+        gameState = new GameState();
+        menuState = new MenuState();
+        ChangeState(gameState);
+    }
+    private void Update()
+    {
+        currentState?.UpdateGame();
     }
 
-    // Method to change states
-    public void ChangeState(IGameState newState)
+    private void ChangeState(IGameState newState)
     {
-        //currentState?.Exit();
-        //currentState = newState;
-        //currentState.Enter();
+        currentState?.Exit();
+        currentState = newState;
+        currentState.Enter();
     }
-    
 }
