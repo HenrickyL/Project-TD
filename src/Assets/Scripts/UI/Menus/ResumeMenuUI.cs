@@ -1,6 +1,7 @@
 
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResumeMenuUI : AbstractMenuUI
 {
@@ -11,7 +12,6 @@ public class ResumeMenuUI : AbstractMenuUI
     public override void Initialize()
     {
         CreateMenuButtons();
-        this.Show();
     }
 
     public void AddSubMenu(AbstractSubMenuUI submenu)
@@ -31,23 +31,31 @@ public class ResumeMenuUI : AbstractMenuUI
         AdjustButtonPositions();
     }
 
+    private void CloseMenu() {
+        UIManager.Instance.Hide();
+        GameManager.Instance.ChangeToGameState();
+    }
+
 
     public void ResumeGame()
     {
+        CloseMenu();
         Debug.Log("Resume Game");
     }
 
     public void OpenOptions()
     {
-        Debug.Log("Open Options");
-        this.Hide();
+        Hide();
         subMenu.Show();
+        Debug.Log("Open Options");
     }
 
     public void GoToMainMenu()
     {
+        CloseMenu();
+        SceneManager.LoadScene(ScenesEnum.MainMenuScene.ToString());
         Debug.Log("Exit To Main Menu");
     }
-    
+
 }
 

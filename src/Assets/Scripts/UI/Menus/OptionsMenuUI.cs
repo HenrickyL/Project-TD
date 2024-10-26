@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class OptionsMenuUI : AbstractSubMenuUI
 {
-    [SerializeField] private GameObject panelOptions;
     [SerializeField] private TMP_Dropdown languageDropdown;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private Transform backPos;
@@ -22,7 +21,7 @@ public class OptionsMenuUI : AbstractSubMenuUI
                 Key = LocalizationFields.OptionMenu
             });
         }
-        panelOptions.SetActive(false);
+        panel.SetActive(false);
         CreateLanguageOptions();
         SetupBackButton();
     }

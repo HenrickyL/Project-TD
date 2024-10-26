@@ -27,6 +27,7 @@ public class MainMenuUI : AbstractMenuUI
     {
         Debug.Log("Play");
         SceneManager.LoadScene(ScenesEnum.GameScene.ToString());
+        GameManager.Instance?.Initialize();
     }
 
     public void OpenOptions()

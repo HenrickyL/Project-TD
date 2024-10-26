@@ -1,6 +1,4 @@
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour //Singleton
 {
@@ -9,7 +7,8 @@ public class GameManager : MonoBehaviour //Singleton
 
     private GameState gameState;
     private MenuState menuState;
-    
+
+
 
     private void Awake()
     {
@@ -19,9 +18,24 @@ public class GameManager : MonoBehaviour //Singleton
             // Mantém o GameManager ao mudar de cena
             DontDestroyOnLoad(gameObject);
         }
-        else { 
+        else {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        Initialize();
+    }
+
+    public void Initialize() {
+        
+        if (gameState == null)
+            gameState = new GameState();
+        if (menuState == null)
+            menuState = new MenuState();
+        UIManager.Instance.Initialize();
+        ChangeState(gameState);
     }
 
     /*-----------------------------*/
@@ -29,26 +43,19 @@ public class GameManager : MonoBehaviour //Singleton
     public void ChangeToGameState() {
         ChangeState(gameState);
     }
+
+    public void ChangeResume() { 
+        ChangeState(gameState);
+        UIManager.Instance.Hide();
+    }
+
     public void ChangeToMenuState()
     {
         ChangeState(menuState);
     }
-    public void GoToMainMenu() {
-        ChangeToGameState();
-        UIManager.Instance.Hide();
-        SceneManager.LoadScene(ScenesEnum.MainMenuScene.ToString());
-    }
 
     /*-----------------------------*/
     
-    private void Start()
-    {
-        if (gameState == null)
-            gameState = new GameState();
-        if (menuState == null)
-            menuState = new MenuState();
-        ChangeState(gameState);
-    }
     private void Update()
     {
         currentState?.UpdateGame();
