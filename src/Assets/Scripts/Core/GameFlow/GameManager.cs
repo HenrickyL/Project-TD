@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour //Singleton
         else { 
             Destroy(gameObject);
         }
-        Debug.Log("--->Awake GameManager");
     }
 
     /*-----------------------------*/
