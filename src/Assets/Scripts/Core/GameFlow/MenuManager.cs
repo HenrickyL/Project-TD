@@ -19,8 +19,4 @@ public class MenuManager : MonoBehaviour
         // Exibe o menu principal inicialmente
         mainMenuUI.Show();
     }
-    
-    
-
-   
 }

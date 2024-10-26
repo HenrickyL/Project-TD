@@ -1,23 +1,73 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour //Singleton
 {
+    private IGameState currentState;
+    public static GameManager Instance { get; private set; }
+
+    private GameState gameState;
+    private MenuState menuState;
+
+
+
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            // Mantém o GameManager ao mudar de cena
+            DontDestroyOnLoad(gameObject);
+        }
+        else {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        // Start the game in the MenuState
-        //ChangeState(new MenuState());
+        Initialize();
     }
 
-    // Method to change states
-    public void ChangeState(IGameState newState)
-    {
-        //currentState?.Exit();
-        //currentState = newState;
-        //currentState.Enter();
+    public void Initialize() {
+        
+        if (gameState == null)
+            gameState = new GameState();
+        if (menuState == null)
+            menuState = new MenuState();
+        UIManager.Instance.Initialize();
+        UIManager.Instance.OnEnable = true;
+        ChangeState(gameState);
     }
+
+    /*-----------------------------*/
+
+    public void ChangeToGameState() {
+        ChangeState(gameState);
+    }
+
+    public void ChangeResume() { 
+        ChangeState(gameState);
+        UIManager.Instance.Hide();
+    }
+
+    public void ChangeToMenuState()
+    {
+        ChangeState(menuState);
+    }
+
+    /*-----------------------------*/
     
+    private void Update()
+    {
+        if (UIManager.Instance.OnEnable) { 
+            currentState?.UpdateGame();
+        }
+    }
+
+    private void ChangeState(IGameState newState)
+    {
+        currentState?.Exit();
+        currentState = newState;
+        currentState.Enter();
+    }
 }
