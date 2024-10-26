@@ -37,7 +37,7 @@ public class MenuState : IGameState
     private void KeySwapMenu()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            GameManager.Instance.ChangeToGameState();
+            GameManager.Instance.ChangeResume();
         }
     }
 }

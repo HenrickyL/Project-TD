@@ -56,5 +56,6 @@ public class UIManager : MonoBehaviour, IUIManager
     public void Hide()
     {
         canvas.gameObject.SetActive(false);
+        optionsMenuUI?.Hide();
     }
 }
