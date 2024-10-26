@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour, IUIManager
     [SerializeField] private ResumeMenuUI resumeMenu;
     [SerializeField] private OptionsMenuUI optionsMenuUI;
 
-
+    public bool OnEnable { get; set; }
 
     private void Awake()
     {

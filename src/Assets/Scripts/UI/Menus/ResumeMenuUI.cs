@@ -54,6 +54,7 @@ public class ResumeMenuUI : AbstractMenuUI
     {
         CloseMenu();
         SceneManager.LoadScene(ScenesEnum.MainMenuScene.ToString());
+        UIManager.Instance.OnEnable = false;
         Debug.Log("Exit To Main Menu");
     }
 

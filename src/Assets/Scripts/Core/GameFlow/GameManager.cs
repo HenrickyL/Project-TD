@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour //Singleton
         if (menuState == null)
             menuState = new MenuState();
         UIManager.Instance.Initialize();
+        UIManager.Instance.OnEnable = true;
         ChangeState(gameState);
     }
 
@@ -58,7 +59,9 @@ public class GameManager : MonoBehaviour //Singleton
     
     private void Update()
     {
-        currentState?.UpdateGame();
+        if (UIManager.Instance.OnEnable) { 
+            currentState?.UpdateGame();
+        }
     }
 
     private void ChangeState(IGameState newState)
