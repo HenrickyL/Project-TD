@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour //Singleton
     private GameState gameState;
     private MenuState menuState;
 
+    public bool OnInitialize { get; set; } = false;
+
 
 
     private void Awake()
@@ -29,14 +31,17 @@ public class GameManager : MonoBehaviour //Singleton
     }
 
     public void Initialize() {
-        
-        if (gameState == null)
-            gameState = new GameState();
-        if (menuState == null)
-            menuState = new MenuState();
-        UIManager.Instance.Initialize();
-        UIManager.Instance.OnEnable = true;
-        ChangeState(gameState);
+
+        if (!OnInitialize) { 
+            if (gameState == null)
+                gameState = new GameState();
+            if (menuState == null)
+                menuState = new MenuState();
+            UIManager.Instance.Initialize();
+            OnInitialize = true;
+        }
+            UIManager.Instance.OnEnable = true;
+            ChangeState(gameState);
     }
 
     /*-----------------------------*/

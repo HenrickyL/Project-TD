@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour, IUIManager
     [SerializeField] private OptionsMenuUI optionsMenuUI;
 
     public bool OnEnable { get; set; }
+    public bool OnInitalize { get; set; } = false;
+
 
     private void Awake()
     {
@@ -30,16 +32,20 @@ public class UIManager : MonoBehaviour, IUIManager
 
     public void Initialize()
     {
-        canvas = canvas ?? GetComponentInParent<Canvas>();
-        if (canvas != null)
-        {
-            DontDestroyOnLoad(canvas.gameObject);
-        }
-        resumeMenu.AddSubMenu(optionsMenuUI);
+        if (!OnInitalize) { 
+            canvas = canvas ?? GetComponentInParent<Canvas>();
+            if (canvas != null)
+            {
+                DontDestroyOnLoad(canvas.gameObject);
+            }
+            resumeMenu.AddSubMenu(optionsMenuUI);
 
-        resumeMenu.Initialize();
-        optionsMenuUI.Initialize();
+            resumeMenu.Initialize();
+            optionsMenuUI.Initialize();
+            OnInitalize = true;
+        }
         optionsMenuUI.Hide();
+        resumeMenu.UpdateTexts();
     }
 
     public void UpdateTexts()
