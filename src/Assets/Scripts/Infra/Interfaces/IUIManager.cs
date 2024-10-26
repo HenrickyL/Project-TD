@@ -7,7 +7,7 @@ public interface IUIManager
     //void AddSubMenu(IUIManager submenu);
 }
 
-public interface IUISubMenu : IUIManager
+public interface IUISubMenu
 {
     void AddParent(IUIManager submenu);
 }

@@ -1,28 +1,30 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class OptionsMenuUI : MonoBehaviour, IUISubMenu
+public class OptionsMenuUI : AbstractSubMenuUI
 {
     [SerializeField] private GameObject panelOptions;
     [SerializeField] private TMP_Dropdown languageDropdown;
     [SerializeField] private TMP_Text titleText;
-    
+    [SerializeField] private Transform backPos;
+
+
     private TMP_Text backButtonText;
-    private IUIManager parent;
 
 
-    public void Initialize()
+    public override void Initialize()
     {
+        if (titleText != null) { 
+            texts.Add(new TextResponse()
+            {
+                Text = titleText,
+                Key = LocalizationFields.OptionMenu
+            });
+        }
         panelOptions.SetActive(false);
         CreateLanguageOptions();
         SetupBackButton();
-    }
-
-    public void AddParent(IUIManager submenu)
-    {
-        parent = submenu;
     }
 
     /*--------------------------*/
@@ -37,6 +39,11 @@ public class OptionsMenuUI : MonoBehaviour, IUISubMenu
             CreateLanguageOptions();
         }
         Debug.Log("Changed Language");
+    }
+
+    private void OnBackToMainMenu() {
+        this.Hide();
+        parent.Show();
     }
 
     /*--------------------------*/
@@ -56,37 +63,18 @@ public class OptionsMenuUI : MonoBehaviour, IUISubMenu
 
     private void SetupBackButton()
     {
-        System.Action onClose = this.Hide;
-        Button backButton = panelOptions.GetComponentInChildren<Button>();
-        backButton.onClick.AddListener(() => onClose.Invoke());
+        ButtonConfig setup = new ButtonConfig() { IsToUpper = true };
+        buttons = new ButtonResponse[1];
+        buttons[0] = ButtonFactory.CreateButton(LocalizationFields.Back, buttonPrefab, OnBackToMainMenu, backPos, setup);
 
-        backButtonText = backButton.GetComponentInChildren<TMP_Text>();
+        foreach (ButtonResponse item in buttons)
+        {
+            texts.Add(new TextResponse()
+            {
+                Text = item.Text,
+                Key = item.KeyText
+            });
+        }
     }
 
-
-
-    /*--------------------------*/
-
-    public void Show()
-    {
-        panelOptions.SetActive(true);
-    }
-
-    public void Hide()
-    {
-        Debug.Log("Close Options");
-        panelOptions.SetActive(false);
-        parent?.Show();
-    }
-
-    private string GetLocalizadValue(LocalizationFields key)
-    {
-        return LocalizationManager.GetLocalizadMenuValue(key);
-    }
-
-    public void UpdateTexts()
-    {
-        titleText.text = GetLocalizadValue(LocalizationFields.OptionMenu).ToUpper();
-        backButtonText.text = GetLocalizadValue(LocalizationFields.Back).ToUpper();
-    }
 }

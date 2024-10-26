@@ -17,6 +17,7 @@ public record ButtonResponse
 {
     public LocalizationFields KeyText { get; set; }
     public Button Button { get; set; }
+    public TMP_Text Text { get; set; }
     public float Width { get; set; }
     public float Height { get; set; }
 }
@@ -67,6 +68,7 @@ public static class ButtonFactory
         return new ButtonResponse(){ 
             KeyText = textKey,
             Button = button,
+            Text = buttonText,
             Height = values.y,
             Width = values.x
         };

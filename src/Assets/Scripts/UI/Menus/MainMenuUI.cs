@@ -1,55 +1,27 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class MainMenuUI : MonoBehaviour, IUIManager
+public class MainMenuUI : AbstractMenuUI
 {
-    [SerializeField] private GameObject panelMainMenu;
     [SerializeField] private TMP_Text menuTitleText;
-    [SerializeField] private GameObject buttonPrefab;
-    [SerializeField] private Transform body;
+    private AbstractSubMenuUI subMenu;
 
-    private IUISubMenu subMenu;
-    private ButtonResponse[] buttons;
-    private float offset = 10;
-
-    public void Initialize()
+    public override void Initialize()
     {
-        CreateMenuButtons(PlayGame, OpenOptions, ExitGame);
+        CreateMenuButtons();
         this.Show();
     }
 
-    public void AddSubMenu(IUISubMenu submenu)
+    public void AddSubMenu(AbstractSubMenuUI submenu)
     {
         subMenu = submenu;
         submenu.AddParent(this);
     }
 
-    private void CreateMenuButtons(System.Action onStartGame, System.Action onOpenOptions, System.Action onExitGame)
-    {
-        ButtonConfig setup = new ButtonConfig() { IsToUpper = true };
-        buttons = new ButtonResponse[3];
-        buttons[0] = ButtonFactory.CreateButton(LocalizationFields.StartGame, buttonPrefab, onStartGame, body, setup);
-        buttons[1] = ButtonFactory.CreateButton(LocalizationFields.Options, buttonPrefab, onOpenOptions, body, setup);
-        buttons[2] = ButtonFactory.CreateButton(LocalizationFields.Quit, buttonPrefab, onExitGame, body, setup);
 
-        AdjustButtonPositions();
-    }
 
-    private void AdjustButtonPositions()
-    {
-        RectTransform rectTransform = body.GetComponent<RectTransform>();
-        float posY = rectTransform.transform.localPosition.y;
-        float offsetY = buttons[0].Height + offset;
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            Button button = buttons[i].Button;
-            RectTransform buttonTransform = button.GetComponent<RectTransform>();
-            buttonTransform.localPosition = new Vector3(0, posY - i * offsetY, 0);
-        }
-    }
+    /*--------------------------*/
 
     public void PlayGame()
     {
@@ -70,29 +42,35 @@ public class MainMenuUI : MonoBehaviour, IUIManager
         Application.Quit();
     }
 
-    private string GetLocalizadValue(LocalizationFields key)
-    {
-        return LocalizationManager.GetLocalizadMenuValue(key);
-    }
+    /*--------------------------*/
 
-    public void Show()
+    private void CreateMenuButtons()
     {
-        panelMainMenu.SetActive(true);
-    }
+        ButtonConfig setup = new ButtonConfig() { IsToUpper = true };
+        buttons = new ButtonResponse[3];
+        buttons[0] = ButtonFactory.CreateButton(LocalizationFields.StartGame, buttonPrefab, PlayGame, body, setup);
+        buttons[1] = ButtonFactory.CreateButton(LocalizationFields.Options, buttonPrefab, OpenOptions, body, setup);
+        buttons[2] = ButtonFactory.CreateButton(LocalizationFields.Quit, buttonPrefab, ExitGame, body, setup);
 
-    public void Hide()
-    {
-        panelMainMenu.SetActive(false);
-    }
 
-    public void UpdateTexts()
-    {
-        menuTitleText.text = LocalizationManager.GetLocalizadMenuValue(LocalizationFields.MainMenu).ToUpper();
-
-        foreach (ButtonResponse item in buttons)
-        {
-            TMP_Text startText = item.Button.GetComponentInChildren<TMP_Text>();
-            startText.text = GetLocalizadValue(item.KeyText).ToUpper();
+        foreach (ButtonResponse item in buttons) {
+            texts.Add(new TextResponse()
+            {
+                Text = item.Text,
+                Key = item.KeyText
+            });
         }
+
+        menuTitleText.text = GetLocalizadValue(LocalizationFields.MainMenu).ToUpper();
+        texts.Add(new TextResponse()
+        {
+            Text = menuTitleText,
+            Key = LocalizationFields.MainMenu
+        });
+
+        AdjustButtonPositions();
     }
+
+    
+
 }
