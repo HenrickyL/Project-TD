@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour //Singleton
     private GameState gameState;
     private MenuState menuState;
 
-    public bool OnInitialize { get; set; } = false;
+    private bool OnInitialize { get; set; } = false;
 
 
 
@@ -40,8 +40,8 @@ public class GameManager : MonoBehaviour //Singleton
             UIManager.Instance.Initialize();
             OnInitialize = true;
         }
-            UIManager.Instance.OnEnable = true;
-            ChangeState(gameState);
+        UIManager.Instance.OnEnable = true;
+        ChangeState(gameState);
     }
 
     /*-----------------------------*/

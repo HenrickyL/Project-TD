@@ -33,8 +33,6 @@ public class OptionsMenuUI : AbstractSubMenuUI
         var languages = LocalizationManager.GetOrderedLanguages();
 
         if (LocalizationManager.SetLanguage(languages[lang])) { 
-            parent.UpdateTexts();
-            this.UpdateTexts();
             CreateLanguageOptions();
         }
         Debug.Log("Changed Language");
@@ -65,15 +63,7 @@ public class OptionsMenuUI : AbstractSubMenuUI
         ButtonConfig setup = new ButtonConfig() { IsToUpper = true };
         buttons = new ButtonResponse[1];
         buttons[0] = ButtonFactory.CreateButton(LocalizationFields.Back, buttonPrefab, OnBackToMainMenu, backPos, setup);
-
-        foreach (ButtonResponse item in buttons)
-        {
-            texts.Add(new TextResponse()
-            {
-                Text = item.Text,
-                Key = item.KeyText
-            });
-        }
+        RegisterLocalizationInButtons();
     }
 
 }

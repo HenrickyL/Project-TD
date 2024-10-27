@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour, IUIManager
     [SerializeField] private ResumeMenuUI resumeMenu;
     [SerializeField] private OptionsMenuUI optionsMenuUI;
 
-    public bool OnEnable { get; set; }
+    public bool OnEnable { get; set; } = false;
     public bool OnInitalize { get; set; } = false;
 
 
@@ -38,14 +38,15 @@ public class UIManager : MonoBehaviour, IUIManager
             {
                 DontDestroyOnLoad(canvas.gameObject);
             }
-            resumeMenu.AddSubMenu(optionsMenuUI);
+            LocalizationManager.RegisterObserver(resumeMenu);
+            LocalizationManager.RegisterObserver(optionsMenuUI);
 
+            resumeMenu.AddSubMenu(optionsMenuUI);
             resumeMenu.Initialize();
             optionsMenuUI.Initialize();
             OnInitalize = true;
         }
         optionsMenuUI.Hide();
-        resumeMenu.UpdateTexts();
     }
 
     public void UpdateTexts()

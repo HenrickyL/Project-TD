@@ -28,6 +28,8 @@ public class ResumeMenuUI : AbstractMenuUI
         buttons[1] = ButtonFactory.CreateButton(LocalizationFields.Options, buttonPrefab, OpenOptions, body, setup);
         buttons[2] = ButtonFactory.CreateButton(LocalizationFields.QuitToMainMenu, buttonPrefab, GoToMainMenu, body, setup);
 
+        RegisterLocalizationInButtons();
+
         AdjustButtonPositions();
     }
 
@@ -53,8 +55,9 @@ public class ResumeMenuUI : AbstractMenuUI
     public void GoToMainMenu()
     {
         CloseMenu();
-        SceneManager.LoadScene(ScenesEnum.MainMenuScene.ToString());
         UIManager.Instance.OnEnable = false;
+        MenuManager.Instance.Show();
+        SceneManager.LoadScene(ScenesEnum.MainMenuScene.ToString());
         Debug.Log("Exit To Main Menu");
     }
 

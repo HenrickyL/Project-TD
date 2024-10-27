@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public record TextResponse {
     public TMP_Text Text { get; set; }
@@ -26,7 +26,6 @@ public abstract class AbstractMenuUI : MonoBehaviour, IUIManager
     {
         throw new System.NotImplementedException();
     }
-
 
     public void UpdateTexts()
     {
@@ -63,6 +62,17 @@ public abstract class AbstractMenuUI : MonoBehaviour, IUIManager
     protected string GetLocalizadValue(LocalizationFields key)
     {
         return LocalizationManager.GetLocalizadMenuValue(key);
+    }
+
+    protected void RegisterLocalizationInButtons() {
+        foreach(ButtonResponse item in buttons)
+        {
+            texts.Add(new TextResponse()
+            {
+                Text = item.Text,
+                Key = item.KeyText
+            });
+        }
     }
 
 }
