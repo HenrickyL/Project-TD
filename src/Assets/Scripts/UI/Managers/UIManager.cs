@@ -7,7 +7,9 @@ public class UIManager : MonoBehaviour, IUIManager
     [SerializeField] private ResumeMenuUI resumeMenu;
     [SerializeField] private OptionsMenuUI optionsMenuUI;
 
-    public bool OnEnable { get; set; }
+    public bool OnEnable { get; set; } = false;
+    public bool OnInitalize { get; set; } = false;
+
 
     private void Awake()
     {
@@ -30,15 +32,20 @@ public class UIManager : MonoBehaviour, IUIManager
 
     public void Initialize()
     {
-        canvas = canvas ?? GetComponentInParent<Canvas>();
-        if (canvas != null)
-        {
-            DontDestroyOnLoad(canvas.gameObject);
-        }
-        resumeMenu.AddSubMenu(optionsMenuUI);
+        if (!OnInitalize) { 
+            canvas = canvas ?? GetComponentInParent<Canvas>();
+            if (canvas != null)
+            {
+                DontDestroyOnLoad(canvas.gameObject);
+            }
+            LocalizationManager.RegisterObserver(resumeMenu);
+            LocalizationManager.RegisterObserver(optionsMenuUI);
 
-        resumeMenu.Initialize();
-        optionsMenuUI.Initialize();
+            resumeMenu.AddSubMenu(optionsMenuUI);
+            resumeMenu.Initialize();
+            optionsMenuUI.Initialize();
+            OnInitalize = true;
+        }
         optionsMenuUI.Hide();
     }
 

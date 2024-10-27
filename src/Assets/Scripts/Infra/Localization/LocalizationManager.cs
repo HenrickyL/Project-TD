@@ -1,11 +1,12 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using Newtonsoft.Json;
 
 public static class LocalizationManager
 {
+    private static List<ILocalizateObject> observers = new();
     private static Dictionary<LocalizationCategory, Dictionary<string, string>> localizedData
         = new Dictionary<LocalizationCategory, Dictionary<string, string>>();
 
@@ -34,6 +35,7 @@ public static class LocalizationManager
         {
             currentLanguage = language;
             localizedData.Clear();
+            NotifyObservers();
             Debug.Log($"Language set to {language}. Localization data cleared.");
             return true;
         }
@@ -44,6 +46,26 @@ public static class LocalizationManager
         return GetLocalizedValue(LocalizationCategory.Menus, key);
     }
 
+    public static void RegisterObserver(ILocalizateObject loc) {
+        observers.Add(loc);
+    }
+
+    public static void UnregisterObserver(ILocalizateObject loc)
+    {
+        observers.Remove(loc);
+    }
+
+    public static void NotifyObservers()
+    {
+        foreach (var observer in observers)
+        {
+            observer.UpdateTexts();
+        }
+    }
+
+    public static void ClearObserver() {
+        observers.Clear();
+    }
 
 
     /*---------------------*/

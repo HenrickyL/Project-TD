@@ -1,7 +1,6 @@
-public interface IUIManager
+public interface IUIManager : ILocalizateObject
 {
     void Initialize();  // Inicializa o Main Menu
-    void UpdateTexts();  // Atualiza todos os textos na UI
     void Show();
     void Hide();
     //void AddSubMenu(IUIManager submenu);

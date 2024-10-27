@@ -25,9 +25,10 @@ public class MainMenuUI : AbstractMenuUI
 
     public void PlayGame()
     {
-        Debug.Log("Play");
         SceneManager.LoadScene(ScenesEnum.GameScene.ToString());
         GameManager.Instance?.Initialize();
+        MenuManager.Instance?.Hide();
+        Debug.Log("Play");
     }
 
     public void OpenOptions()
@@ -53,14 +54,7 @@ public class MainMenuUI : AbstractMenuUI
         buttons[1] = ButtonFactory.CreateButton(LocalizationFields.Options, buttonPrefab, OpenOptions, body, setup);
         buttons[2] = ButtonFactory.CreateButton(LocalizationFields.Quit, buttonPrefab, ExitGame, body, setup);
 
-
-        foreach (ButtonResponse item in buttons) {
-            texts.Add(new TextResponse()
-            {
-                Text = item.Text,
-                Key = item.KeyText
-            });
-        }
+        RegisterLocalizationInButtons();
 
         menuTitleText.text = GetLocalizadValue(LocalizationFields.MainMenu).ToUpper();
         texts.Add(new TextResponse()
