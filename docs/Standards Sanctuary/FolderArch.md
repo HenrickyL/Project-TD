@@ -21,6 +21,10 @@ Explicação das Pastas:
                 GameManager.cs
                 ModeManager.cs
         /Gameplay
+            /Controllers
+                GameController.cs
+            /Map
+                MapGenerator.cs
             /Production
                 ResourceManager.cs
                 ProductionManager.cs
