@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class GameState : IGameState
 {
+    private GameController gameController;
+
     public void Enter()
     {
-        Time.timeScale = 1;  // Retoma o tempo normal do jogo
-        UIManager.Instance.Hide();
-        Debug.Log("Entering Game State");
+        // Inicializa o controlador do jogo
+        gameController = GameController.Instance;
+        gameController.InitializeGame();  // Gera o mapa e configura o jogo
+
+        this.SetupEnter();
     }
 
     public void Exit()
@@ -17,6 +21,8 @@ public class GameState : IGameState
     public void UpdateGame()
     {
         KeyOpenResumeMenu();
+
+        gameController.UpdateGame();
     }
 
     /*--------------------------------*/
@@ -26,5 +32,10 @@ public class GameState : IGameState
         {
             GameManager.Instance.ChangeToMenuState();
         }
+    }
+    private void SetupEnter() {
+        Time.timeScale = 1;  // Retoma o tempo normal do jogo
+        UIManager.Instance.Hide();
+        Debug.Log("Entering Game State");
     }
 }
