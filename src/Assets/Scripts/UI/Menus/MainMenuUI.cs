@@ -23,7 +23,7 @@ public class MainMenuUI : AbstractMenuUI
 
     /*--------------------------*/
 
-    public void PlayGame()
+    private void PlayGame()
     {
         SceneManager.LoadScene(ScenesEnum.GameScene.ToString());
         GameManager.Instance?.Initialize();
@@ -31,14 +31,14 @@ public class MainMenuUI : AbstractMenuUI
         Debug.Log("Play");
     }
 
-    public void OpenOptions()
+    private void OpenOptions()
     {
         Debug.Log("Open Options");
         this.Hide();
         subMenu.Show();
     }
 
-    public void ExitGame()
+    private void ExitGame()
     {
         Debug.Log("Exit Game");
         Application.Quit();
