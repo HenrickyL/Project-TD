@@ -39,27 +39,26 @@ public class ResumeMenuUI : AbstractMenuUI
     }
 
 
-    public void ResumeGame()
+    private void ResumeGame()
     {
         CloseMenu();
         Debug.Log("Resume Game");
     }
 
-    public void OpenOptions()
+    private void OpenOptions()
     {
         Hide();
         subMenu.Show();
         Debug.Log("Open Options");
     }
 
-    public void GoToMainMenu()
+    private void GoToMainMenu()
     {
         CloseMenu();
         UIManager.Instance.OnEnable = false;
-        MenuManager.Instance.Show();
+        MenuManager.Instance?.Show();
         SceneManager.LoadScene(ScenesEnum.MainMenuScene.ToString());
         Debug.Log("Exit To Main Menu");
     }
-
 }
 

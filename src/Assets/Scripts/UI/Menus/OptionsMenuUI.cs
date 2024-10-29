@@ -28,7 +28,7 @@ public class OptionsMenuUI : AbstractSubMenuUI
 
     /*--------------------------*/
 
-    public void ChangeLanguage(int lang)
+    private void ChangeLanguage(int lang)
     {
         var languages = LocalizationManager.GetOrderedLanguages();
 
