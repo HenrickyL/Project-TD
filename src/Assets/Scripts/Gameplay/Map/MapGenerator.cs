@@ -1,18 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using System.Drawing;
 //sealed 
 public static class MapGenerator 
 {
-    public static int mapWidth = 10;
-    public static int mapHeight = 10;
+    private static GameBoard _board = default;
+    private static Vector2Int _size;
 
-    public static void Generate()
-    {
-        Debug.Log("Generating map...");
-    }
 
-    public static IEnumerator GenerateMap()
+    public static IEnumerator GenerateMap(GameBoard board, Vector2Int size)
     {
+        _board = board;
+        _size = size;
+
         yield return GenerateTopology();
         yield return PlaceObstacles();
         yield return DecorateEnvironment();
@@ -21,6 +21,8 @@ public static class MapGenerator
     // Método abstrato para gerar a topologia do mapa
     private static IEnumerator GenerateTopology() {
         Debug.Log("Generating Topology...");
+        _board.Initialize(_size);
+
         yield return null;
     }
 
