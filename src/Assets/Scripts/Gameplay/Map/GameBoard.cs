@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using UnityEngine;
 
@@ -67,5 +68,13 @@ public class GameBoard : MonoBehaviour
         {
             _size.y = 2;
         }
+    }
+
+    private GameTile GetTile(int x, int y) {
+        if (x < 0 || x > _size.x || y < 0 || y >= _size.y)
+            throw new ArgumentOutOfRangeException("Invalid Coordinates");
+
+        int index = x+y*_size.x;
+        return _tiles[index];
     }
 } 

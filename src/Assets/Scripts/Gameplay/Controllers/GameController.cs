@@ -9,6 +9,15 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameBoard board = default;
 
+    [SerializeField]
+    Material _arrowEnable = default;
+
+    [SerializeField]
+    Material _arrowDisable = default;
+
+    public static Material ArrowMaterial { get { return Instance._arrowEnable; } }
+    public static Material ArrowDisableMaterial { get { return Instance._arrowDisable; } }
+
 
     private void Awake()
     {

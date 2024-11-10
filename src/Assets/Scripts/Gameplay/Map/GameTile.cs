@@ -1,32 +1,32 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class GameTile : MonoBehaviour
 {
     [SerializeField]
-    Transform arrow = default;
+    TileArrow _arrow;
 
     private GameTile[] _neighbors;
 
-    public GameTile North { get { return _neighbors[(int)Direction.north]; } set { _neighbors[(int)Direction.north] = value; } }
-    public GameTile East { get { return _neighbors[(int)Direction.east]; } set { _neighbors[(int)Direction.east] = value; } }
-    public GameTile South { get { return _neighbors[(int)Direction.south]; } set { _neighbors[(int)Direction.south] = value; } }
-    public GameTile West { get { return _neighbors[(int)Direction.west]; } set { _neighbors[(int)Direction.west] = value; } }
-
+    public GameTile North { get { return _neighbors[(int)Direction.North]; } set { _neighbors[(int)Direction.North] = value; } }
+    public GameTile East { get { return _neighbors[(int)Direction.East]; } set { _neighbors[(int)Direction.East] = value; } }
+    public GameTile South { get { return _neighbors[(int)Direction.South]; } set { _neighbors[(int)Direction.South] = value; } }
+    public GameTile West { get { return _neighbors[(int)Direction.West]; } set { _neighbors[(int)Direction.West] = value; } }
     GameTile _nextOnPath;
     int _distance;
     public bool HasPath => _distance != int.MaxValue;
 
+    
+    /* -------------------------------------------------------------- */
+
     private void Awake()
     {
-        _neighbors = new GameTile[(int)Direction.west+1];
+        _neighbors = new GameTile[(int)Direction.West + 1];
     }
-
 
     public void MakeAboveNeighbors(
         GameTile above
-    ){
+    )
+    {
         Debug.Assert(
             this.North == null && above.South == null, "Redefined neighbors!"
         );
@@ -45,7 +45,8 @@ public class GameTile : MonoBehaviour
         left.East = this;
     }
 
-    public void CleanPath() { 
+    public void CleanPath()
+    {
         _distance = int.MaxValue;
         _nextOnPath = null;
     }
@@ -55,7 +56,5 @@ public class GameTile : MonoBehaviour
         _distance = 0;
         _nextOnPath = null;
     }
-
-
-
+    
 }
