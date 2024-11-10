@@ -21,7 +21,7 @@ public static class MapGenerator
     // Método abstrato para gerar a topologia do mapa
     private static IEnumerator GenerateTopology() {
         Debug.Log("Generating Topology...");
-        _board.Initialize(_size);
+        yield return _board.Initialize(_size);
 
         yield return null;
     }

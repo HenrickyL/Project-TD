@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -22,7 +23,7 @@ public class GameBoard : MonoBehaviour
         } 
     }
 
-    public void Initialize(Vector2Int size)
+    public IEnumerator Initialize(Vector2Int size)
     {
         this._size = size;
         _ground.localScale = new Vector3(size.x, size.y, 1f);
@@ -37,7 +38,7 @@ public class GameBoard : MonoBehaviour
             }
         }
 
-        TileSearch.FindPaths(_tiles);
+        yield return TileSearch.FindPaths(_tiles);
     }
 
     private void CreateTile(int x, int y, int i) {

@@ -27,13 +27,12 @@ public class GameTile : MonoBehaviour
     public GameTile GrowPathTo(GameTile neighbor)
     {
         Debug.Assert(HasPath, "No path!");
-        if (neighbor == null || neighbor.HasPath)
-        {
-            return null;
-        }
+        //if (neighbor == null || neighbor.HasPath)
+        //{
+        //    return null;
+        //}
         neighbor._distance = _distance + 1;
         neighbor._nextOnPath = this;
-        neighbor.SetEnableArrow(true);
         return neighbor;
     }
 
