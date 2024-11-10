@@ -18,6 +18,7 @@ public class TileArrow : MonoBehaviour
     {
         transform.localRotation = Quaternion.Euler(90, 0, Angle);
         arrowRenderer = GetComponent<Renderer>();
+        ResetMaterial();
     }
 
     private void Update()
@@ -51,6 +52,10 @@ public class TileArrow : MonoBehaviour
 
     public void SetActive(bool value) { 
         isActive = value;
+        ResetMaterial();
+    }
+
+    private void ResetMaterial() {
         Material currentMaterial = isActive ? GameController.ArrowMaterial : GameController.ArrowDisableMaterial;
         arrowRenderer.material = currentMaterial;
     }

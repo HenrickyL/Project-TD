@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -37,6 +36,8 @@ public class GameBoard : MonoBehaviour
                 CreateTile(x, y, i);
             }
         }
+
+        TileSearch.FindPaths(_tiles);
     }
 
     private void CreateTile(int x, int y, int i) {

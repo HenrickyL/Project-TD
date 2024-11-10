@@ -7,6 +7,8 @@ public class GameTile : MonoBehaviour
 
     private GameTile[] _neighbors;
 
+    public GameTile[] Neighbors { get { return _neighbors; } }
+
     public GameTile North { get { return _neighbors[(int)Direction.North]; } set { _neighbors[(int)Direction.North] = value; } }
     public GameTile East { get { return _neighbors[(int)Direction.East]; } set { _neighbors[(int)Direction.East] = value; } }
     public GameTile South { get { return _neighbors[(int)Direction.South]; } set { _neighbors[(int)Direction.South] = value; } }
@@ -22,6 +24,21 @@ public class GameTile : MonoBehaviour
     {
         _neighbors = new GameTile[(int)Direction.West + 1];
     }
+    public GameTile GrowPathTo(GameTile neighbor)
+    {
+        Debug.Assert(HasPath, "No path!");
+        if (neighbor == null || neighbor.HasPath)
+        {
+            return null;
+        }
+        neighbor._distance = _distance + 1;
+        neighbor._nextOnPath = this;
+        neighbor.SetEnableArrow(true);
+        return neighbor;
+    }
+
+    /* -------------------------------------------------------------- */
+
 
     public void MakeAboveNeighbors(
         GameTile above
@@ -45,10 +62,11 @@ public class GameTile : MonoBehaviour
         left.East = this;
     }
 
-    public void CleanPath()
+    public void ClearPath()
     {
         _distance = int.MaxValue;
         _nextOnPath = null;
+        _arrow.SetActive( false );
     }
 
     public void BecomeDestination()
@@ -56,5 +74,24 @@ public class GameTile : MonoBehaviour
         _distance = 0;
         _nextOnPath = null;
     }
-    
+
+
+    public void ShowPath() {
+        if (_distance == 0)
+        {
+            _arrow.gameObject.SetActive(false);
+            return;
+        }
+
+        for (int dir = (int)Direction.North; dir <= (int)Direction.West; dir++) {
+            GameTile tile = _neighbors[dir];
+            if (_nextOnPath == tile) {
+                _arrow.RotateTo((Direction)dir);
+            }
+        }
+    }
+
+    public void SetEnableArrow(bool value) { 
+        _arrow.SetActive(value);
+    }
 }
