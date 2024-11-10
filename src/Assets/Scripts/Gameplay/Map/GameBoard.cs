@@ -1,15 +1,14 @@
+using System.Drawing;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
 {
     [SerializeField]
     Transform _ground = default;
-
     [SerializeField]
     GameTile _tilePrefab = default;
 
-
-    GameTile[] _tiles;
+    private GameTile[] _tiles;
 
     Vector2Int _size;
 
@@ -47,6 +46,15 @@ public class GameBoard : MonoBehaviour
             0f,
             y- Offset.y
         );
+
+        if (x > 0)
+        {
+            tile.MakeLeftNeighbors(_tiles[i - 1]);
+        }
+        if (y > 0)
+        {
+            tile.MakeAboveNeighbors( _tiles[i - _size.x]);
+        }
     }
 
     private void OnValidate()
