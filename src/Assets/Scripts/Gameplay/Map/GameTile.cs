@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class GameTile : MonoBehaviour
 {
@@ -12,12 +14,15 @@ public class GameTile : MonoBehaviour
     public GameTile South { get { return _neighbors[(int)Direction.south]; } set { _neighbors[(int)Direction.south] = value; } }
     public GameTile West { get { return _neighbors[(int)Direction.west]; } set { _neighbors[(int)Direction.west] = value; } }
 
-
+    GameTile _nextOnPath;
+    int _distance;
+    public bool HasPath => _distance != int.MaxValue;
 
     private void Awake()
     {
         _neighbors = new GameTile[(int)Direction.west+1];
     }
+
 
     public void MakeAboveNeighbors(
         GameTile above
@@ -40,6 +45,16 @@ public class GameTile : MonoBehaviour
         left.East = this;
     }
 
+    public void CleanPath() { 
+        _distance = int.MaxValue;
+        _nextOnPath = null;
+    }
+
+    public void BecomeDestination()
+    {
+        _distance = 0;
+        _nextOnPath = null;
+    }
 
 
 
