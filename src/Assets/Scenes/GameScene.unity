@@ -260,6 +260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardSize: {x: 11, y: 11}
   board: {fileID: 1476209619}
+  _arrowEnable: {fileID: 2100000, guid: 7cc096686626d994eb8f5b7847c94c87, type: 2}
+  _arrowDisable: {fileID: 2100000, guid: 0e469bcfcdf74814aa09775c3f868079, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
