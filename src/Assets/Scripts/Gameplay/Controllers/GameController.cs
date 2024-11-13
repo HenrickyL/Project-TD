@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
     public void InitializeGame()
     {
         StartCoroutine(MapGenerator.GenerateMap(board, boardSize));
-        //MapGenerator.GenerateMap(board, boardSize);
+        //MapGenerator.Generate(board, boardSize);
 
 
         SetupGameElements();  // Configura elementos adicionais, como defesas e inimigos

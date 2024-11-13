@@ -20,7 +20,7 @@ public class GameBoard : MonoBehaviour
                 (_size.x - 1) * 0.5f, (_size.y - 1) * 0.5f
             );
             return _offset;
-        } 
+        }
     }
 
     public IEnumerator Initialize(Vector2Int size)
@@ -30,7 +30,7 @@ public class GameBoard : MonoBehaviour
 
         _tiles = new GameTile[size.x * size.y];
 
-        for (int i=0, y = 0; y < size.y; y++)
+        for (int i = 0, y = 0; y < size.y; y++)
         {
             for (int x = 0; x < size.x; x++, i++)
             {
@@ -38,16 +38,21 @@ public class GameBoard : MonoBehaviour
             }
         }
 
-        yield return TileSearch.FindPaths(_tiles);
+        yield return TileSearch.FindPathsEnumerator(_tiles);
+
+        //Perikan.IA.Node<GameTile> node = Perikan.IA.SearchMethods.BreadthFirstSearch<GameTile>(_tiles[0], _tiles.Last());
+        //Debug.Log(">>>>>>>>>>>>>>>> Path");
+        //StartCoroutine(TileSearch.FindPath(node));
     }
 
     private void CreateTile(int x, int y, int i) {
         GameTile tile = _tiles[i] = Instantiate(_tilePrefab);
+        tile.SetPosition(new Vector2Int(x, y));
         tile.transform.SetParent(transform, false);
         tile.transform.localPosition = new Vector3(
-            x - Offset.x, 
+            x - Offset.x,
             0f,
-            y- Offset.y
+            y - Offset.y
         );
 
         if (x > 0)
@@ -56,7 +61,7 @@ public class GameBoard : MonoBehaviour
         }
         if (y > 0)
         {
-            tile.MakeAboveNeighbors( _tiles[i - _size.x]);
+            tile.MakeBelowNeighbors(_tiles[i - _size.x]);
         }
     }
 
@@ -76,7 +81,9 @@ public class GameBoard : MonoBehaviour
         if (x < 0 || x > _size.x || y < 0 || y >= _size.y)
             throw new ArgumentOutOfRangeException("Invalid Coordinates");
 
-        int index = x+y*_size.x;
+        int index = x + y * _size.x;
         return _tiles[index];
     }
+
+    public void SetEnable(bool value) { gameObject.SetActive(value); }
 } 

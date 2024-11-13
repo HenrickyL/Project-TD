@@ -16,7 +16,7 @@ public class TileArrow : MonoBehaviour
 
     private void Awake()
     {
-        transform.localRotation = Quaternion.Euler(90, 0, Angle);
+        transform.localRotation = Quaternion.Euler(90, Angle,0);
         arrowRenderer = GetComponent<Renderer>();
         ResetMaterial();
     }
@@ -38,7 +38,7 @@ public class TileArrow : MonoBehaviour
     private void ResetRotation()
     {
         initialRotation = transform.localRotation;
-        targetRotation = Quaternion.Euler(90, 0, Angle);
+        targetRotation = Quaternion.Euler(90, Angle, 0);
         rotationProgress = 0.0f;
     }
 
