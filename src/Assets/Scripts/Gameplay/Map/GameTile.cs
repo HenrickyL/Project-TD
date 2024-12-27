@@ -8,7 +8,13 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     [SerializeField]
     private GameTile[] _neighbors;
 
-    public GameTile[] Neighbors { get { return _neighbors; } }
+    public GameTile[] Neighbors { 
+        get {
+            return IsAlternative ?
+                new GameTile[] { North, South, East, West } :
+                new GameTile[] { West, East, South, North };
+        }
+    }
 
     public GameTile North { get { return _neighbors[(int)Direction.North]; } set { _neighbors[(int)Direction.North] = value; } }
     public GameTile East { get { return _neighbors[(int)Direction.East]; } set { _neighbors[(int)Direction.East] = value; } }
@@ -23,8 +29,9 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     public bool HasPath => _distance != int.MaxValue;
 
     private Vector2Int _position;
+    public bool IsAlternative { get; set; }
 
-    
+
     /* -------------------------------------------------------------- */
 
     private void Awake()
