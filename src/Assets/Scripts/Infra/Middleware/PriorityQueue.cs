@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace CustomCollections {
+namespace Perikan.CustomCollections
+{
     public class PriorityQueue<T> : IEnumerable<(T item, float priority)>
     {
         private List<(T item, float priority)> _heap = new List<(T item, float priority)>();
