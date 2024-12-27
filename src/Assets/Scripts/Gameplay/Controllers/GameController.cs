@@ -35,12 +35,17 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void SaveBoard() {
+        DontDestroyOnLoad(board);
+    }
+
     // Inicializa o jogo e gera o mapa
     public void InitializeGame()
     {
+
         StartCoroutine(MapGenerator.GenerateMap(board, boardSize));
         //MapGenerator.Generate(board, boardSize);
-
+        SaveBoard();
 
         SetupGameElements();  // Configura elementos adicionais, como defesas e inimigos
 

@@ -25,6 +25,7 @@ public class GameBoard : MonoBehaviour
 
     public IEnumerator Initialize(Vector2Int size)
     {
+        //Clear();
         this._size = size;
         _ground.localScale = new Vector3(size.x, size.y, 1f);
 
@@ -47,6 +48,12 @@ public class GameBoard : MonoBehaviour
 
     private void CreateTile(int x, int y, int i) {
         GameTile tile = _tiles[i] = Instantiate(_tilePrefab);
+        tile.IsAlternative = (x & 1) == 0;
+        if ((y & 1) == 0)
+        {
+            tile.IsAlternative = !tile.IsAlternative;
+        }
+
         tile.SetPosition(new Vector2Int(x, y));
         tile.transform.SetParent(transform, false);
         tile.transform.localPosition = new Vector3(
@@ -86,4 +93,13 @@ public class GameBoard : MonoBehaviour
     }
 
     public void SetEnable(bool value) { gameObject.SetActive(value); }
+
+    public void Clear() {
+        if(_tiles.Length > 0)
+        {
+            foreach (GameTile tile in _tiles) {
+                if(tile != null) Destroy(tile);
+            }
+        }
+    }
 } 

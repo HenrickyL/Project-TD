@@ -3,7 +3,11 @@ using UnityEngine;
 public class GameState : IGameState
 {
     private GameController gameController;
-    private static bool _onInitilize = false;
+    private bool _onInitilize = false;
+
+    public void Clear() {
+        _onInitilize = false;
+    }
 
     private void InitializeState() {
         if (!_onInitilize) { 
