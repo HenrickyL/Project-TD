@@ -74,8 +74,6 @@ public static class LocalizationManager
         string currentLangCode = currentLanguage.GetLanguageInfo().Code;
         string filePath = Path.Combine(Application.streamingAssetsPath, "Localization", currentLangCode, category + ".json");
 
-        Debug.Log($"Loading localization file from: {filePath}");
-
         if (File.Exists(filePath))
         {
             string dataAsJson = File.ReadAllText(filePath);
@@ -87,7 +85,7 @@ public static class LocalizationManager
             // Substitui a categoria existente no cache
             localizedData.Add(category, localizedText);
 
-            Debug.Log($"Loaded Localization {category} in {currentLangCode}");
+            //Debug.Log($"Loaded Localization {category} in {currentLangCode}");
         }
         else
         {

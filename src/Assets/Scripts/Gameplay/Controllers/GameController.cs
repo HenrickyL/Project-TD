@@ -4,8 +4,27 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
 
+    [SerializeField]
+    Vector2Int boardSize = new Vector2Int(11, 11);
+    [SerializeField]
+    GameBoard board = default;
+
+    [SerializeField]
+    Material _arrowEnable = default;
+
+    [SerializeField]
+    Material _arrowDisable = default;
+
+    public static Material ArrowMaterial { get { return Instance._arrowEnable; } }
+    public static Material ArrowDisableMaterial { get { return Instance._arrowDisable; } }
+
+
     private void Awake()
     {
+        AwakeSingleton();
+    }
+    
+    private void AwakeSingleton() {
         if (Instance == null)
         {
             Instance = this;
@@ -16,15 +35,21 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void SaveBoard() {
+        DontDestroyOnLoad(board);
+    }
+
     // Inicializa o jogo e gera o mapa
     public void InitializeGame()
     {
-        StartCoroutine(MapGenerator.GenerateMap());
+
+        StartCoroutine(MapGenerator.GenerateMap(board, boardSize));
+        //MapGenerator.Generate(board, boardSize);
+        SaveBoard();
 
         SetupGameElements();  // Configura elementos adicionais, como defesas e inimigos
 
         Debug.Log("GameController Initalized");
-
     }
 
     // Configura outros elementos do jogo
