@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Drawing;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -94,9 +95,15 @@ public class GameBoard : MonoBehaviour
 
     public void SetEnable(bool value) { gameObject.SetActive(value); }
 
-    public GameTile GetTile(Ray ray) { 
-
-
+    public GameTile GetTile(Ray ray) {
+        if (Physics.Raycast(ray, out RaycastHit hit)) {
+            int x = (int)(hit.point.x + _size.x * 0.5f);
+            int y = (int)(hit.point.z + _size.y * 0.5f);
+            if (x >= 0 && x < _size.x && y >= 0 && y < _size.y)
+            {
+                return _tiles[x + y * _size.x];
+            }
+        }
         return null;
     }
 
