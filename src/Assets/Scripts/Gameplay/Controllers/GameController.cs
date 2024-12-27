@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     Vector2Int boardSize = new Vector2Int(11, 11);
+    
     [SerializeField]
     GameBoard board = default;
 
@@ -14,9 +15,13 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     Material _arrowDisable = default;
-
     public static Material ArrowMaterial { get { return Instance._arrowEnable; } }
     public static Material ArrowDisableMaterial { get { return Instance._arrowDisable; } }
+
+    [SerializeField]
+    GameTileContentFactory tileContentFactory = default;
+
+
 
 
     private void Awake()
