@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameTileContentFactory tileContentFactory = default;
 
-
+    Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
 
     private void Awake()
@@ -69,5 +69,21 @@ public class GameController : MonoBehaviour
     {
         // Atualizações do loop principal do jogo
         // Exemplo: Atualizar a lógica dos inimigos e defesas
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleTouch();
+        }
     }
+
+    /* ----------------------------------------------------- */
+    private void HandleTouch()
+    {
+        GameTile tile = board.GetTile(TouchRay);
+        if (tile != null)
+        {
+            tile.Content = tileContentFactory.Get(GameTileContentType.Destination);
+            tile.Content.transform.Translate(new Vector3(0, 0.01f));
+        }
+    }
+
 }

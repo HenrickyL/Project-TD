@@ -8,6 +8,23 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     [SerializeField]
     private GameTile[] _neighbors;
 
+    GameTileContent _content;
+
+    public GameTileContent Content
+    {
+        get => _content;
+        set
+        {
+            Debug.Assert(value != null, "Null assigned to content!");
+            if (_content != null)
+            {
+                _content.Recycle();
+            }
+            _content = value;
+            _content.transform.localPosition = transform.localPosition;
+        }
+    }
+
     public GameTile[] Neighbors { 
         get {
             return IsAlternative ?

@@ -30,6 +30,9 @@ public class GameTileContentFactory : ScriptableObject
 
     public GameTileContent Get(GameTileContentType type)
     {
+        Vector3 a = destinationPrefab.transform.position;
+        Vector3 b = emptyPrefab.transform.position;
+
         switch (type)
         {
             case GameTileContentType.Destination: return Get(destinationPrefab);
