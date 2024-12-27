@@ -79,18 +79,15 @@ public static class TileSearch
             GameTile tile = searchFrontier.Dequeue();
             searchExplored.Add(tile);
 
-            if (tile == goal)
-            {
-                goal.ShowPath();
-                goal.SetEnableArrow(true);
-
-                yield break;
-            }
-
-
             tile.ShowPath();
             tile.SetEnableArrow(true);
             yield return null;
+
+            if (tile == goal && !(searchFrontier.Count > 0))
+            {
+                yield break;
+            }
+            
             yield return null;
 
             foreach (GameTile neighbor in tile.Neighbors)
