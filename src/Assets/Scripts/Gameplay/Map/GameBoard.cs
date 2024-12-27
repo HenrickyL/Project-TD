@@ -94,6 +94,12 @@ public class GameBoard : MonoBehaviour
 
     public void SetEnable(bool value) { gameObject.SetActive(value); }
 
+    public GameTile GetTile(Ray ray) { 
+
+
+        return null;
+    }
+
     public void Clear() {
         if(_tiles.Length > 0)
         {
