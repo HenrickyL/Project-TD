@@ -1,58 +1,111 @@
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
 using Perikan.AI;
-
+using Perikan.CustomCollections;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public static class TileSearch
 {
-    
+    //public static IEnumerator FindPathsEnumerator(GameTile[] tiles)
+    //{
+    //    PriorityQueue<Node<GameTile>> searchFrontier = new();
+    //    List<Node<GameTile>> searchExplored = new();
+    //    foreach (GameTile t in tiles)
+    //    {
+    //        t.ClearPath();
+    //    }
+    //    GameTile initial = tiles[0];
+    //    initial.BecomeDestination();
+    //    GameTile goal = tiles[tiles.Length -2];
+
+    //    searchFrontier.Enqueue(new Node<GameTile>(initial, 0), 0);
+
+    //    int cost = 0;
+    //    while (searchFrontier.Count > 0 && cost < 2000)
+    //    {
+    //        cost++;
+    //        Node<GameTile> tile = searchFrontier.Dequeue();
+    //        searchExplored.Add(tile);
+
+    //        if (tile.State == goal) {
+    //            yield break;
+    //        }
+
+
+    //        tile.State.ShowPath();
+    //        tile.State.SetEnableArrow(true);
+    //        yield return null;
+    //        yield return null;
+
+    //        foreach (GameTile neighbor in tile.State.Neighbors)
+    //        {
+    //            if (neighbor != null)
+    //            {
+    //                GameTile childTile = tile.State.GrowPathTo(neighbor);
+    //                float fCost =  cost+childTile.DistanceTo(goal);
+    //                Debug.Log($"{cost}: {fCost}");
+    //                Node<GameTile> children = new Node<GameTile>(childTile, fCost, tile);
+    //                if (children != null &&
+    //                    (!ContainsInExploreds(searchExplored, children) || !ContainsInFrontier(searchFrontier, children))) { 
+    //                    searchFrontier.Enqueue(children, children.Value);
+    //                }else 
+    //                    searchFrontier.TryReplace(children, children.Value);
+    //            }
+    //        }
+    //    }
+    //    yield break;
+    //}
 
     public static IEnumerator FindPathsEnumerator(GameTile[] tiles)
     {
-        CustomCollections.PriorityQueue<Node<GameTile>> searchFrontier = new();
-        List<Node<GameTile>> searchExplored = new();
+        Queue<GameTile> searchFrontier = new();
+        List<GameTile> searchExplored = new();
         foreach (GameTile t in tiles)
         {
             t.ClearPath();
         }
-        GameTile initial = tiles[0];
+        GameTile initial = tiles[tiles.Length/2];
         initial.BecomeDestination();
-        GameTile goal = tiles.Last();
+        GameTile goal = tiles.Last();//[tiles.Length - 2];
 
+        searchFrontier.Enqueue(initial);
+        //searchFrontier.Enqueue(new Node<GameTile>(initial, 0), 0);
 
-        searchFrontier.Enqueue(new Node<GameTile>(initial, 0), 0);
 
         int cost = 0;
         while (searchFrontier.Count > 0 && cost < 2000)
         {
             cost++;
-            Node<GameTile> tile = searchFrontier.Dequeue();
+            GameTile tile = searchFrontier.Dequeue();
             searchExplored.Add(tile);
 
-            if (tile.State == goal) {
+            if (tile == goal)
+            {
+                goal.ShowPath();
+                goal.SetEnableArrow(true);
+
                 yield break;
             }
 
 
-            tile.State.ShowPath();
-            tile.State.SetEnableArrow(true);
+            tile.ShowPath();
+            tile.SetEnableArrow(true);
             yield return null;
             yield return null;
 
-            foreach (GameTile neighbor in tile.State.Neighbors)
+            foreach (GameTile neighbor in tile.Neighbors)
             {
                 if (neighbor != null)
                 {
-                    GameTile childTile = tile.State.GrowPathTo(neighbor);
-                    float fCost =  childTile.DistanceTo(goal);
-                    Debug.Log($"{cost}: {fCost}");
-                    Node<GameTile> children = new Node<GameTile>(childTile, fCost, tile);
-                    if (children != null &&
-                        (!ContainsInExploreds(searchExplored, children) || !ContainsInFrontier(searchFrontier, children))) { 
-                        searchFrontier.Enqueue(children, children.Value);
-                    }else 
-                        searchFrontier.TryReplace(children, children.Value);
+                    GameTile childTile = tile.GrowPathTo(neighbor);
+                    if (childTile != null &&
+                        (!searchExplored.Contains(childTile) && !searchFrontier.Contains(childTile)))
+                    {
+                        //searchFrontier.Enqueue(children, children.Value);
+                        searchFrontier.Enqueue(childTile);
+                    }
+                    //else
+                    //    searchFrontier.TryReplace(children, children.Value);
                 }
             }
         }
@@ -71,7 +124,7 @@ public static class TileSearch
         return false;
     }
 
-    private static bool ContainsInFrontier(CustomCollections.PriorityQueue<Node<GameTile>> searchFrontier, Node<GameTile> item)
+    private static bool ContainsInFrontier(PriorityQueue<Node<GameTile>> searchFrontier, Node<GameTile> item)
     {
         foreach (var (state, priority) in searchFrontier)
         {
