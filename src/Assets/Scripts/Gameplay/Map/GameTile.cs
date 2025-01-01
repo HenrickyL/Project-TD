@@ -25,7 +25,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         }
     }
 
-    public GameTile[] Neighbors { 
+    public GameTile[] Neighbors {
         get {
             return IsAlternative ?
                 new GameTile[] { North, South, East, West } :
@@ -94,7 +94,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     {
         _distance = int.MaxValue;
         _nextOnPath = null;
-        _arrow.SetActive( false );
+        _arrow.SetActive(false);
     }
 
     public void BecomeDestination()
@@ -103,6 +103,9 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         _nextOnPath = null;
     }
 
+    public GameTile Next() {
+        return _nextOnPath;
+    }
 
     public void ShowPath() {
         if (_distance == 0)
