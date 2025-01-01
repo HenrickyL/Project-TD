@@ -129,10 +129,9 @@ public static class TileSearch
             {
                 if (neighbor != null)
                 {
-                    GameTile childTile = tile.GrowPathTo(neighbor);
-                    if (childTile != null &&
-                        (!searchExplored.Contains(childTile) && !searchFrontier.Contains(childTile)))
+                    if (!searchExplored.Contains(neighbor) && !searchFrontier.Contains(neighbor))
                     {
+                        GameTile childTile = tile.GrowPathTo(neighbor);
                         //searchFrontier.Enqueue(children, children.Value);
                         searchFrontier.Enqueue(childTile);
                     }
