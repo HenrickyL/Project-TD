@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "GameTileContentFactory", menuName = "Factory/GameTileContentFactory")]
 public class GameTileContentFactory : ScriptableObject
 {
     private Scene _contentScene;
