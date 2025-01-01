@@ -110,7 +110,7 @@ public static class TileSearch
 
 
         int cost = 0;
-        while (searchFrontier.Count > 0)
+        while (searchFrontier.Count > 0 && cost < 3500)
         {
             cost++;
             GameTile tile = searchFrontier.Dequeue();
