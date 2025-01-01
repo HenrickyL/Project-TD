@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Drawing;
+using System.Linq;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -9,6 +10,8 @@ public class GameBoard : MonoBehaviour
     Transform _ground = default;
     [SerializeField]
     GameTile _tilePrefab = default;
+
+    private GameTileContentFactory _contentFactory;
 
     private GameTile[] _tiles;
 
@@ -24,10 +27,11 @@ public class GameBoard : MonoBehaviour
         }
     }
 
-    public IEnumerator Initialize(Vector2Int size)
+    public void Initialize(Vector2Int size, GameTileContentFactory contentFactory)
     {
         //Clear();
         this._size = size;
+        this._contentFactory = contentFactory;
         _ground.localScale = new Vector3(size.x, size.y, 1f);
 
         _tiles = new GameTile[size.x * size.y];
@@ -36,18 +40,20 @@ public class GameBoard : MonoBehaviour
         {
             for (int x = 0; x < size.x; x++, i++)
             {
-                CreateTile(x, y, i);
+                GameTile tile = CreateTile(x, y, i);
+                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             }
         }
 
-        yield return TileSearch.FindPathsEnumerator(_tiles);
+        //yield return TileSearch.FindPathsEnumerator(_tiles);
+        //yield return ToggleDestination(_tiles[_tiles.Length / 2]);
 
         //Perikan.IA.Node<GameTile> node = Perikan.IA.SearchMethods.BreadthFirstSearch<GameTile>(_tiles[0], _tiles.Last());
         //Debug.Log(">>>>>>>>>>>>>>>> Path");
         //StartCoroutine(TileSearch.FindPath(node));
     }
 
-    private void CreateTile(int x, int y, int i) {
+    private GameTile CreateTile(int x, int y, int i) {
         GameTile tile = _tiles[i] = Instantiate(_tilePrefab);
         tile.IsAlternative = (x & 1) == 0;
         if ((y & 1) == 0)
@@ -71,6 +77,7 @@ public class GameBoard : MonoBehaviour
         {
             tile.MakeBelowNeighbors(_tiles[i - _size.x]);
         }
+        return tile;
     }
 
     private void OnValidate()
@@ -112,6 +119,24 @@ public class GameBoard : MonoBehaviour
         {
             foreach (GameTile tile in _tiles) {
                 if(tile != null) Destroy(tile);
+            }
+        }
+    }
+
+
+    public void ToggleDestination(GameTile tile) {
+        if (tile.Content.Type == GameTileContentType.Destination)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+           TileSearch.FindPath(_tiles);
+        }
+        else
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Destination);
+            tile.Content.transform.Translate(new Vector3(0, 0.01f));
+            if (!(TileSearch.FindAllDestinations(_tiles).Count == 0))
+            {
+                TileSearch.FindPath(_tiles);
             }
         }
     }

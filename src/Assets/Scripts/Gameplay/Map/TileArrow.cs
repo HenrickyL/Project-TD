@@ -25,7 +25,7 @@ public class TileArrow : MonoBehaviour
     {
         if (rotationProgress < 1)
         {
-            rotationProgress += Time.deltaTime * 0.25f; // Interpolação suave da rotação
+            rotationProgress += Time.deltaTime * 0.5f; // Interpolação suave da rotação
             transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, rotationProgress);
         }
     }

@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour
     public void InitializeGame()
     {
 
-        StartCoroutine(MapGenerator.GenerateMap(board, boardSize));
+        StartCoroutine(MapGenerator.GenerateMap(board, tileContentFactory, boardSize));
         //MapGenerator.Generate(board, boardSize);
         SaveBoard();
 
@@ -79,10 +79,12 @@ public class GameController : MonoBehaviour
     private void HandleTouch()
     {
         GameTile tile = board.GetTile(TouchRay);
-        if (tile != null)
+        if (tile != null && tile.Content.Type != GameTileContentType.Destination)
         {
-            tile.Content = tileContentFactory.Get(GameTileContentType.Destination);
-            tile.Content.transform.Translate(new Vector3(0, 0.01f));
+            //tile.Content = tileContentFactory.Get(GameTileContentType.Destination);
+            //StartCoroutine(
+            board.ToggleDestination(tile);
+                //);
         }
     }
 
