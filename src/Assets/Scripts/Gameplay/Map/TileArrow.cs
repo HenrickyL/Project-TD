@@ -12,6 +12,7 @@ public class TileArrow : MonoBehaviour
     private float rotationProgress;
     public float Angle { get { return _direction.ToAngle(); } }
     private bool _isActive = false;
+    private bool _isAnimating = false; // Toggle to remove animation
 
 
     private void Awake()
@@ -23,7 +24,7 @@ public class TileArrow : MonoBehaviour
 
     private void Update()
     {
-        if (rotationProgress < 1)
+        if (_isAnimating && rotationProgress < 1)
         {
             rotationProgress += Time.deltaTime * 0.5f; // Interpolação suave da rotação
             transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, rotationProgress);
@@ -37,9 +38,15 @@ public class TileArrow : MonoBehaviour
 
     private void ResetRotation()
     {
-        initialRotation = transform.localRotation;
         targetRotation = Quaternion.Euler(90, Angle, 0);
-        rotationProgress = 0.0f;
+        if (_isAnimating)
+        {
+            initialRotation = transform.localRotation;
+            rotationProgress = 0.0f;
+        }
+        else {
+            transform.localRotation = targetRotation;
+        }
     }
 
     /* ---------------------------------------------- */
