@@ -80,8 +80,13 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.V)){
-             board.ShowPaths = !board.ShowPaths;
+        if (Input.GetKeyDown(KeyCode.G)){
+             board.ShowGrid = !board.ShowGrid;
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            board.ShowPaths = !board.ShowPaths;
         }
     }
 

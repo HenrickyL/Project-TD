@@ -28,13 +28,14 @@ public static class MapGenerator
 
         _board.SetEnable(true);
         _board.Initialize(_size, _tileContentFactory);
+        _board.ShowGrid = true;
     }
 
     // Método abstrato para gerar a topologia do mapa
     private static IEnumerator GenerateTopology() {
         Debug.Log("Generating Topology...");
-       _board.Initialize(_size, _tileContentFactory);
-
+        _board.Initialize(_size, _tileContentFactory);
+        _board.ShowGrid = true;
         yield return null;
     }
 

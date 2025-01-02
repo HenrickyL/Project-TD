@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -7,6 +8,8 @@ public class GameBoard : MonoBehaviour
     Transform _ground = default;
     [SerializeField]
     GameTile _tilePrefab = default;
+    [SerializeField]
+    Texture2D _gridTexture = default;
 
     private GameTileContentFactory _contentFactory;
 
@@ -17,7 +20,28 @@ public class GameBoard : MonoBehaviour
     Vector2 _offset = default;
 
 
-    private bool _showPaths = true;
+    private bool _showPaths = false;
+    private bool _showGrid = true;
+
+    public bool ShowGrid
+    {
+        get => _showGrid;
+        set
+        {
+            _showGrid = value;
+            Material m = _ground.GetComponent<MeshRenderer>().material;
+            if (_showGrid)
+            {
+                m.mainTexture = _gridTexture;
+                //m.SetTexture("_MainTex", _gridTexture);
+                m.SetTextureScale("_BaseMap", _size);
+            }
+            else
+            {
+                m.mainTexture = null;
+            }
+        }
+    }
 
     public bool ShowPaths
     {
