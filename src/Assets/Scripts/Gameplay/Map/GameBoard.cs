@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Drawing;
-using System.Linq;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -127,11 +124,18 @@ public class GameBoard : MonoBehaviour
     public void ToggleDestination(GameTile tile) {
         if (tile.Content.Type == GameTileContentType.Destination)
         {
-            if (!TileSearch.ExistDetination(_tiles))
+            GameTileContent aux = tile.Content;
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+
+            if (TileSearch.ExistDetination(_tiles))
             {
+                Destroy(aux);
                 tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-                TileSearch.FindPath(_tiles);
             }
+            else {
+                tile.Content = aux;
+            }
+            TileSearch.FindPath(_tiles);
         }
         else if(tile.Content.Type == GameTileContentType.Empty)
         {
