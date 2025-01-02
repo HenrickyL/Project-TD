@@ -57,7 +57,7 @@ public static class TileSearch
 
     public static bool ExistDetination(GameTile[] tiles) {
         List<GameTile> destinations = FindAllDestinations(tiles);
-        return destinations.Count == 0;
+        return destinations.Count > 0;
     }
 
     /// TODO: Verify if path is correct
@@ -100,12 +100,11 @@ public static class TileSearch
 
 
         List<GameTile> destinations = FindAllDestinations(tiles);
+        if (destinations.Count == 0) return false;
         foreach (GameTile tile in destinations)
         {
             searchFrontier.Enqueue(tile);
         }
-
-        if (destinations.Count == 0) return false;
 
         //GameTile initial = tiles[tiles.Length/2];
         //initial.BecomeDestination();

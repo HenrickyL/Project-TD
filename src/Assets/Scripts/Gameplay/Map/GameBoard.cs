@@ -127,14 +127,13 @@ public class GameBoard : MonoBehaviour
     public void ToggleDestination(GameTile tile) {
         if (tile.Content.Type == GameTileContentType.Destination)
         {
-            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             if (!TileSearch.ExistDetination(_tiles))
             {
-                tile.Content = _contentFactory.Get(GameTileContentType.Destination);
+                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
                 TileSearch.FindPath(_tiles);
             }
         }
-        else
+        else if(tile.Content.Type == GameTileContentType.Empty)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Destination);
             tile.Content.transform.Translate(new Vector3(0, 0.01f));
@@ -151,7 +150,7 @@ public class GameBoard : MonoBehaviour
         else if(tile.Content.Type == GameTileContentType.Empty)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Wall);
-            if (!TileSearch.ExistDetination(_tiles)) { 
+            if (!TileSearch.FindPath(_tiles)) { 
                 tile.Content = _contentFactory.Get(GameTileContentType.Empty);
                 TileSearch.FindPath(_tiles);
             }
