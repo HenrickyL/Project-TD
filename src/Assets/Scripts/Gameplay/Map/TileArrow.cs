@@ -11,7 +11,7 @@ public class TileArrow : MonoBehaviour
     private Quaternion targetRotation;
     private float rotationProgress;
     public float Angle { get { return _direction.ToAngle(); } }
-    private bool isActive = false;
+    private bool _isActive = false;
 
 
     private void Awake()
@@ -51,12 +51,12 @@ public class TileArrow : MonoBehaviour
 
 
     public void SetActive(bool value) { 
-        isActive = value;
+        _isActive = value;
         ResetMaterial();
     }
 
     private void ResetMaterial() {
-        Material currentMaterial = isActive ? GameController.ArrowMaterial : GameController.ArrowDisableMaterial;
+        Material currentMaterial = _isActive ? GameController.ArrowMaterial : GameController.ArrowDisableMaterial;
         arrowRenderer.material = currentMaterial;
     }
 }

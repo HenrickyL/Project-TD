@@ -120,9 +120,7 @@ public static class TileSearch
             GameTile tile = searchFrontier.Dequeue();
             searchExplored.Add(tile);
 
-            tile.ShowPath();
-            tile.SetEnableArrow(true);
-
+            
             //if (!(searchFrontier.Count > 0))
             //{
             //    yield return true;
@@ -135,12 +133,25 @@ public static class TileSearch
                     if (!searchExplored.Contains(neighbor) && !searchFrontier.Contains(neighbor))
                     {
                         GameTile childTile = tile.GrowPathTo(neighbor);
-                        //searchFrontier.Enqueue(children, children.Value);
-                        searchFrontier.Enqueue(childTile);
+                        if(childTile != null)
+                            searchFrontier.Enqueue(childTile);
                     }
                     //else
                     //    searchFrontier.TryReplace(children, children.Value);
                 }
+            }
+        }
+
+
+        foreach (GameTile tile in tiles){
+            if (!tile.HasPath)
+            {
+                //return false;
+                tile.SetEnableArrow(false);
+            }
+            else { 
+                tile.ShowPath();
+                tile.SetEnableArrow(true);
             }
         }
         return true;

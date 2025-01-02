@@ -10,6 +10,8 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
 
     GameTileContent _content;
 
+    public bool onWall => Content.Type == GameTileContentType.Wall;
+
     public GameTileContent Content
     {
         get => _content;
@@ -64,7 +66,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         //}
         neighbor._distance = _distance + 1;
         neighbor._nextOnPath = this;
-        return neighbor;
+        return !neighbor.onWall ? neighbor : null;
     }
 
     /* -------------------------------------------------------------- */
