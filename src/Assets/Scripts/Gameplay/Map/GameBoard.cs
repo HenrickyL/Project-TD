@@ -128,14 +128,31 @@ public class GameBoard : MonoBehaviour
         if (tile.Content.Type == GameTileContentType.Destination)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-           TileSearch.FindPath(_tiles);
+            if (!TileSearch.ExistDetination(_tiles))
+            {
+                tile.Content = _contentFactory.Get(GameTileContentType.Destination);
+                TileSearch.FindPath(_tiles);
+            }
         }
         else
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Destination);
             tile.Content.transform.Translate(new Vector3(0, 0.01f));
-            if (!(TileSearch.FindAllDestinations(_tiles).Count == 0))
-            {
+            TileSearch.FindPath(_tiles);
+        }
+    }
+
+    public void ToggleWall(GameTile tile) {
+        if (tile.Content.Type == GameTileContentType.Wall)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            TileSearch.FindPath(_tiles);
+        }
+        else if(tile.Content.Type == GameTileContentType.Empty)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Wall);
+            if (!TileSearch.ExistDetination(_tiles)) { 
+                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
                 TileSearch.FindPath(_tiles);
             }
         }

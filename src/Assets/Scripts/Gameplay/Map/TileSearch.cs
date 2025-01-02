@@ -55,8 +55,13 @@ public static class TileSearch
     //}
 
 
+    public static bool ExistDetination(GameTile[] tiles) {
+        List<GameTile> destinations = FindAllDestinations(tiles);
+        return destinations.Count == 0;
+    }
+
     /// TODO: Verify if path is correct
-    public static List<GameTile> FindAllDestinations(GameTile[] tiles) {
+    private static List<GameTile> FindAllDestinations(GameTile[] tiles) {
         List<GameTile> gameTiles = new();
         foreach (GameTile tile in tiles)
         {
@@ -75,7 +80,7 @@ public static class TileSearch
     }
 
 
-    public static void FindPath(GameTile[] tiles)
+    public static bool FindPath(GameTile[] tiles)
     {
         Queue<GameTile> searchFrontier = new();
         List<GameTile> searchExplored = new();
@@ -100,6 +105,7 @@ public static class TileSearch
             searchFrontier.Enqueue(tile);
         }
 
+        if (destinations.Count == 0) return false;
 
         //GameTile initial = tiles[tiles.Length/2];
         //initial.BecomeDestination();
@@ -107,7 +113,6 @@ public static class TileSearch
 
         //searchFrontier.Enqueue(initial);
         //searchFrontier.Enqueue(new Node<GameTile>(initial, 0), 0);
-
 
         int cost = 0;
         while (searchFrontier.Count > 0 && cost < 3500)
@@ -124,7 +129,6 @@ public static class TileSearch
             //    yield return true;
             //}
 
-
             foreach (GameTile neighbor in tile.Neighbors)
             {
                 if (neighbor != null)
@@ -140,6 +144,7 @@ public static class TileSearch
                 }
             }
         }
+        return true;
     }
 
     public static IEnumerator<bool> FindPathsEnumerator(GameTile[] tiles)
