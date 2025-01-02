@@ -8,7 +8,24 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     [SerializeField]
     private GameTile[] _neighbors;
 
-    public GameTile[] Neighbors { 
+    GameTileContent _content;
+
+    public GameTileContent Content
+    {
+        get => _content;
+        set
+        {
+            Debug.Assert(value != null, "Null assigned to content!");
+            if (_content != null)
+            {
+                _content.Recycle();
+            }
+            _content = value;
+            _content.transform.localPosition = transform.localPosition;
+        }
+    }
+
+    public GameTile[] Neighbors {
         get {
             return IsAlternative ?
                 new GameTile[] { North, South, East, West } :
@@ -77,7 +94,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     {
         _distance = int.MaxValue;
         _nextOnPath = null;
-        _arrow.SetActive( false );
+        _arrow.SetActive(false);
     }
 
     public void BecomeDestination()
@@ -86,6 +103,9 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         _nextOnPath = null;
     }
 
+    public GameTile Next() {
+        return _nextOnPath;
+    }
 
     public void ShowPath() {
         if (_distance == 0)

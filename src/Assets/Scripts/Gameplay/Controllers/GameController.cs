@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     Vector2Int boardSize = new Vector2Int(11, 11);
+    
     [SerializeField]
     GameBoard board = default;
 
@@ -14,9 +15,13 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     Material _arrowDisable = default;
-
     public static Material ArrowMaterial { get { return Instance._arrowEnable; } }
     public static Material ArrowDisableMaterial { get { return Instance._arrowDisable; } }
+
+    [SerializeField]
+    GameTileContentFactory tileContentFactory = default;
+
+    Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
 
     private void Awake()
@@ -43,7 +48,7 @@ public class GameController : MonoBehaviour
     public void InitializeGame()
     {
 
-        StartCoroutine(MapGenerator.GenerateMap(board, boardSize));
+        StartCoroutine(MapGenerator.GenerateMap(board, tileContentFactory, boardSize));
         //MapGenerator.Generate(board, boardSize);
         SaveBoard();
 
@@ -64,5 +69,23 @@ public class GameController : MonoBehaviour
     {
         // Atualizações do loop principal do jogo
         // Exemplo: Atualizar a lógica dos inimigos e defesas
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleTouch();
+        }
     }
+
+    /* ----------------------------------------------------- */
+    private void HandleTouch()
+    {
+        GameTile tile = board.GetTile(TouchRay);
+        if (tile != null && tile.Content.Type != GameTileContentType.Destination)
+        {
+            //tile.Content = tileContentFactory.Get(GameTileContentType.Destination);
+            //StartCoroutine(
+            board.ToggleDestination(tile);
+                //);
+        }
+    }
+
 }

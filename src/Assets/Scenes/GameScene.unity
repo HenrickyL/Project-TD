@@ -262,6 +262,7 @@ MonoBehaviour:
   board: {fileID: 1476209619}
   _arrowEnable: {fileID: 2100000, guid: 7cc096686626d994eb8f5b7847c94c87, type: 2}
   _arrowDisable: {fileID: 2100000, guid: 0e469bcfcdf74814aa09775c3f868079, type: 2}
+  tileContentFactory: {fileID: 11400000, guid: f9566aa00a1bfee45a0fa47ae0c70bf9, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
