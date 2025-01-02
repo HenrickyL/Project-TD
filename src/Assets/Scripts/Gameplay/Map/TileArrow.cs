@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TileArrow : MonoBehaviour
+public class TileArrow : TileElement
 {
     [SerializeField]
     private Direction _direction = Direction.North;
@@ -11,8 +11,7 @@ public class TileArrow : MonoBehaviour
     private Quaternion targetRotation;
     private float rotationProgress;
     public float Angle { get { return _direction.ToAngle(); } }
-    private bool _isActive = false;
-    private bool _isAnimating = false; // Toggle to remove animation
+    private bool _isAnimating = true; // Toggle to remove animation
 
 
     private void Awake()
@@ -33,6 +32,12 @@ public class TileArrow : MonoBehaviour
 
     private void Start()
     {
+        ResetRotation();
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
         ResetRotation();
     }
 
@@ -57,13 +62,13 @@ public class TileArrow : MonoBehaviour
     }
 
 
-    public void SetActive(bool value) { 
-        _isActive = value;
+    public override void Toggle() {
+        base.Toggle();
         ResetMaterial();
     }
 
     private void ResetMaterial() {
-        Material currentMaterial = _isActive ? GameController.ArrowMaterial : GameController.ArrowDisableMaterial;
+        Material currentMaterial = IsActive ? GameController.ArrowMaterial : GameController.ArrowDisableMaterial;
         arrowRenderer.material = currentMaterial;
     }
 }

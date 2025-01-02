@@ -124,18 +124,11 @@ public class GameBoard : MonoBehaviour
     public void ToggleDestination(GameTile tile) {
         if (tile.Content.Type == GameTileContentType.Destination)
         {
-            GameTileContent aux = tile.Content;
-            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-
             if (TileSearch.ExistDetination(_tiles))
             {
-                Destroy(aux);
                 tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+                TileSearch.FindPath(_tiles);
             }
-            else {
-                tile.Content = aux;
-            }
-            TileSearch.FindPath(_tiles);
         }
         else if(tile.Content.Type == GameTileContentType.Empty)
         {

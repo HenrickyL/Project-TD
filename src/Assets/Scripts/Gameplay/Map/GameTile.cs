@@ -1,10 +1,10 @@
-using UnityEngine;
 using Perikan.AI;
 using System;
+using UnityEngine;
 public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
 {
-    [SerializeField]
-    TileArrow _arrow;
+    //[SerializeField]
+    //TileArrow _arrow;
     [SerializeField]
     private GameTile[] _neighbors;
 
@@ -23,9 +23,12 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
                 _content.Recycle();
             }
             _content = value;
-            _content.transform.localPosition = transform.localPosition;
+            // Definir o pai da instância
+            _content.transform.SetParent(this.transform, false);
         }
     }
+
+    public TileArrow Arrow { get; set; }
 
     public GameTile[] Neighbors {
         get {
@@ -96,7 +99,10 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     {
         _distance = int.MaxValue;
         _nextOnPath = null;
-        _arrow.SetActive(false);
+        if (Content.Element.IsActive)
+        {
+            Content.Element.Toggle();
+        }
     }
 
     public void BecomeDestination()
@@ -112,21 +118,25 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     public void ShowPath() {
         if (_distance == 0)
         {
-            _arrow.gameObject.SetActive(false);
+            //_arrow.gameObject.SetActive(false);
             return;
         }
         for (int dir = (int)Direction.North; dir <= (int)Direction.West; dir++)
         {
             GameTile tile = _neighbors[dir];
-            if (_nextOnPath == tile)
+            if (_nextOnPath == tile && Content.Element is TileArrow)
             {
-                _arrow.RotateTo((Direction)dir);
+                TileArrow arrow = Content.Element as TileArrow;
+                arrow.RotateTo((Direction)dir);
             }
         }
     }
 
     public void SetEnableArrow(bool value) { 
-        _arrow.SetActive(value);
+        if(Content.Element.IsActive != value)
+        {
+            Content.Element.Toggle();
+        }
     }
 
     public float DistanceTo(GameTile tile) { 

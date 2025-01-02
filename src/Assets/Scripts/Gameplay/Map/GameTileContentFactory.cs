@@ -28,7 +28,7 @@ public class GameTileContentFactory : ScriptableObject
     {
         GameTileContent instance = Instantiate(prefab);
         instance.OriginFactory = this;
-        MoveToFactoryScene(instance.gameObject);
+        //MoveToFactoryScene(instance.gameObject);
         return instance;
     }
 
