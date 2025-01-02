@@ -3,23 +3,23 @@ using UnityEngine;
 public class GameTileContent : MonoBehaviour
 {
     [SerializeField]
-    GameTileContentType type = default;
-    public GameTileContentType Type => type;
-    GameTileContentFactory originFactory;
+    private GameTileContentType _type = default;
+    public GameTileContentType Type => _type;
 
+    private GameTileContentFactory _originFactory;
 
     public GameTileContentFactory OriginFactory
     {
-        get => originFactory;
+        get => _originFactory;
         set
         {
-            Debug.Assert(originFactory == null, "Redefined origin factory!");
-            originFactory = value;
+            Debug.Assert(_originFactory == null, "Redefined origin factory!");
+            _originFactory = value;
         }
     }
 
     public void Recycle()
     {
-        originFactory.Reclaim(this);
+        _originFactory.Reclaim(this);
     }
 }
