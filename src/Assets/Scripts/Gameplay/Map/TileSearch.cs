@@ -1,5 +1,6 @@
 using Perikan.AI;
 using Perikan.CustomCollections;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 public static class TileSearch
@@ -143,17 +144,19 @@ public static class TileSearch
         }
 
 
-        foreach (GameTile tile in tiles){
-            if (!tile.HasPath)
+            foreach (GameTile tile in tiles)
             {
-                //return false;
-                tile.SetEnableArrow(false);
+                if (!tile.HasPath)
+                {
+                    //return false;
+                    tile.Content.Element.Disable();
+                }
+                else
+                {
+                    tile.ShowPath();
+                    tile.SetEnableArrow(true);
+                }
             }
-            else { 
-                tile.ShowPath();
-                tile.SetEnableArrow(true);
-            }
-        }
         return true;
     }
 

@@ -79,6 +79,10 @@ public class GameController : MonoBehaviour
                 HandleTouch();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.V)){
+             board.ShowPaths = !board.ShowPaths;
+        }
     }
 
     /* ----------------------------------------------------- */

@@ -116,6 +116,8 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     }
 
     public void ShowPath() {
+        if (Content.Element is TileArrow)
+            Content.Element.Enable();
         if (_distance == 0)
         {
             //_arrow.gameObject.SetActive(false);
@@ -125,10 +127,16 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         {
             GameTile tile = _neighbors[dir];
             if (_nextOnPath == tile && Content.Element is TileArrow)
-            {
+                {
                 TileArrow arrow = Content.Element as TileArrow;
                 arrow.RotateTo((Direction)dir);
             }
+        }
+    }
+
+    public void HidePath() {
+        if (Content.Element is TileArrow) {
+            Content.Element.Disable();
         }
     }
 

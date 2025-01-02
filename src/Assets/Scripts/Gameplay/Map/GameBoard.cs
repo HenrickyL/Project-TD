@@ -16,6 +16,36 @@ public class GameBoard : MonoBehaviour
 
     Vector2 _offset = default;
 
+
+    private bool _showPaths = true;
+
+    public bool ShowPaths
+    {
+        get => _showPaths;
+        set
+        {
+            _showPaths = value;
+            ApplyShowPath();
+        }
+    }
+
+    private void ApplyShowPath() {
+        if (_showPaths)
+        {
+            foreach (GameTile tile in _tiles)
+            {
+                tile.ShowPath();
+            }
+        }
+        else
+        {
+            foreach (GameTile tile in _tiles)
+            {
+                tile.HidePath();
+            }
+        }
+    }
+
     public Vector2 Offset { get {
             _offset = new Vector2(
                 (_size.x - 1) * 0.5f, (_size.y - 1) * 0.5f
@@ -41,13 +71,13 @@ public class GameBoard : MonoBehaviour
                 tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             }
         }
-
-        //yield return TileSearch.FindPathsEnumerator(_tiles);
+        //yield return T ileSearch.FindPathsEnumerator(_tiles);
         //yield return ToggleDestination(_tiles[_tiles.Length / 2]);
 
         //Perikan.IA.Node<GameTile> node = Perikan.IA.SearchMethods.BreadthFirstSearch<GameTile>(_tiles[0], _tiles.Last());
         //Debug.Log(">>>>>>>>>>>>>>>> Path");
         //StartCoroutine(TileSearch.FindPath(node));
+        ApplyShowPath();
     }
 
     private GameTile CreateTile(int x, int y, int i) {
@@ -147,10 +177,12 @@ public class GameBoard : MonoBehaviour
         else if(tile.Content.Type == GameTileContentType.Empty)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Wall);
-            if (!TileSearch.FindPath(_tiles)) { 
-                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            if (TileSearch.ExistDetination(_tiles)) { 
                 TileSearch.FindPath(_tiles);
             }
+            //if (!TileSearch.FindPath(_tiles)) { 
+            //    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            //}
         }
     }
 } 
