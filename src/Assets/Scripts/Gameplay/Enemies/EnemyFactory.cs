@@ -12,4 +12,10 @@ public class EnemyFactory : AbstractGameObjectFactory
         instance.OriginFactory = this;
         return instance;
     }
+
+    public void Reclaim(Enemy enemy)
+    {
+        Debug.Assert(enemy.OriginFactory == this, "Wrong factory reclaimed!");
+        Destroy(enemy.gameObject);
+    }
 }
