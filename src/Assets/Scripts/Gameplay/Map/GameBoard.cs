@@ -181,14 +181,14 @@ public class GameBoard : MonoBehaviour
             if (TileSearch.ExistDetination(_tiles))
             {
                 tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-                TileSearch.FindPath(_tiles);
+                FindPath();
             }
         }
         else if(tile.Content.Type == GameTileContentType.Empty)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Destination);
             tile.Content.transform.Translate(new Vector3(0, 0.01f));
-            TileSearch.FindPath(_tiles);
+            FindPath();
         }
     }
 
@@ -196,17 +196,21 @@ public class GameBoard : MonoBehaviour
         if (tile.Content.Type == GameTileContentType.Wall)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-            TileSearch.FindPath(_tiles);
+            FindPath();
         }
         else if(tile.Content.Type == GameTileContentType.Empty)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Wall);
-            if (TileSearch.ExistDetination(_tiles)) { 
-                TileSearch.FindPath(_tiles);
+            if (TileSearch.ExistDetination(_tiles)) {
+                FindPath();
             }
             //if (!TileSearch.FindPath(_tiles)) { 
             //    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             //}
         }
+    }
+
+    private bool FindPath() {
+        return TileSearch.FindPath(_tiles, ShowPaths);
     }
 } 

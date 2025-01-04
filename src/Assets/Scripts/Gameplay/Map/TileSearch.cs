@@ -81,7 +81,7 @@ public static class TileSearch
     }
 
 
-    public static bool FindPath(GameTile[] tiles)
+    public static bool FindPath(GameTile[] tiles, bool onVisible = false)
     {
         Queue<GameTile> searchFrontier = new();
         List<GameTile> searchExplored = new();
@@ -143,7 +143,7 @@ public static class TileSearch
             }
         }
 
-
+        if (onVisible) { 
             foreach (GameTile tile in tiles)
             {
                 if (!tile.HasPath)
@@ -157,6 +157,7 @@ public static class TileSearch
                     tile.SetEnableArrow(true);
                 }
             }
+        }
         return true;
     }
 
