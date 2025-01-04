@@ -40,7 +40,7 @@ public static class DirectionExtensions
     }
 
 
-    public static float ToAngle(this Direction direction)
+    public static float GetAngle(this Direction direction)
     {
         return (float)direction * 90f;
     }

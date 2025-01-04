@@ -10,7 +10,7 @@ public class TileArrow : TileElement
     private Quaternion initialRotation;
     private Quaternion targetRotation;
     private float rotationProgress;
-    public float Angle { get { return _direction.ToAngle(); } }
+    public float Angle { get { return _direction.GetAngle(); } }
     private bool _isAnimating = true; // Toggle to remove animation
 
 
