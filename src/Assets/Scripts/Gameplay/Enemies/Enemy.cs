@@ -13,4 +13,9 @@ public class Enemy : MonoBehaviour
             originFactory = value;
         }
     }
+
+    public void SpawnOn(GameTile tile)
+    {
+        transform.localPosition = tile.transform.localPosition;
+    }
 }
