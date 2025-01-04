@@ -3,24 +3,39 @@ using System.Collections;
 //sealed 
 public static class MapGenerator 
 {
-    public static int mapWidth = 10;
-    public static int mapHeight = 10;
+    private static GameBoard _board = default;
+    private static Vector2Int _size;
+    private static GameTileContentFactory _tileContentFactory;
 
-    public static void Generate()
-    {
-        Debug.Log("Generating map...");
-    }
 
-    public static IEnumerator GenerateMap()
+    public static IEnumerator GenerateMap(GameBoard board, GameTileContentFactory contentFactory,  Vector2Int size)
     {
+        _board = board;
+        _size = size;
+        _board.SetEnable(true);
+        _tileContentFactory = contentFactory;
+
         yield return GenerateTopology();
         yield return PlaceObstacles();
         yield return DecorateEnvironment();
     }
 
+    public static void Generate(GameBoard board, GameTileContentFactory contentFactory, Vector2Int size)
+    {
+        _board = board;
+        _size = size;
+        _tileContentFactory = contentFactory;
+
+        _board.SetEnable(true);
+        _board.Initialize(_size, _tileContentFactory);
+        _board.ShowGrid = true;
+    }
+
     // Método abstrato para gerar a topologia do mapa
     private static IEnumerator GenerateTopology() {
         Debug.Log("Generating Topology...");
+        _board.Initialize(_size, _tileContentFactory);
+        _board.ShowGrid = true;
         yield return null;
     }
 

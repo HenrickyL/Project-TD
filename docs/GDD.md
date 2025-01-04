@@ -85,6 +85,7 @@ Timberborn: Gerenciamento de produção e recursos com blocos predefinidos e IA 
 * **Civilization:** Gerenciamento de recursos e escolhas ideológicas.
 * **Final Fantasy Tactics:** Combate baseado em grid com diferentes unidades e habilidades.
 * **Bloons TD 5:** Tower Defense tradicional com evolução e especialização de defesas.
+* **Crowntakers:** Mais simples, mas usa HEX e tem troca de cenários e abertura do mesmo. Da para andar e lutar no mesmo cenário.
 -------------------
 ## 5. Opções de Temas
 
