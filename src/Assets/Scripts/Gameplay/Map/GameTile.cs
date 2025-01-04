@@ -13,6 +13,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     public bool isWall => Content.Type == GameTileContentType.Wall;
     public bool isEmpty => Content.Type == GameTileContentType.Empty;
     public bool isDestination => Content.Type == GameTileContentType.Destination;
+    public Vector3 ExitPoint { get; private set; }
 
     public GameTile NextTileOnPath => _nextOnPath;
 
@@ -73,6 +74,8 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         //}
         neighbor._distance = _distance + 1;
         neighbor._nextOnPath = this;
+
+        neighbor.ExitPoint = (neighbor.transform.localPosition + this.transform.localPosition) * 0.5f;
         return !neighbor.isWall ? neighbor : null;
     }
 
@@ -113,6 +116,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     {
         _distance = 0;
         _nextOnPath = null;
+        ExitPoint = transform.localPosition;
     }
 
     public GameTile Next() {
