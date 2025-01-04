@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -26,6 +25,7 @@ public class Enemy : MonoBehaviour
         _tileTo = tile.NextTileOnPath;
         _positionFrom = _tileFrom.transform.localPosition;
         _positionTo = _tileFrom.ExitPoint;
+        transform.localRotation = _tileFrom.PathDirection.GetRotation();
         _progress = 0f;
     }
 
@@ -34,6 +34,11 @@ public class Enemy : MonoBehaviour
         _progress += Time.deltaTime;
         while (_progress > 1f) {
             _tileFrom = _tileTo;
+            if (_tileTo == null)
+            {
+                OriginFactory.Reclaim(this);
+                return false;
+            }
             _tileTo = _tileTo.NextTileOnPath;
             if (_tileTo == null)
             {
@@ -42,6 +47,7 @@ public class Enemy : MonoBehaviour
             }
             _positionFrom = _positionTo;
             _positionTo = _tileFrom.ExitPoint;
+            transform.localRotation = _tileFrom.PathDirection.GetRotation();
             _progress -= 1f;
         }
         transform.localPosition = Vector3.LerpUnclamped(_positionFrom, _positionTo, _progress);
