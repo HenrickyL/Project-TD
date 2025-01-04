@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     Vector2Int boardSize = new Vector2Int(11, 11);
     
     [SerializeField]
-    GameBoard board = default;
+    GameBoard _board = default;
 
     [SerializeField]
     Material _arrowEnable = default;
@@ -21,7 +21,17 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameTileContentFactory tileContentFactory = default;
 
+    [SerializeField]
+    EnemyFactory enemyFactory = default;
+
+    [SerializeField, Range(0.1f, 10f)]
+    float spawnSpeed = 1f;
+
+    float _spawnProgress = 0;
+
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
+
+    EnemyCollection enemies = new EnemyCollection();
 
 
     private void Awake()
@@ -41,14 +51,13 @@ public class GameController : MonoBehaviour
     }
 
     private void SaveBoard() {
-        DontDestroyOnLoad(board);
+        DontDestroyOnLoad(_board);
     }
 
     // Inicializa o jogo e gera o mapa
     public void InitializeGame()
     {
-
-        StartCoroutine(MapGenerator.GenerateMap(board, tileContentFactory, boardSize));
+        StartCoroutine(MapGenerator.GenerateMap(_board, tileContentFactory, boardSize));
         //MapGenerator.Generate(board, boardSize);
         SaveBoard();
 
@@ -75,34 +84,73 @@ public class GameController : MonoBehaviour
             {
                 HandleAlternativeTouch();
             }
-            else {
+            else if (Input.GetKey(KeyCode.LeftControl)) {
+                HandleSpawnTouch();
+            }
+            else
+            {
                 HandleTouch();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.G)){
-             board.ShowGrid = !board.ShowGrid;
+             _board.ShowGrid = !_board.ShowGrid;
         }
 
         if (Input.GetKeyDown(KeyCode.V))
         {
-            board.ShowPaths = !board.ShowPaths;
+            _board.ShowPaths = !_board.ShowPaths;
+        }
+
+        UpdateSpawn();
+        UpdateEnemies();
+    }
+
+
+    /* ----------------------------------------------------- */
+
+    private void UpdateSpawn() {
+        _spawnProgress += spawnSpeed * Time.deltaTime;
+        while (_spawnProgress >= 1f)
+        {
+            _spawnProgress -= 1f;
+            SpawnEnemy();
         }
     }
 
-    /* ----------------------------------------------------- */
+    private void UpdateEnemies() { 
+        enemies.GameUpdate();
+    }
     private void HandleAlternativeTouch()
     {
-        GameTile tile = board.GetTile(TouchRay);
+        GameTile tile = _board.GetTile(TouchRay);
         if (tile != null){
-            board.ToggleDestination(tile);
+            _board.ToggleDestination(tile);
+        }
+    }
+
+    private void HandleSpawnTouch() { 
+        GameTile tile = _board.GetTile(TouchRay);
+        if (tile != null)
+        {
+            _board.ToggleSpawnPoint(tile);
         }
     }
 
     private void HandleTouch() {
-        GameTile tile = board.GetTile(TouchRay);
+        GameTile tile = _board.GetTile(TouchRay);
         if (tile != null) {
-            board.ToggleWall(tile);
+            _board.ToggleWall(tile);
+        }
+    }
+
+    private void SpawnEnemy() {
+        if (_board.SpawnPointCount > 0 && _board.HasDestinations) { 
+            GameTile spawnPoint =
+                _board.GetSpawnPoint(Random.Range(0, _board.SpawnPointCount));
+            Enemy enemy = enemyFactory.Get();
+            enemy.SpawnOn(spawnPoint);
+            enemies.Add(enemy);
         }
     }
 }

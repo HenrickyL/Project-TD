@@ -81,7 +81,7 @@ public static class TileSearch
     }
 
 
-    public static bool FindPath(GameTile[] tiles)
+    public static bool FindPath(GameTile[] tiles, bool onVisible = false)
     {
         Queue<GameTile> searchFrontier = new();
         List<GameTile> searchExplored = new();
@@ -127,13 +127,14 @@ public static class TileSearch
             //    yield return true;
             //}
 
-            foreach (GameTile neighbor in tile.Neighbors)
+            foreach (Direction dir in tile.NeighborsOrder)
             {
+                GameTile neighbor = tile.Neighbors[(int)dir];
                 if (neighbor != null)
                 {
                     if (!searchExplored.Contains(neighbor) && !searchFrontier.Contains(neighbor))
                     {
-                        GameTile childTile = tile.GrowPathTo(neighbor);
+                        GameTile childTile = tile.GrowPathTo(neighbor, dir);
                         if(childTile != null)
                             searchFrontier.Enqueue(childTile);
                     }
@@ -143,10 +144,10 @@ public static class TileSearch
             }
         }
 
-
+        if (onVisible) { 
             foreach (GameTile tile in tiles)
             {
-                if (!tile.HasPath)
+                if (tile.isEmpty && !tile.HasPath)
                 {
                     //return false;
                     tile.Content.Element.Disable();
@@ -157,77 +158,78 @@ public static class TileSearch
                     tile.SetEnableArrow(true);
                 }
             }
+        }
         return true;
     }
 
-    public static IEnumerator<bool> FindPathsEnumerator(GameTile[] tiles)
-    {
-        Queue<GameTile> searchFrontier = new();
-        List<GameTile> searchExplored = new();
-        //foreach (GameTile tile in tiles)
-        //{
-        //    if (tile.Content.Type == GameTileContentType.Destination)
-        //    {
-        //        tile.BecomeDestination();
-        //        searchFrontier.Enqueue(tile);
-        //    }
-        //    else { 
-        //        tile.ClearPath();
-        //    }
-        //}
+    //public static IEnumerator<bool> FindPathsEnumerator(GameTile[] tiles)
+    //{
+    //    Queue<GameTile> searchFrontier = new();
+    //    List<GameTile> searchExplored = new();
+    //    //foreach (GameTile tile in tiles)
+    //    //{
+    //    //    if (tile.Content.Type == GameTileContentType.Destination)
+    //    //    {
+    //    //        tile.BecomeDestination();
+    //    //        searchFrontier.Enqueue(tile);
+    //    //    }
+    //    //    else { 
+    //    //        tile.ClearPath();
+    //    //    }
+    //    //}
 
-        //if (searchFrontier.Count == 0) yield return false;
-
-
-        List<GameTile> destinations = FindAllDestinations(tiles);
-        foreach (GameTile tile in destinations)
-        {
-            searchFrontier.Enqueue(tile);
-        }
+    //    //if (searchFrontier.Count == 0) yield return false;
 
 
-        //GameTile initial = tiles[tiles.Length/2];
-        //initial.BecomeDestination();
-        //GameTile goal = tiles.Last();//[tiles.Length - 2];
+    //    List<GameTile> destinations = FindAllDestinations(tiles);
+    //    foreach (GameTile tile in destinations)
+    //    {
+    //        searchFrontier.Enqueue(tile);
+    //    }
 
-        //searchFrontier.Enqueue(initial);
-        //searchFrontier.Enqueue(new Node<GameTile>(initial, 0), 0);
+
+    //    //GameTile initial = tiles[tiles.Length/2];
+    //    //initial.BecomeDestination();
+    //    //GameTile goal = tiles.Last();//[tiles.Length - 2];
+
+    //    //searchFrontier.Enqueue(initial);
+    //    //searchFrontier.Enqueue(new Node<GameTile>(initial, 0), 0);
 
 
-        while (searchFrontier.Count > 0)
-        {
-            GameTile tile = searchFrontier.Dequeue();
-            searchExplored.Add(tile);
+    //    while (searchFrontier.Count > 0)
+    //    {
+    //        GameTile tile = searchFrontier.Dequeue();
+    //        searchExplored.Add(tile);
 
-            tile.ShowPath();
-            tile.SetEnableArrow(true);
-            yield return false;
+    //        tile.ShowPath();
+    //        tile.SetEnableArrow(true);
+    //        yield return false;
 
-            //if (!(searchFrontier.Count > 0))
-            //{
-            //    yield return true;
-            //}
+    //        //if (!(searchFrontier.Count > 0))
+    //        //{
+    //        //    yield return true;
+    //        //}
             
-            yield return false;
+    //        yield return false;
 
-            foreach (GameTile neighbor in tile.Neighbors)
-            {
-                if (neighbor != null)
-                {
-                    GameTile childTile = tile.GrowPathTo(neighbor);
-                    if (childTile != null && 
-                        (!searchExplored.Contains(childTile) && !searchFrontier.Contains(childTile)))
-                    {
-                        //searchFrontier.Enqueue(children, children.Value);
-                        searchFrontier.Enqueue(childTile);
-                    }
-                    //else
-                    //    searchFrontier.TryReplace(children, children.Value);
-                }
-            }
-        }
-        yield return true;
-    }
+    //        foreach (GameTile neighbor in tile.Neighbors)
+    //        {
+    //            if (neighbor != null)
+    //            {
+    //                GameTile childTile = tile.GrowPathTo(neighbor);
+    //                if (childTile != null && 
+    //                    (!searchExplored.Contains(childTile) && !searchFrontier.Contains(childTile)))
+    //                {
+    //                    //searchFrontier.Enqueue(children, children.Value);
+    //                    searchFrontier.Enqueue(childTile);
+    //                }
+    //                //else
+    //                //    searchFrontier.TryReplace(children, children.Value);
+    //            }
+    //        }
+    //    }
+    //    yield return true;
+    //}
 
     private static bool ContainsInExploreds(List<Node<GameTile>> searchExplored, Node<GameTile> item) {
         foreach (var node in searchExplored)
@@ -287,20 +289,20 @@ public static class TileSearch
     //}
 
 
-    public static IEnumerator FindPath(Perikan.AI.Node<GameTile> root)
-    {
-        Perikan.AI.Node<GameTile> node = root;
-        while (node.Father != null) {
-            GameTile tile = node.State;
-            GameTile father = node.Father.State;
-            tile.GrowPathTo(father);
-            tile.ShowPath();
-            tile.SetEnableArrow(true);
-            yield return null;
-            node = node.Father;
-        }
-        yield break;
-    }
+    //public static IEnumerator FindPath(Perikan.AI.Node<GameTile> root)
+    //{
+    //    Perikan.AI.Node<GameTile> node = root;
+    //    while (node.Father != null) {
+    //        GameTile tile = node.State;
+    //        GameTile father = node.Father.State;
+    //        tile.GrowPathTo(father);
+    //        tile.ShowPath();
+    //        tile.SetEnableArrow(true);
+    //        yield return null;
+    //        node = node.Father;
+    //    }
+    //    yield break;
+    //}
 
 }
 
