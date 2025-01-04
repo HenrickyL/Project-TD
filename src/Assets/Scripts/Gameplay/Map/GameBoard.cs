@@ -54,6 +54,7 @@ public class GameBoard : MonoBehaviour
     }
 
     private List<GameTile> _spawnPoints = new();
+    public int SpawnPointCount => _spawnPoints.Count;
 
 
     private void ApplyShowPath() {
@@ -227,6 +228,11 @@ public class GameBoard : MonoBehaviour
             tile.Content.transform.Translate(new Vector3(0, 0.01f));
             _spawnPoints.Add(tile);
         }
+    }
+
+    public GameTile GetSpawnPoint(int index)
+    {
+        return _spawnPoints[index];
     }
 
     private bool FindPath() {
