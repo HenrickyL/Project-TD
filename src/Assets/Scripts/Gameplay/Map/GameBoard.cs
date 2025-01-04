@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -54,6 +55,7 @@ public class GameBoard : MonoBehaviour
     }
 
     private List<GameTile> _spawnPoints = new();
+    public bool HasDestinations => _tiles.FirstOrDefault(x => x.isDestination) != null;
     public int SpawnPointCount => _spawnPoints.Count;
 
 

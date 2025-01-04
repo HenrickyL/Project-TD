@@ -145,7 +145,7 @@ public class GameController : MonoBehaviour
     }
 
     private void SpawnEnemy() {
-        if (_board.SpawnPointCount > 0) { 
+        if (_board.SpawnPointCount > 0 && _board.HasDestinations) { 
             GameTile spawnPoint =
                 _board.GetSpawnPoint(Random.Range(0, _board.SpawnPointCount));
             Enemy enemy = enemyFactory.Get();

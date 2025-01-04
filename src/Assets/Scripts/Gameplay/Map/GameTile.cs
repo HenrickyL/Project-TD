@@ -12,7 +12,9 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
 
     public bool isWall => Content.Type == GameTileContentType.Wall;
     public bool isEmpty => Content.Type == GameTileContentType.Empty;
+    public bool isDestination => Content.Type == GameTileContentType.Destination;
 
+    public GameTile NextTileOnPath => _nextOnPath;
 
     public GameTileContent Content
     {
