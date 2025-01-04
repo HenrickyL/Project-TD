@@ -6,6 +6,11 @@ public enum Direction
     North,East,South,West
 }
 
+public enum DirectionChange
+{
+    None, TurnRight, TurnLeft, TurnAround
+}
+
 public static class DirectionOrder {
     private static readonly Direction[] _primaryOrder = new[] { Direction.North, Direction.South, Direction.East, Direction.West };
     private static readonly Direction[] _reverseOrder = new[] { Direction.West, Direction.East, Direction.South, Direction.North };
@@ -29,23 +34,15 @@ public static class DirectionExtensions
         Quaternion.Euler(0f, 270f, 0f)
     };
 
-    
-
     public static Quaternion GetRotation(this Direction direction)
     {
         return _rotations[(int)direction];
     }
 
+
     public static float ToAngle(this Direction direction)
     {
-        return direction switch
-        {
-            Direction.North => 0f,
-            Direction.East => 90f,
-            Direction.South => 180f,
-            Direction.West => 270f,
-            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
-        };
+        return (float)direction * 90f;
     }
 
     public static Direction Inverse(this Direction direction) {
@@ -57,5 +54,24 @@ public static class DirectionExtensions
             Direction.West => Direction.East,
             _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
         };
+    }
+
+    public static DirectionChange GetDirectionChangeTo(
+        this Direction current, Direction next
+    )
+    {
+        if (current == next)
+        {
+            return DirectionChange.None;
+        }
+        else if (current + 1 == next || current - 3 == next)
+        {
+            return DirectionChange.TurnRight;
+        }
+        else if (current - 1 == next || current + 3 == next)
+        {
+            return DirectionChange.TurnLeft;
+        }
+        return DirectionChange.TurnAround;
     }
 }
