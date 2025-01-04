@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     DirectionChange _directionChange;
     float _directionAngleFrom, _directionAngleTo;
 
+    [SerializeField]
+    Transform _model = default;
+
     public EnemyFactory OriginFactory
     {
         get => originFactory;
@@ -51,8 +54,10 @@ public class Enemy : MonoBehaviour
             PrepareNextState();
             _progress -= 1f;
         }
-        transform.localPosition = Vector3.LerpUnclamped(_positionFrom, _positionTo, _progress);
-        if (_directionChange != DirectionChange.None)
+        if (_directionChange == DirectionChange.None) { 
+            transform.localPosition = Vector3.LerpUnclamped(_positionFrom, _positionTo, _progress);
+        }
+        else
         {
             float angle = Mathf.LerpUnclamped(
                 _directionAngleFrom, _directionAngleTo, _progress
@@ -94,20 +99,30 @@ public class Enemy : MonoBehaviour
     {
         transform.localRotation = _direction.GetRotation();
         _directionAngleTo = _direction.GetAngle();
+        _model.localPosition = Vector3.zero;
     }
 
     private void PrepareTurnRight()
     {
         _directionAngleTo = _directionAngleFrom + 90f;
+        _model.localPosition = new Vector3(-0.5f, 0f);
+        transform.localPosition = _positionFrom + _direction.GetHalfVector();
+
+
     }
 
     void PrepareTurnLeft()
     {
         _directionAngleTo = _directionAngleFrom - 90f;
+        _model.localPosition = new Vector3(0.5f, 0f);
+        transform.localPosition = _positionFrom + _direction.GetHalfVector();
     }
 
     private void PrepareTurnAround()
     {
         _directionAngleTo = _directionAngleFrom + 180f;
+        _model.localPosition = Vector3.zero;
+        transform.localPosition = _positionFrom;
+
     }
 }
