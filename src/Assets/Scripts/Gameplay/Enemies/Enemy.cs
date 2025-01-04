@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 
     GameTile _tileFrom, _tileTo;
     Vector3 _positionFrom, _positionTo;
-    float _progress;
+    float _progress, _progressFactor;
 
     Direction _direction;
     DirectionChange _directionChange;
@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     Transform _model = default;
+
+    
 
     public EnemyFactory OriginFactory
     {
@@ -37,7 +39,7 @@ public class Enemy : MonoBehaviour
 
     public bool GameUpdate()
     {
-        _progress += Time.deltaTime;
+        _progress += Time.deltaTime * _progressFactor;
         while (_progress > 1f) {
             _tileFrom = _tileTo;
             if (_tileTo == null)
@@ -51,8 +53,10 @@ public class Enemy : MonoBehaviour
                 OriginFactory.Reclaim(this);
                 return false;
             }
+            _progress = (_progress - 1f) / _progressFactor;
             PrepareNextState();
-            _progress -= 1f;
+            _progress *= _progressFactor;
+
         }
         if (_directionChange == DirectionChange.None) { 
             transform.localPosition = Vector3.LerpUnclamped(_positionFrom, _positionTo, _progress);
@@ -76,6 +80,7 @@ public class Enemy : MonoBehaviour
         _directionChange = DirectionChange.None;
         _directionAngleFrom = _directionAngleTo = _direction.GetAngle();
         transform.localRotation = _direction.GetRotation();
+        _progressFactor = 2f;
     }
 
     private void PrepareNextState() {
@@ -100,6 +105,7 @@ public class Enemy : MonoBehaviour
         transform.localRotation = _direction.GetRotation();
         _directionAngleTo = _direction.GetAngle();
         _model.localPosition = Vector3.zero;
+        _progressFactor = 1f;
     }
 
     private void PrepareTurnRight()
@@ -107,8 +113,7 @@ public class Enemy : MonoBehaviour
         _directionAngleTo = _directionAngleFrom + 90f;
         _model.localPosition = new Vector3(-0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
-
-
+        _progressFactor = 1f / (Mathf.PI * 0.25f);
     }
 
     void PrepareTurnLeft()
@@ -116,6 +121,7 @@ public class Enemy : MonoBehaviour
         _directionAngleTo = _directionAngleFrom - 90f;
         _model.localPosition = new Vector3(0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
+        _progressFactor = 1f / (Mathf.PI * 0.25f);
     }
 
     private void PrepareTurnAround()
@@ -123,6 +129,6 @@ public class Enemy : MonoBehaviour
         _directionAngleTo = _directionAngleFrom + 180f;
         _model.localPosition = Vector3.zero;
         transform.localPosition = _positionFrom;
-
+        _progressFactor = 2f;
     }
 }
