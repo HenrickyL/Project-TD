@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -75,7 +76,11 @@ public class GameController : MonoBehaviour
             {
                 HandleAlternativeTouch();
             }
-            else {
+            else if (Input.GetKey(KeyCode.LeftControl)) {
+                HandleSpawnTouch();
+            }
+            else
+            {
                 HandleTouch();
             }
         }
@@ -96,6 +101,14 @@ public class GameController : MonoBehaviour
         GameTile tile = board.GetTile(TouchRay);
         if (tile != null){
             board.ToggleDestination(tile);
+        }
+    }
+
+    private void HandleSpawnTouch() { 
+        GameTile tile = board.GetTile(TouchRay);
+        if (tile != null)
+        {
+            board.ToggleSpawnPoint(tile);
         }
     }
 
