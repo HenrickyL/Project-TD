@@ -1,14 +1,16 @@
-using UnityEngine;
 using Perikan.AI;
 using System;
+using UnityEngine;
 public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
 {
-    [SerializeField]
-    TileArrow _arrow;
+    //[SerializeField]
+    //TileArrow _arrow;
     [SerializeField]
     private GameTile[] _neighbors;
 
     GameTileContent _content;
+
+    public bool onWall => Content.Type == GameTileContentType.Wall;
 
     public GameTileContent Content
     {
@@ -21,9 +23,12 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
                 _content.Recycle();
             }
             _content = value;
-            _content.transform.localPosition = transform.localPosition;
+            // Definir o pai da instância
+            _content.transform.SetParent(this.transform, false);
         }
     }
+
+    public TileArrow Arrow { get; set; }
 
     public GameTile[] Neighbors {
         get {
@@ -64,7 +69,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         //}
         neighbor._distance = _distance + 1;
         neighbor._nextOnPath = this;
-        return neighbor;
+        return !neighbor.onWall ? neighbor : null;
     }
 
     /* -------------------------------------------------------------- */
@@ -94,7 +99,10 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     {
         _distance = int.MaxValue;
         _nextOnPath = null;
-        _arrow.SetActive(false);
+        if (Content.Element.IsActive)
+        {
+            Content.Element.Toggle();
+        }
     }
 
     public void BecomeDestination()
@@ -108,23 +116,35 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     }
 
     public void ShowPath() {
+        if (Content.Element is TileArrow)
+            Content.Element.Enable();
         if (_distance == 0)
         {
-            _arrow.gameObject.SetActive(false);
+            //_arrow.gameObject.SetActive(false);
             return;
         }
         for (int dir = (int)Direction.North; dir <= (int)Direction.West; dir++)
         {
             GameTile tile = _neighbors[dir];
-            if (_nextOnPath == tile)
-            {
-                _arrow.RotateTo((Direction)dir);
+            if (_nextOnPath == tile && Content.Element is TileArrow)
+                {
+                TileArrow arrow = Content.Element as TileArrow;
+                arrow.RotateTo((Direction)dir);
             }
         }
     }
 
+    public void HidePath() {
+        if (Content.Element is TileArrow) {
+            Content.Element.Disable();
+        }
+    }
+
     public void SetEnableArrow(bool value) { 
-        _arrow.SetActive(value);
+        if(Content.Element.IsActive != value)
+        {
+            Content.Element.Toggle();
+        }
     }
 
     public float DistanceTo(GameTile tile) { 

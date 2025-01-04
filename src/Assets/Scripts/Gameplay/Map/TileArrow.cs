@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TileArrow : MonoBehaviour
+public class TileArrow : TileElement
 {
     [SerializeField]
     private Direction _direction = Direction.North;
@@ -11,7 +11,7 @@ public class TileArrow : MonoBehaviour
     private Quaternion targetRotation;
     private float rotationProgress;
     public float Angle { get { return _direction.ToAngle(); } }
-    private bool isActive = false;
+    private bool _isAnimating = true; // Toggle to remove animation
 
 
     private void Awake()
@@ -23,7 +23,7 @@ public class TileArrow : MonoBehaviour
 
     private void Update()
     {
-        if (rotationProgress < 1)
+        if (_isAnimating && rotationProgress < 1)
         {
             rotationProgress += Time.deltaTime * 0.5f; // Interpolação suave da rotação
             transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, rotationProgress);
@@ -35,11 +35,23 @@ public class TileArrow : MonoBehaviour
         ResetRotation();
     }
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        ResetRotation();
+    }
+
     private void ResetRotation()
     {
-        initialRotation = transform.localRotation;
         targetRotation = Quaternion.Euler(90, Angle, 0);
-        rotationProgress = 0.0f;
+        if (_isAnimating)
+        {
+            initialRotation = transform.localRotation;
+            rotationProgress = 0.0f;
+        }
+        else {
+            transform.localRotation = targetRotation;
+        }
     }
 
     /* ---------------------------------------------- */
@@ -50,13 +62,13 @@ public class TileArrow : MonoBehaviour
     }
 
 
-    public void SetActive(bool value) { 
-        isActive = value;
+    public override void Toggle() {
+        base.Toggle();
         ResetMaterial();
     }
 
     private void ResetMaterial() {
-        Material currentMaterial = isActive ? GameController.ArrowMaterial : GameController.ArrowDisableMaterial;
+        Material currentMaterial = IsActive ? GameController.ArrowMaterial : GameController.ArrowDisableMaterial;
         arrowRenderer.material = currentMaterial;
     }
 }

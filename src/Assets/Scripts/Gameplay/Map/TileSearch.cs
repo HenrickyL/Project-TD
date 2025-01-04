@@ -1,5 +1,6 @@
 using Perikan.AI;
 using Perikan.CustomCollections;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 public static class TileSearch
@@ -55,8 +56,13 @@ public static class TileSearch
     //}
 
 
+    public static bool ExistDetination(GameTile[] tiles) {
+        List<GameTile> destinations = FindAllDestinations(tiles);
+        return destinations.Count > 0;
+    }
+
     /// TODO: Verify if path is correct
-    public static List<GameTile> FindAllDestinations(GameTile[] tiles) {
+    private static List<GameTile> FindAllDestinations(GameTile[] tiles) {
         List<GameTile> gameTiles = new();
         foreach (GameTile tile in tiles)
         {
@@ -75,7 +81,7 @@ public static class TileSearch
     }
 
 
-    public static void FindPath(GameTile[] tiles)
+    public static bool FindPath(GameTile[] tiles)
     {
         Queue<GameTile> searchFrontier = new();
         List<GameTile> searchExplored = new();
@@ -95,11 +101,11 @@ public static class TileSearch
 
 
         List<GameTile> destinations = FindAllDestinations(tiles);
+        if (destinations.Count == 0) return false;
         foreach (GameTile tile in destinations)
         {
             searchFrontier.Enqueue(tile);
         }
-
 
         //GameTile initial = tiles[tiles.Length/2];
         //initial.BecomeDestination();
@@ -108,7 +114,6 @@ public static class TileSearch
         //searchFrontier.Enqueue(initial);
         //searchFrontier.Enqueue(new Node<GameTile>(initial, 0), 0);
 
-
         int cost = 0;
         while (searchFrontier.Count > 0 && cost < 3500)
         {
@@ -116,14 +121,11 @@ public static class TileSearch
             GameTile tile = searchFrontier.Dequeue();
             searchExplored.Add(tile);
 
-            tile.ShowPath();
-            tile.SetEnableArrow(true);
-
+            
             //if (!(searchFrontier.Count > 0))
             //{
             //    yield return true;
             //}
-
 
             foreach (GameTile neighbor in tile.Neighbors)
             {
@@ -132,14 +134,30 @@ public static class TileSearch
                     if (!searchExplored.Contains(neighbor) && !searchFrontier.Contains(neighbor))
                     {
                         GameTile childTile = tile.GrowPathTo(neighbor);
-                        //searchFrontier.Enqueue(children, children.Value);
-                        searchFrontier.Enqueue(childTile);
+                        if(childTile != null)
+                            searchFrontier.Enqueue(childTile);
                     }
                     //else
                     //    searchFrontier.TryReplace(children, children.Value);
                 }
             }
         }
+
+
+            foreach (GameTile tile in tiles)
+            {
+                if (!tile.HasPath)
+                {
+                    //return false;
+                    tile.Content.Element.Disable();
+                }
+                else
+                {
+                    tile.ShowPath();
+                    tile.SetEnableArrow(true);
+                }
+            }
+        return true;
     }
 
     public static IEnumerator<bool> FindPathsEnumerator(GameTile[] tiles)

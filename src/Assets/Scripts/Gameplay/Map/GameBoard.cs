@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
@@ -10,6 +8,8 @@ public class GameBoard : MonoBehaviour
     Transform _ground = default;
     [SerializeField]
     GameTile _tilePrefab = default;
+    [SerializeField]
+    Texture2D _gridTexture = default;
 
     private GameTileContentFactory _contentFactory;
 
@@ -18,6 +18,57 @@ public class GameBoard : MonoBehaviour
     Vector2Int _size;
 
     Vector2 _offset = default;
+
+
+    private bool _showPaths = false;
+    private bool _showGrid = true;
+
+    public bool ShowGrid
+    {
+        get => _showGrid;
+        set
+        {
+            _showGrid = value;
+            Material m = _ground.GetComponent<MeshRenderer>().material;
+            if (_showGrid)
+            {
+                m.mainTexture = _gridTexture;
+                //m.SetTexture("_MainTex", _gridTexture);
+                m.SetTextureScale("_BaseMap", _size);
+            }
+            else
+            {
+                m.mainTexture = null;
+            }
+        }
+    }
+
+    public bool ShowPaths
+    {
+        get => _showPaths;
+        set
+        {
+            _showPaths = value;
+            ApplyShowPath();
+        }
+    }
+
+    private void ApplyShowPath() {
+        if (_showPaths)
+        {
+            foreach (GameTile tile in _tiles)
+            {
+                tile.ShowPath();
+            }
+        }
+        else
+        {
+            foreach (GameTile tile in _tiles)
+            {
+                tile.HidePath();
+            }
+        }
+    }
 
     public Vector2 Offset { get {
             _offset = new Vector2(
@@ -44,13 +95,13 @@ public class GameBoard : MonoBehaviour
                 tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             }
         }
-
-        //yield return TileSearch.FindPathsEnumerator(_tiles);
+        //yield return T ileSearch.FindPathsEnumerator(_tiles);
         //yield return ToggleDestination(_tiles[_tiles.Length / 2]);
 
         //Perikan.IA.Node<GameTile> node = Perikan.IA.SearchMethods.BreadthFirstSearch<GameTile>(_tiles[0], _tiles.Last());
         //Debug.Log(">>>>>>>>>>>>>>>> Path");
         //StartCoroutine(TileSearch.FindPath(node));
+        ApplyShowPath();
     }
 
     private GameTile CreateTile(int x, int y, int i) {
@@ -127,17 +178,35 @@ public class GameBoard : MonoBehaviour
     public void ToggleDestination(GameTile tile) {
         if (tile.Content.Type == GameTileContentType.Destination)
         {
-            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-           TileSearch.FindPath(_tiles);
+            if (TileSearch.ExistDetination(_tiles))
+            {
+                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+                TileSearch.FindPath(_tiles);
+            }
         }
-        else
+        else if(tile.Content.Type == GameTileContentType.Empty)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Destination);
             tile.Content.transform.Translate(new Vector3(0, 0.01f));
-            if (!(TileSearch.FindAllDestinations(_tiles).Count == 0))
-            {
+            TileSearch.FindPath(_tiles);
+        }
+    }
+
+    public void ToggleWall(GameTile tile) {
+        if (tile.Content.Type == GameTileContentType.Wall)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            TileSearch.FindPath(_tiles);
+        }
+        else if(tile.Content.Type == GameTileContentType.Empty)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Wall);
+            if (TileSearch.ExistDetination(_tiles)) { 
                 TileSearch.FindPath(_tiles);
             }
+            //if (!TileSearch.FindPath(_tiles)) { 
+            //    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            //}
         }
     }
 } 

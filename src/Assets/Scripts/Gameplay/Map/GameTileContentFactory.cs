@@ -12,6 +12,10 @@ public class GameTileContentFactory : ScriptableObject
     [SerializeField]
     GameTileContent emptyPrefab = default;
 
+    [SerializeField]
+    GameTileContent wallPrefab = default;
+
+
     /* --------------------------------------------------------------------------------- */
 
     public void Reclaim(GameTileContent content)
@@ -24,19 +28,17 @@ public class GameTileContentFactory : ScriptableObject
     {
         GameTileContent instance = Instantiate(prefab);
         instance.OriginFactory = this;
-        MoveToFactoryScene(instance.gameObject);
+        //MoveToFactoryScene(instance.gameObject);
         return instance;
     }
 
     public GameTileContent Get(GameTileContentType type)
     {
-        Vector3 a = destinationPrefab.transform.position;
-        Vector3 b = emptyPrefab.transform.position;
-
         switch (type)
         {
             case GameTileContentType.Destination: return Get(destinationPrefab);
             case GameTileContentType.Empty: return Get(emptyPrefab);
+            case GameTileContentType.Wall: return Get(wallPrefab);
         }
         Debug.Assert(false, "Unsupported type: " + type);
         return null;

@@ -71,21 +71,38 @@ public class GameController : MonoBehaviour
         // Exemplo: Atualizar a lógica dos inimigos e defesas
         if (Input.GetMouseButtonDown(0))
         {
-            HandleTouch();
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                HandleAlternativeTouch();
+            }
+            else {
+                HandleTouch();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.G)){
+             board.ShowGrid = !board.ShowGrid;
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            board.ShowPaths = !board.ShowPaths;
         }
     }
 
     /* ----------------------------------------------------- */
-    private void HandleTouch()
+    private void HandleAlternativeTouch()
     {
         GameTile tile = board.GetTile(TouchRay);
-        if (tile != null && tile.Content.Type != GameTileContentType.Destination)
-        {
-            //tile.Content = tileContentFactory.Get(GameTileContentType.Destination);
-            //StartCoroutine(
+        if (tile != null){
             board.ToggleDestination(tile);
-                //);
         }
     }
 
+    private void HandleTouch() {
+        GameTile tile = board.GetTile(TouchRay);
+        if (tile != null) {
+            board.ToggleWall(tile);
+        }
+    }
 }
