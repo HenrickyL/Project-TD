@@ -26,4 +26,5 @@ public abstract class AbstractGameObjectFactory : ScriptableObject
         //SceneManager.MoveGameObjectToScene(instance.gameObject, scene);
         return instance;
     }
+
 }
