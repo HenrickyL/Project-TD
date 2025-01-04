@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour
 
     Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
+    EnemyCollection enemies = new EnemyCollection();
+
 
     private void Awake()
     {
@@ -55,7 +57,6 @@ public class GameController : MonoBehaviour
     // Inicializa o jogo e gera o mapa
     public void InitializeGame()
     {
-
         StartCoroutine(MapGenerator.GenerateMap(_board, tileContentFactory, boardSize));
         //MapGenerator.Generate(board, boardSize);
         SaveBoard();
@@ -101,15 +102,25 @@ public class GameController : MonoBehaviour
             _board.ShowPaths = !_board.ShowPaths;
         }
 
+        UpdateSpawn();
+        UpdateEnemies();
+    }
 
+
+    /* ----------------------------------------------------- */
+
+    private void UpdateSpawn() {
         _spawnProgress += spawnSpeed * Time.deltaTime;
-        while (_spawnProgress >= 1f) {
+        while (_spawnProgress >= 1f)
+        {
             _spawnProgress -= 1f;
             SpawnEnemy();
         }
     }
 
-    /* ----------------------------------------------------- */
+    private void UpdateEnemies() { 
+        enemies.GameUpdate();
+    }
     private void HandleAlternativeTouch()
     {
         GameTile tile = _board.GetTile(TouchRay);
@@ -139,6 +150,7 @@ public class GameController : MonoBehaviour
                 _board.GetSpawnPoint(Random.Range(0, _board.SpawnPointCount));
             Enemy enemy = enemyFactory.Get();
             enemy.SpawnOn(spawnPoint);
+            enemies.Add(enemy);
         }
     }
 }
