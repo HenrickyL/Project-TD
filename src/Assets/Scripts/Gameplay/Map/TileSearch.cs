@@ -146,7 +146,7 @@ public static class TileSearch
         if (onVisible) { 
             foreach (GameTile tile in tiles)
             {
-                if (!tile.HasPath)
+                if (tile.isEmpty && !tile.HasPath)
                 {
                     //return false;
                     tile.Content.Element.Disable();
