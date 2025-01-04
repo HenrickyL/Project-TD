@@ -15,6 +15,9 @@ public class GameTileContentFactory : ScriptableObject
     [SerializeField]
     GameTileContent wallPrefab = default;
 
+    [SerializeField]
+    GameTileContent spawnPoint = default;
+
 
     /* --------------------------------------------------------------------------------- */
 
@@ -39,6 +42,7 @@ public class GameTileContentFactory : ScriptableObject
             case GameTileContentType.Destination: return Get(destinationPrefab);
             case GameTileContentType.Empty: return Get(emptyPrefab);
             case GameTileContentType.Wall: return Get(wallPrefab);
+            case GameTileContentType.SpawnPoint:return Get(spawnPoint);
         }
         Debug.Assert(false, "Unsupported type: " + type);
         return null;
