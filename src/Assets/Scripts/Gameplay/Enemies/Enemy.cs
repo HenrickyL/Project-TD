@@ -16,7 +16,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     Transform _model = default;
 
-    
+    [SerializeField]
+    AnimationStateController _animController;
+
+    bool inMovimento = true;
 
     public EnemyFactory OriginFactory
     {
@@ -35,6 +38,7 @@ public class Enemy : MonoBehaviour
         _tileTo = tile.NextTileOnPath;
         _progress = 0f;
         PrepareIntro();
+        _animController.ChangeAnimator(AnimationStateEnum.Walk);
     }
 
     public bool GameUpdate()
