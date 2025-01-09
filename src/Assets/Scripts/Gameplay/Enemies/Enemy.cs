@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -18,8 +19,6 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     AnimationStateController _animController;
-
-    bool inMovimento = true;
 
     public EnemyFactory OriginFactory
     {
@@ -47,7 +46,8 @@ public class Enemy : MonoBehaviour
         while (_progress > 1f) {        
             if (_tileTo == null)
             {
-                OriginFactory.Reclaim(this);
+                //OriginFactory.Reclaim(this);
+                StartCoroutine(HandleDeath());
                 return false;
             }
             _progress = (_progress - 1f) / _progressFactor;
@@ -144,5 +144,14 @@ public class Enemy : MonoBehaviour
         _model.localPosition = Vector3.zero;
         transform.localPosition = _positionFrom;
         _progressFactor = 2f;
+    }
+
+    private IEnumerator HandleDeath()
+    {
+        _animController.ChangeAnimator(AnimationStateEnum.Death);
+
+        yield return new WaitForSeconds(_animController.GetAnimationLength(AnimationStateEnum.Death)+0.1f);
+
+        OriginFactory.Reclaim(this);
     }
 }
