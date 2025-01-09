@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: EnemyFactory
   m_EditorClassIdentifier: 
   prefab: {fileID: 2731802761349827289, guid: c7dec934506e41a4991c78a1388e0b72, type: 3}
+  scale:
+    min: 0.5
+    max: 1.5

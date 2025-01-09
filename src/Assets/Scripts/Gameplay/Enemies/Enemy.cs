@@ -67,6 +67,10 @@ public class Enemy : MonoBehaviour
         }
         return true;
     }
+    public void Initialize(float scale)
+    {
+        _model.localScale = new Vector3(scale, scale, scale);
+    }
 
     /* -------------------------------------------- */
 

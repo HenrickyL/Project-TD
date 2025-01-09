@@ -6,10 +6,14 @@ public class EnemyFactory : AbstractGameObjectFactory
     [SerializeField]
     Enemy prefab = default;
 
+
+    [SerializeField, FloatRangeSlider(0.5f, 2f)]
+    FloatRange scale = new FloatRange(1f);
     public Enemy Get()
     {
         Enemy instance = CreateGameObjectInstance(prefab);
         instance.OriginFactory = this;
+        instance.Initialize(scale.RandomValueInRange);
         return instance;
     }
 
