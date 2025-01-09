@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     AnimationStateController _animController;
 
     float _pathOffset;
+    float _speed;
 
     public EnemyFactory OriginFactory
     {
@@ -69,14 +70,20 @@ public class Enemy : MonoBehaviour
         }
         return true;
     }
-    public void Initialize(float scale, float pathOffset)
+    public void Initialize(float scale, float speed, float pathOffset)
     {
         _model.localScale = new Vector3(scale, scale, scale);
+        this._speed = speed;
         this._pathOffset = pathOffset;
     }
 
     /* -------------------------------------------- */
 
+    /// <summary>
+    /// Configura o estado inicial (intro) do inimigo.
+    /// No estado de introdução, o inimigo se move do centro do ladrilho inicial para sua borda.
+    /// Como não há mudança de direção neste estado, os ângulos "From" e "To" são iguais.
+    /// </summary>
     private void PrepareIntro() {
         _positionFrom = _tileFrom.transform.localPosition;
         _positionTo = _tileFrom.ExitPoint;
@@ -85,9 +92,13 @@ public class Enemy : MonoBehaviour
         _directionAngleFrom = _directionAngleTo = _direction.GetAngle();
         _model.localPosition = new Vector3(_pathOffset, 0f);
         transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f;
+        _progressFactor = 2f * _speed;
     }
 
+    /// <summary>
+    /// Configura o estado final (outro) do inimigo.
+    /// Neste estado, o inimigo retorna para o centro do ladrilho atual antes de ser removido do jogo.
+    /// </summary>
     void PrepareOutro()
     {
         _positionTo = _tileFrom.transform.localPosition;
@@ -95,7 +106,7 @@ public class Enemy : MonoBehaviour
         _directionAngleTo = _direction.GetAngle();
         _model.localPosition = new Vector3(_pathOffset, 0f);
         transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f;
+        _progressFactor = 2f * _speed;
     }
 
     private void PrepareNextState() {
@@ -127,7 +138,7 @@ public class Enemy : MonoBehaviour
         transform.localRotation = _direction.GetRotation();
         _directionAngleTo = _direction.GetAngle();
         _model.localPosition = new Vector3(_pathOffset, 0f); ;
-        _progressFactor = 1f;
+        _progressFactor = _speed;
     }
 
     private void PrepareTurnRight()
@@ -135,7 +146,7 @@ public class Enemy : MonoBehaviour
         _directionAngleTo = _directionAngleFrom + 90f;
         _model.localPosition = new Vector3(_pathOffset - 0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = 1f / (Mathf.PI * 0.5f * (0.5f - _pathOffset));
+        _progressFactor = _speed / (Mathf.PI * 0.5f * (0.5f - _pathOffset));
     }
 
     void PrepareTurnLeft()
@@ -143,7 +154,7 @@ public class Enemy : MonoBehaviour
         _directionAngleTo = _directionAngleFrom - 90f;
         _model.localPosition = new Vector3(_pathOffset+0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = 1f / (Mathf.PI * 0.5f * (0.5f + _pathOffset));
+        _progressFactor = _speed / (Mathf.PI * 0.5f * (0.5f + _pathOffset));
     }
 
     private void PrepareTurnAround()
@@ -151,14 +162,14 @@ public class Enemy : MonoBehaviour
         _directionAngleTo = _directionAngleFrom + (_pathOffset < 0f ? 180f : -180f);
         _model.localPosition = new Vector3(_pathOffset, 0f);
         transform.localPosition = _positionFrom;
-        _progressFactor = 1f / (Mathf.PI * Mathf.Max(Mathf.Abs(_pathOffset), 0.2f));
+        _progressFactor = _speed / (Mathf.PI * Mathf.Max(Mathf.Abs(_pathOffset), 0.2f));
     }
 
     private IEnumerator HandleDeath()
     {
         _animController.ChangeAnimator(AnimationStateEnum.Death);
 
-        yield return new WaitForSeconds(_animController.GetAnimationLength(AnimationStateEnum.Death)+0.1f);
+        yield return new WaitForSeconds(_animController.GetAnimationLength(AnimationStateEnum.Death)+0.15f);
 
         OriginFactory.Reclaim(this);
     }
