@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class AbstractGameObjectFactory : ScriptableObject
+public abstract class AbstractGameEntityFactory : ScriptableObject
 {
     Scene scene;
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameTileContentFactory", menuName = "Factory/GameTileContentFactory")]
-public class GameTileContentFactory : AbstractGameObjectFactory
+public class GameTileContentFactory : AbstractGameEntityFactory
 {
 
     [SerializeField]
