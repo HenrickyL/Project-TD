@@ -3,9 +3,6 @@ using UnityEngine.SceneManagement;
 
 public abstract class AbstractGameAssetFactory : ScriptableObject
 {
-    [SerializeField]
-    protected GameAsset prefab = default;
-
     Scene scene;
 
     protected T CreateGameAssetInstance<T>(T prefab) where T : GameAsset

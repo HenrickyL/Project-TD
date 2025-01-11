@@ -2,9 +2,9 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyFactory", menuName = "Factory/EnemyFactory")]
 public class EnemyFactory : AbstractGameEntityFactory
-{ 
-    //[SerializeField]
-    //Enemy prefab = default;
+{
+    [SerializeField]
+    Enemy prefab = default;
 
     [SerializeField, FloatRangeSlider(0.5f, 2f)]
     FloatRange scale = new FloatRange(1f);
@@ -18,7 +18,7 @@ public class EnemyFactory : AbstractGameEntityFactory
 
     public Enemy Get()
     {
-        Enemy enemy = base.Get<Enemy>((Enemy)prefab);
+        Enemy enemy = base.Get<Enemy>(prefab);
         enemy.Initialize(scale.RandomValueInRange, speed.RandomValueInRange, pathOffset.RandomValueInRange);
         return enemy;
     }
