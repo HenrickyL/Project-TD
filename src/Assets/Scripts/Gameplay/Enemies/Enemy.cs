@@ -1,11 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : GameEntity
 {
-    ///TODO: Use State machine use as in Menu
-    EnemyFactory originFactory;
-
     GameTile _tileFrom, _tileTo;
     Vector3 _positionFrom, _positionTo;
     float _progress, _progressFactor;
@@ -14,36 +11,17 @@ public class Enemy : MonoBehaviour
     DirectionChange _directionChange;
     float _directionAngleFrom, _directionAngleTo;
 
-    [SerializeField]
-    Transform _model = default;
-
-    [SerializeField]
-    AnimationStateController _animController;
-
-    float _pathOffset;
-    float _speed;
-
-    public EnemyFactory OriginFactory
-    {
-        get => originFactory;
-        set
-        {
-            Debug.Assert(originFactory == null, "Redefined origin factory!");
-            originFactory = value;
-        }
-    }
-
-    public void SpawnOn(GameTile tile)
+    public override void SpawnOn(GameTile tile)
     {
         Debug.Assert(tile.NextTileOnPath != null, "Nowhere to go!", this);
         _tileFrom = tile;
         _tileTo = tile.NextTileOnPath;
         _progress = 0f;
         PrepareIntro();
-        _animController.ChangeAnimator(AnimationStateEnum.Walk);
+        AnimationController.ChangeAnimator(AnimationStateEnum.Walk);
     }
 
-    public bool GameUpdate()
+    public override bool GameUpdate()
     {
         _progress += Time.deltaTime * _progressFactor;
         while (_progress > 1f) {        
@@ -72,9 +50,9 @@ public class Enemy : MonoBehaviour
     }
     public void Initialize(float scale, float speed, float pathOffset)
     {
-        _model.localScale = new Vector3(scale, scale, scale);
-        this._speed = speed;
-        this._pathOffset = pathOffset;
+        ModelLocalScale = new Vector3(scale, scale, scale);
+        Speed = speed;
+        PathOffset = pathOffset;
     }
 
     /* -------------------------------------------- */
@@ -90,9 +68,9 @@ public class Enemy : MonoBehaviour
         _direction = _tileFrom.PathDirection;
         _directionChange = DirectionChange.None;
         _directionAngleFrom = _directionAngleTo = _direction.GetAngle();
-        _model.localPosition = new Vector3(_pathOffset, 0f);
+        ModelLocalPosition = new Vector3(PathOffset, 0f);
         transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f * _speed;
+        _progressFactor = 2f * Speed;
     }
 
     /// <summary>
@@ -104,9 +82,9 @@ public class Enemy : MonoBehaviour
         _positionTo = _tileFrom.transform.localPosition;
         _directionChange = DirectionChange.None;
         _directionAngleTo = _direction.GetAngle();
-        _model.localPosition = new Vector3(_pathOffset, 0f);
+        ModelLocalPosition = new Vector3(PathOffset, 0f);
         transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f * _speed;
+        _progressFactor = 2f * Speed;
     }
 
     private void PrepareNextState() {
@@ -137,39 +115,39 @@ public class Enemy : MonoBehaviour
     {
         transform.localRotation = _direction.GetRotation();
         _directionAngleTo = _direction.GetAngle();
-        _model.localPosition = new Vector3(_pathOffset, 0f); ;
-        _progressFactor = _speed;
+        ModelLocalPosition = new Vector3(PathOffset, 0f); ;
+        _progressFactor = Speed;
     }
 
     private void PrepareTurnRight()
     {
         _directionAngleTo = _directionAngleFrom + 90f;
-        _model.localPosition = new Vector3(_pathOffset - 0.5f, 0f);
+        ModelLocalPosition = new Vector3(PathOffset - 0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = _speed / (Mathf.PI * 0.5f * (0.5f - _pathOffset));
+        _progressFactor = Speed / (Mathf.PI * 0.5f * (0.5f - PathOffset));
     }
 
     void PrepareTurnLeft()
     {
         _directionAngleTo = _directionAngleFrom - 90f;
-        _model.localPosition = new Vector3(_pathOffset+0.5f, 0f);
+        ModelLocalPosition = new Vector3(PathOffset+0.5f, 0f);
         transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = _speed / (Mathf.PI * 0.5f * (0.5f + _pathOffset));
+        _progressFactor = Speed / (Mathf.PI * 0.5f * (0.5f + PathOffset));
     }
 
     private void PrepareTurnAround()
     {
-        _directionAngleTo = _directionAngleFrom + (_pathOffset < 0f ? 180f : -180f);
-        _model.localPosition = new Vector3(_pathOffset, 0f);
+        _directionAngleTo = _directionAngleFrom + (PathOffset < 0f ? 180f : -180f);
+        ModelLocalPosition = new Vector3(PathOffset, 0f);
         transform.localPosition = _positionFrom;
-        _progressFactor = _speed / (Mathf.PI * Mathf.Max(Mathf.Abs(_pathOffset), 0.2f));
+        _progressFactor = Speed / (Mathf.PI * Mathf.Max(Mathf.Abs(PathOffset), 0.2f));
     }
 
     private IEnumerator HandleDeath()
     {
-        _animController.ChangeAnimator(AnimationStateEnum.Death);
+        AnimationController.ChangeAnimator(AnimationStateEnum.Death);
 
-        yield return new WaitForSeconds(_animController.GetAnimationLength(AnimationStateEnum.Death)+0.15f);
+        yield return new WaitForSeconds(AnimationController.GetAnimationLength(AnimationStateEnum.Death)+0.15f);
 
         OriginFactory.Reclaim(this);
     }

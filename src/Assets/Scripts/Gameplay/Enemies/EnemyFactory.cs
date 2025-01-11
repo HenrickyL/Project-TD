@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyFactory", menuName = "Factory/EnemyFactory")]
 public class EnemyFactory : AbstractGameEntityFactory
 { 
-    [SerializeField]
-    Enemy prefab = default;
+    //[SerializeField]
+    //Enemy prefab = default;
 
     [SerializeField, FloatRangeSlider(0.5f, 2f)]
     FloatRange scale = new FloatRange(1f);
@@ -18,15 +18,8 @@ public class EnemyFactory : AbstractGameEntityFactory
 
     public Enemy Get()
     {
-        Enemy instance = CreateGameObjectInstance(prefab);
-        instance.OriginFactory = this;
-        instance.Initialize(scale.RandomValueInRange, speed.RandomValueInRange, pathOffset.RandomValueInRange);
-        return instance;
-    }
-
-    public void Reclaim(Enemy enemy)
-    {
-        Debug.Assert(enemy.OriginFactory == this, "Wrong factory reclaimed!");
-        Destroy(enemy.gameObject);
+        Enemy enemy = base.Get<Enemy>((Enemy)prefab);
+        enemy.Initialize(scale.RandomValueInRange, speed.RandomValueInRange, pathOffset.RandomValueInRange);
+        return enemy;
     }
 }
