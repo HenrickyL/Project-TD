@@ -2,9 +2,7 @@ using UnityEngine;
 
 public abstract class GameAsset : MonoBehaviour
 {
-    ///TODO: Use State machine use as in Menu
     private AbstractGameAssetFactory _originFactory;
-
     public AbstractGameAssetFactory OriginFactory
     {
         get => _originFactory;
@@ -16,8 +14,6 @@ public abstract class GameAsset : MonoBehaviour
     }
 
     
-
-
     /* --------------------------------------------------- */
 
     //public abstract void Initialize();

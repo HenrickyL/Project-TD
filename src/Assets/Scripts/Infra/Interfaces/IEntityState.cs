@@ -1,6 +1,7 @@
-public interface IEntityState 
-{
+using System.Collections;
+
+public interface IEntityState { 
     void Enter(GameEntity entity);
-    void UpdateGame();
+    IEnumerator UpdateState();
     void Exit();
 }

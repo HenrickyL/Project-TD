@@ -14,12 +14,16 @@ public class EnemyCollection
     {
         for (int i = 0; i < _enemies.Count; i++)
         {
-            if (!_enemies[i].GameUpdate())
+            Enemy enemy = _enemies[i];
+            if (!enemy.IsAlive)
             {
                 int lastIndex = _enemies.Count - 1;
                 _enemies[i] = _enemies[lastIndex];
                 _enemies.RemoveAt(lastIndex);
                 i -= 1;
+            }
+            else { 
+                enemy.GameUpdate();
             }
         }
     }

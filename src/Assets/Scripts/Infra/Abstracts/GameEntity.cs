@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+// Is a StateMachine
 public abstract class GameEntity : GameAsset
 {
     [SerializeField]
@@ -13,7 +15,7 @@ public abstract class GameEntity : GameAsset
         get => _model.localScale;
         set { _model.localScale = value; }
     }
-
+    public Vector3 Position => gameObject.transform.localPosition;
 
     [SerializeField]
     AnimationStateController _animController;
@@ -25,8 +27,24 @@ public abstract class GameEntity : GameAsset
 
     public float PathOffset { get; set; }
     public float Speed { get; set; }
+    public bool IsAlive { get; set; } = true;
 
 
+    private IEntityState _currentState;
+
+    public IEntityState CurrentState => _currentState;
+
+    /* ------------------------------------------------- */
     public abstract void SpawnOn(GameTile tile);
-    public abstract bool GameUpdate();
+    public virtual void GameUpdate() {
+        if(_currentState != null)
+            StartCoroutine(_currentState.UpdateState());
+    }
+
+    public void ChangeState(IEntityState newState)
+    {
+        _currentState?.Exit();
+        _currentState = newState;
+        _currentState.Enter(this);
+    }
 }

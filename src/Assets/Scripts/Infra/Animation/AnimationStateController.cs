@@ -2,7 +2,17 @@ using System.Linq;
 using UnityEngine;
 
 public enum AnimationStateEnum { 
-    Idle, Walk, Attack, Death
+    Idle, Walk, Attack, Death, Spawn
+}
+
+public enum AnimationParamsEnum
+{
+    DistanceY
+}
+
+public enum AnimationTypeEnum
+{
+    Idle, Walk, Attack, JumpIdle, JumpLand, Death
 }
 
 [RequireComponent(typeof(Animator))]
@@ -10,6 +20,7 @@ public class AnimationStateController : MonoBehaviour
 {
     Animator animator;
     private int[] stateHash;
+    private int distanceYHash;
     private AnimationClip[] animationClips;
 
     void Awake()
@@ -17,13 +28,21 @@ public class AnimationStateController : MonoBehaviour
         animator = GetComponent<Animator>();
         SetStateHash();
         CacheAnimationClips();
+        distanceYHash = Animator.StringToHash(AnimationParamsEnum.DistanceY.ToString());
     }
 
-    public void ChangeAnimator(AnimationStateEnum state) {
-        animator.SetBool(stateHash[(int)state], true);
+    public void ChangeAnimator(AnimationStateEnum state, float value = 0) {
+        switch (state) {
+            case AnimationStateEnum.Spawn:
+                animator.SetFloat(distanceYHash, value);
+                break;
+            default:
+                animator.SetBool(stateHash[(int)state], true);
+                break;
+        }
     }
 
-    public float GetAnimationLength(AnimationStateEnum state)
+    public float GetAnimationLength(AnimationTypeEnum state)
     {
         AnimationClip clip = animationClips[(int)state];
 
@@ -48,13 +67,13 @@ public class AnimationStateController : MonoBehaviour
     private void CacheAnimationClips()
     {
         // Mapeia os clipes para cada estado
-        animationClips = new AnimationClip[(int)AnimationStateEnum.Death + 1];
-        var clips = animator.runtimeAnimatorController.animationClips;
+        animationClips = new AnimationClip[(int)AnimationTypeEnum.Death + 1];
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
 
-        for (AnimationStateEnum state = AnimationStateEnum.Idle; state <= AnimationStateEnum.Death; state++)
+        for (AnimationTypeEnum type = AnimationTypeEnum.Idle; type <= AnimationTypeEnum.Death; type++)
         {
-            string stateName = state.ToString();
-            animationClips[(int)state] = clips.FirstOrDefault(c => c.name == stateName);
+            string AnimationName = type.ToString();
+            animationClips[(int)type] = clips.FirstOrDefault(c => c.name == AnimationName);
         }
     }
 
