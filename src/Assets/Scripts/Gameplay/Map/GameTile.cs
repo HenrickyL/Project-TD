@@ -132,7 +132,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     }
 
     public void ShowPath() {
-        if (Content.Element is TileArrow)
+        if (isEmpty)
             Content.Element.Enable();
         if (_distance == 0)
         {

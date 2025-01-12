@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GameTileContentFactory", menuName = "Factory/GameTileContentFactory")]
-public class GameTileContentFactory : AbstractGameObjectFactory
+public class GameTileContentFactory : AbstractGameAssetFactory
 {
 
     [SerializeField]
@@ -27,9 +27,7 @@ public class GameTileContentFactory : AbstractGameObjectFactory
 
     private GameTileContent Get(GameTileContent prefab)
     {
-        GameTileContent instance = CreateGameObjectInstance(prefab);
-        instance.OriginFactory = this;
-        return instance;
+        return base.Get<GameTileContent>(prefab);
     }
 
     public GameTileContent Get(GameTileContentType type)
