@@ -7,7 +7,7 @@ public enum AnimationStateEnum {
 
 public enum AnimationParamsEnum
 {
-    DistanceY
+    MovimentY
 }
 
 public enum AnimationTypeEnum
@@ -28,7 +28,7 @@ public class AnimationStateController : MonoBehaviour
         animator = GetComponent<Animator>();
         SetStateHash();
         CacheAnimationClips();
-        distanceYHash = Animator.StringToHash(AnimationParamsEnum.DistanceY.ToString());
+        distanceYHash = Animator.StringToHash(AnimationParamsEnum.MovimentY.ToString());
     }
 
     public void ChangeAnimator(AnimationStateEnum state, float value = 0) {

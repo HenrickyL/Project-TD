@@ -5,6 +5,16 @@ public class Enemy : GameEntity
     public GameTile TileFrom { get; set; }
 
 
+    //private void Awake()
+    //{
+    //    ChangeState(new SpawnState(null));
+    //}
+
+    //private void Update()
+    //{
+    //    GameUpdate();
+    //}
+
 
     public override void SpawnOn(GameTile tile)
     {
