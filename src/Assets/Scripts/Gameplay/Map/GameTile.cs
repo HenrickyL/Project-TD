@@ -10,7 +10,14 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
 
     GameTileContent _content;
 
-    public bool onWall => Content.Type == GameTileContentType.Wall;
+    public bool isWall => Content.Type == GameTileContentType.Wall;
+    public bool isEmpty => Content.Type == GameTileContentType.Empty;
+    public bool isDestination => Content.Type == GameTileContentType.Destination;
+    public Vector3 ExitPoint { get; private set; }
+
+    public GameTile NextTileOnPath => _nextOnPath;
+
+    public Direction PathDirection { get; private set; }
 
     public GameTileContent Content
     {
@@ -30,13 +37,18 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
 
     public TileArrow Arrow { get; set; }
 
-    public GameTile[] Neighbors {
+    public Direction[] NeighborsOrder {
         get {
             return IsAlternative ?
-                new GameTile[] { North, South, East, West } :
-                new GameTile[] { West, East, South, North };
+                DirectionOrder.GetPrimary() :
+                DirectionOrder.GetReverse();
         }
     }
+
+    public GameTile[] Neighbors => _neighbors;
+
+
+    public GameTile Ne { get; set; }
 
     public GameTile North { get { return _neighbors[(int)Direction.North]; } set { _neighbors[(int)Direction.North] = value; } }
     public GameTile East { get { return _neighbors[(int)Direction.East]; } set { _neighbors[(int)Direction.East] = value; } }
@@ -59,8 +71,9 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     private void Awake()
     {
         _neighbors = new GameTile[(int)Direction.West + 1];
+        this.PathDirection = Direction.North;
     }
-    public GameTile GrowPathTo(GameTile neighbor)
+    public GameTile GrowPathTo(GameTile neighbor, Direction direction)
     {
         Debug.Assert(HasPath, "No path!");
         //if (neighbor == null || neighbor.HasPath)
@@ -69,7 +82,9 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         //}
         neighbor._distance = _distance + 1;
         neighbor._nextOnPath = this;
-        return !neighbor.onWall ? neighbor : null;
+        neighbor.ExitPoint = (neighbor.transform.localPosition + this.transform.localPosition) * 0.5f;
+        neighbor.PathDirection = direction.Inverse();
+        return !neighbor.isWall ? neighbor : null;
     }
 
     /* -------------------------------------------------------------- */
@@ -109,6 +124,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     {
         _distance = 0;
         _nextOnPath = null;
+        ExitPoint = transform.localPosition;
     }
 
     public GameTile Next() {
@@ -116,7 +132,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     }
 
     public void ShowPath() {
-        if (Content.Element is TileArrow)
+        if (isEmpty)
             Content.Element.Enable();
         if (_distance == 0)
         {
