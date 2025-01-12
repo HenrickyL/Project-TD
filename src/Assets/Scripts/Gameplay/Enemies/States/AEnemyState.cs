@@ -1,16 +1,14 @@
-using System.Collections;
-
 public abstract class AEnemyState : IEntityState
 {
     protected private Enemy enemy;
-    protected AnimationStateController animatorController;
+    protected AnimationStateController animationController;
 
     public virtual void Enter(GameEntity entity) { 
         enemy  = entity as Enemy;
-        animatorController = enemy.AnimationController;
+        animationController = enemy.AnimationController;
     }
 
     public virtual void Exit() { }
 
-    public abstract IEnumerator UpdateState();
+    public virtual void UpdateState() { }
 }

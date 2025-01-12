@@ -1,12 +1,10 @@
-using System.Collections;
 using UnityEngine;
-
 public class Enemy : GameEntity
 {
     public GameTile TileTo { get; set; }
     public GameTile TileFrom { get; set; }
 
-    
+
 
     public override void SpawnOn(GameTile tile)
     {
@@ -26,13 +24,5 @@ public class Enemy : GameEntity
     }
 
     /* -------------------------------------------- */
-
     
-    public IEnumerator HandleDeath()
-    {
-        IsAlive = false;
-        AnimationController.ChangeAnimator(AnimationStateEnum.Death);
-        yield return new WaitForSeconds(AnimationController.GetAnimationLength(AnimationTypeEnum.Death)+0.15f);
-        OriginFactory.Reclaim(this);
-    }
 }

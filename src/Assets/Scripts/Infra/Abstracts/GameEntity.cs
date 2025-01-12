@@ -37,8 +37,7 @@ public abstract class GameEntity : GameAsset
     /* ------------------------------------------------- */
     public abstract void SpawnOn(GameTile tile);
     public virtual void GameUpdate() {
-        if(_currentState != null)
-            StartCoroutine(_currentState.UpdateState());
+        _currentState?.UpdateState();
     }
 
     public void ChangeState(IEntityState newState)

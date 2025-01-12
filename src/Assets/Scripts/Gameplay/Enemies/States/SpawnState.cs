@@ -25,7 +25,7 @@ public class SpawnState : AEnemyState
         enemy.transform.localPosition = oldPos;
     }
 
-    public override IEnumerator UpdateState()
+    public override void UpdateState()
     {
         if (Position.y <= 0.05)
         {
@@ -33,9 +33,7 @@ public class SpawnState : AEnemyState
             old.y = 0;
             enemy.transform.localPosition = old;
 
-
             enemy.ChangeState(new MovimentState());
         }
-        yield break;
     }
 }

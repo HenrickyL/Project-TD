@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class MovimentState : AEnemyState
@@ -19,17 +18,17 @@ public class MovimentState : AEnemyState
         base.Enter(entity);
         _progress = 0f;
         PrepareIntro();
-        animatorController.ChangeAnimator(AnimationStateEnum.Walk);
+        animationController.ChangeAnimator(AnimationStateEnum.Walk);
     }
-    public override IEnumerator UpdateState()
+    public override void UpdateState()
     {
         _progress += Time.deltaTime * _progressFactor;
         while (_progress > 1f)
         {
             if (TileTo == null)
             {
-                yield return enemy.HandleDeath();
-                yield break;
+                enemy.ChangeState(new DeathState(enemy));
+                return;
             }
             _progress = (_progress - 1f) / _progressFactor;
             PrepareNextState();
@@ -47,7 +46,6 @@ public class MovimentState : AEnemyState
             );
             enemy.transform.localRotation = Quaternion.Euler(0f, angle, 0f);
         }
-        yield break;
     }
 
     /* ------------------------------------------------------------------- */
