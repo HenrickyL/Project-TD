@@ -13,10 +13,11 @@ public abstract class GameAsset : MonoBehaviour
         }
     }
 
-    
+
     /* --------------------------------------------------- */
 
-    //public abstract void Initialize();
+    public virtual void GameUpdate() { 
+    }
 
     public virtual void Recycle()
     {

@@ -57,6 +57,9 @@ public class GameBoard : MonoBehaviour
     public bool HasDestinations => _tiles.FirstOrDefault(x => x.isDestination) != null;
     public int SpawnPointCount => _spawnPoints.Count;
 
+    private List<GameTileContent> _updatingContent = new();
+
+
 
     private void ApplyShowPath() {
         if (_showPaths)
@@ -219,6 +222,7 @@ public class GameBoard : MonoBehaviour
     {
         if (tile.Content.Type == GameTileContentType.Tower)
         {
+            _updatingContent.Remove(tile.Content);
             tile.Content = _contentFactory.Get(GameTileContentType.Empty);
             FindPath();
         }
@@ -229,10 +233,12 @@ public class GameBoard : MonoBehaviour
             {
                 FindPath();
             }
+            _updatingContent.Add(tile.Content);
         }
         else if (tile.Content.Type == GameTileContentType.Wall)
         {
             tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+            _updatingContent.Add(tile.Content);
         }
     }
 
@@ -269,5 +275,13 @@ public class GameBoard : MonoBehaviour
 
     private bool FindPath() {
         return TileSearch.FindPath(_tiles, ShowPaths);
+    }
+
+    //TODO: Verify a general approach to more Contents
+    public void GameUpdate() {
+        for (int i = 0; i < _updatingContent.Count; i++)
+        {
+            _updatingContent[i].GameUpdate();
+        }
     }
 } 

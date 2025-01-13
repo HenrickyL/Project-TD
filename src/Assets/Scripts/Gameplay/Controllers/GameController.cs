@@ -108,6 +108,7 @@ public class GameController : MonoBehaviour
 
         UpdateSpawn();
         UpdateEnemies();
+        _board.GameUpdate();
     }
 
 

@@ -15,4 +15,5 @@ public class GameTileContent : GameAsset
 
     public bool BlocksPath =>
         Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
+
 }

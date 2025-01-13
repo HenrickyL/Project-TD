@@ -38,7 +38,8 @@ public abstract class GameEntity : GameAsset
 
     /* ------------------------------------------------- */
     public abstract void SpawnOn(GameTile tile);
-    public virtual void GameUpdate() {
+    public override void GameUpdate() {
+        base.GameUpdate();
         _currentState?.UpdateState();
     }
 
