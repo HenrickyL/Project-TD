@@ -36,7 +36,7 @@ public class Tower : GameTileContent
     }
 
     private bool TrackTarget() {
-        if (_target == null) {
+        if (_target == null || !_target.Enemy.IsAlive) {
             return false;
         }
         Vector3 towerPos = Position;
