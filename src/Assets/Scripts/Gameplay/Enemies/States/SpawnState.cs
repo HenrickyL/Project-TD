@@ -6,7 +6,7 @@ public class SpawnState : AEnemyState
 
     private Vector3 Position => enemy.Position;
 
-    public SpawnState(GameTile tile)
+    public SpawnState(GameTile tile) : base("Spawn")
     {
         _tile = tile;
     }

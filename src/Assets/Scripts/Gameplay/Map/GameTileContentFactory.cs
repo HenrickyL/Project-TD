@@ -16,14 +16,11 @@ public class GameTileContentFactory : AbstractGameAssetFactory
     [SerializeField]
     GameTileContent spawnPoint = default;
 
+    [SerializeField]
+    Tower towerPrefab = default;
+
 
     /* --------------------------------------------------------------------------------- */
-
-    public void Reclaim(GameTileContent content)
-    {
-        Debug.Assert(content.OriginFactory == this, "Wrong factory reclaimed!");
-        Destroy(content.gameObject);
-    }
 
     private GameTileContent Get(GameTileContent prefab)
     {
@@ -38,6 +35,7 @@ public class GameTileContentFactory : AbstractGameAssetFactory
             case GameTileContentType.Empty: return Get(emptyPrefab);
             case GameTileContentType.Wall: return Get(wallPrefab);
             case GameTileContentType.SpawnPoint:return Get(spawnPoint);
+            case GameTileContentType.Tower: return Get(towerPrefab);
         }
         Debug.Assert(false, "Unsupported type: " + type);
         return null;
