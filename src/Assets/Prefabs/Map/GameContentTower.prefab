@@ -483,3 +483,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 4
   _tileElement: {fileID: 306931398722522564}
+  targetingRange: 2.5

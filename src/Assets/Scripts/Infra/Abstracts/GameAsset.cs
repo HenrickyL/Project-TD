@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[SelectionBase]
 public abstract class GameAsset : MonoBehaviour
 {
     private AbstractGameAssetFactory _originFactory;
@@ -12,10 +13,7 @@ public abstract class GameAsset : MonoBehaviour
             _originFactory = value;
         }
     }
-
-
     /* --------------------------------------------------- */
-
     public virtual void GameUpdate() { 
     }
 
