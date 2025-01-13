@@ -1,21 +1,53 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Tower : GameTileContent
 {
     [SerializeField, Range(1.5f, 10.5f)]
     float targetingRange = 1.5f;
 
+    private TargetPoint _target;
+
+    const int _enemyLayerMask = 1 << 9;
+
+
     public override void GameUpdate()
     {
         base.GameUpdate();
-        Debug.Log("Searching for target...");
+        if (AcquireTarget())
+        {
+            Debug.Log("Acquired target!");
+        }
     }
 
-    void OnDrawGizmosSelected()
+
+    /* --------------------------------------------- */
+
+    private bool AcquireTarget()
+    {
+        Collider[] targets = Physics.OverlapSphere(
+            transform.position, targetingRange, _enemyLayerMask
+        );
+        if (targets.Length > 0)
+        {
+            _target = targets[0].GetComponent<TargetPoint>();
+            Debug.Assert(_target != null, "Targeted non-enemy!", targets[0]);
+            return true;
+        }
+        _target = null;
+        return false;
+    }
+
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Vector3 position = transform.position;
         position.y += 0.01f;
         Gizmos.DrawWireSphere(position, targetingRange);
+
+        if (_target != null)
+        {
+            Gizmos.DrawLine(position, _target.Position);
+        }
     }
 }
