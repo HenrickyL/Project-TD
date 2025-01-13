@@ -5,7 +5,7 @@ public class DeathState : AEnemyState
 {
     private MonoBehaviour _coroutineHost;
 
-    public DeathState(MonoBehaviour coroutineHost) {
+    public DeathState(MonoBehaviour coroutineHost) : base("Death") {
         _coroutineHost = coroutineHost;
     }
 

@@ -29,8 +29,10 @@ public abstract class GameEntity : GameAsset
     public float Speed { get; set; }
     public bool IsAlive { get; set; } = true;
 
-
     private IEntityState _currentState;
+
+    [SerializeField]
+    private string _stateName = default;
 
     public IEntityState CurrentState => _currentState;
 
@@ -44,6 +46,7 @@ public abstract class GameEntity : GameAsset
     {
         _currentState?.Exit();
         _currentState = newState;
+        _stateName = _currentState.Name();
         _currentState.Enter(this);
     }
 }

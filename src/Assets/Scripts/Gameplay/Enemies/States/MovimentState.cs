@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class MovimentState : AEnemyState
 {
+    public MovimentState() : base("Moviment") { 
+        
+    }
     GameTile TileTo => enemy.TileTo;
     GameTile TileFrom => enemy.TileFrom;
 

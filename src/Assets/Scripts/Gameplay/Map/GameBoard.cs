@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -151,7 +150,7 @@ public class GameBoard : MonoBehaviour
 
     private GameTile GetTile(int x, int y) {
         if (x < 0 || x > _size.x || y < 0 || y >= _size.y)
-            throw new ArgumentOutOfRangeException("Invalid Coordinates");
+            throw new System.ArgumentOutOfRangeException("Invalid Coordinates");
 
         int index = x + y * _size.x;
         return _tiles[index];
@@ -256,6 +255,14 @@ public class GameBoard : MonoBehaviour
 
     public GameTile GetSpawnPoint(int index)
     {
+        return _spawnPoints[index];
+    }
+
+    public GameTile GetRandomSpawnPoint()
+    {
+        //TODO: Save bellow hasPathList in attibute of board, calculate with (Add this bool) bool isChangedSpawn change.
+        List<GameTile> hasPath = _spawnPoints.Where(x => x.HasPath).ToList();
+        int index = UnityEngine.Random.Range(0, hasPath.Count);
         return _spawnPoints[index];
     }
 

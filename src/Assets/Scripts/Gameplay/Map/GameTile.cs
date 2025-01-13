@@ -3,8 +3,6 @@ using System;
 using UnityEngine;
 public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
 {
-    //[SerializeField]
-    //TileArrow _arrow;
     [SerializeField]
     private GameTile[] _neighbors;
 
@@ -15,7 +13,6 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     public bool isDestination => Content.Type == GameTileContentType.Destination;
     public Vector3 ExitPoint { get; private set; }
 
-    public GameTile NextTileOnPath => _nextOnPath;
 
     public Direction PathDirection { get; private set; }
 
@@ -54,8 +51,11 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
     public GameTile East { get { return _neighbors[(int)Direction.East]; } set { _neighbors[(int)Direction.East] = value; } }
     public GameTile South { get { return _neighbors[(int)Direction.South]; } set { _neighbors[(int)Direction.South] = value; } }
     public GameTile West { get { return _neighbors[(int)Direction.West]; } set { _neighbors[(int)Direction.West] = value; } }
+    
     [SerializeField]
     GameTile _nextOnPath;
+    public GameTile NextTileOnPath => _nextOnPath;
+
     [SerializeField]
     int _distance;
 
@@ -84,7 +84,7 @@ public class GameTile : MonoBehaviour, IState<GameTile>, IEquatable<GameTile>
         neighbor._nextOnPath = this;
         neighbor.ExitPoint = (neighbor.transform.localPosition + this.transform.localPosition) * 0.5f;
         neighbor.PathDirection = direction.Inverse();
-        return !neighbor.isWall ? neighbor : null;
+        return neighbor.Content.BlocksPath ? null : neighbor;
     }
 
     /* -------------------------------------------------------------- */
