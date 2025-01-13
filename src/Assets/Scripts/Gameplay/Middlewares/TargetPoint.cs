@@ -21,6 +21,6 @@ public class TargetPoint : MonoBehaviour
         //    GetComponent<SphereCollider>() != null,
         //    "Target point without sphere collider!", this
         //);
-        Debug.Assert(gameObject.layer == 9, "Ponto alvo na camada errada!", this);
+        Debug.Assert(gameObject.layer == 9, "Target point on wrong layer!", this);
     }
 }

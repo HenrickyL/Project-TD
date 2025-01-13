@@ -159,7 +159,7 @@ public class GameBoard : MonoBehaviour
     public void SetEnable(bool value) { gameObject.SetActive(value); }
 
     public GameTile GetTile(Ray ray) {
-        if (Physics.Raycast(ray, out RaycastHit hit)) {
+        if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, 1)) {
             int x = (int)(hit.point.x + _size.x * 0.5f);
             int y = (int)(hit.point.z + _size.y * 0.5f);
             if (x >= 0 && x < _size.x && y >= 0 && y < _size.y)
