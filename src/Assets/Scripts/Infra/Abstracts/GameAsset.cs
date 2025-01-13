@@ -13,6 +13,12 @@ public abstract class GameAsset : MonoBehaviour
             _originFactory = value;
         }
     }
+
+    public Vector3 LocalPosition => gameObject.transform.localPosition;
+    public Vector3 Position => gameObject.transform.position;
+
+    public float Scale { get; protected set; }
+
     /* --------------------------------------------------- */
     public virtual void GameUpdate() { 
     }

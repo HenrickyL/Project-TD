@@ -29,6 +29,7 @@ public class Enemy : GameEntity
     {
         ModelLocalScale = new Vector3(scale, scale, scale);
         Speed = speed;
+        Scale = scale;
         PathOffset = pathOffset;
     }
 

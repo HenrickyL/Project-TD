@@ -1,6 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-
 public class Tower : GameTileContent
 {
     [SerializeField, Range(1.5f, 10.5f)]
@@ -14,19 +12,18 @@ public class Tower : GameTileContent
     public override void GameUpdate()
     {
         base.GameUpdate();
-        if (AcquireTarget())
+        if (TrackTarget() || AcquireTarget())
         {
-            Debug.Log("Acquired target!");
+            Debug.Log("Locked on target!");
         }
     }
-
 
     /* --------------------------------------------- */
 
     private bool AcquireTarget()
     {
         Collider[] targets = Physics.OverlapSphere(
-            transform.position, targetingRange, _enemyLayerMask
+            Position, targetingRange, _enemyLayerMask
         );
         if (targets.Length > 0)
         {
@@ -36,6 +33,20 @@ public class Tower : GameTileContent
         }
         _target = null;
         return false;
+    }
+
+    private bool TrackTarget() {
+        if (_target == null) {
+            return false;
+        }
+        Vector3 towerPos = Position;
+        Vector3 targetPos = _target.Position;
+        if (Vector3.Distance(towerPos, targetPos) > targetingRange + _target.Radius)
+        {
+            _target = null;
+            return false;
+        }
+        return true;
     }
 
     private void OnDrawGizmosSelected()
