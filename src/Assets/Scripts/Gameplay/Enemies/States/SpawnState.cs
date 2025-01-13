@@ -26,14 +26,14 @@ public class SpawnState : AEnemyState
 
     public override void UpdateState()
     {
-        if (Position.y > 0)
+        if (Position.y >= 0)
         {
             animationController.ChangeAnimator(AnimationStateEnum.Spawn, Position.y);
         }
         else
         {
             Vector3 old = enemy.transform.localPosition;
-            old.y = 0;
+            old.y = 0.05f;
             enemy.transform.localPosition = old;
             animationController.ChangeAnimator(AnimationStateEnum.Spawn, Position.y);
             enemy.ChangeState(new MovimentState());
