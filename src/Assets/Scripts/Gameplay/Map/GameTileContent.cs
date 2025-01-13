@@ -12,5 +12,4 @@ public class GameTileContent : GameAsset
     private TileElement _tileElement = default;
 
     public TileElement Element => _tileElement;
-    
 }
