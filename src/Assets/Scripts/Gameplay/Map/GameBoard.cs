@@ -216,6 +216,26 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    public void ToggleTower(GameTile tile)
+    {
+        if (tile.Content.Type == GameTileContentType.Tower)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            FindPath();
+        }
+        else if (tile.Content.Type == GameTileContentType.Empty)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+            if (TileSearch.ExistDetination(_tiles))
+            {
+                FindPath();
+            }
+            //if (!TileSearch.FindPath(_tiles)) { 
+            //    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            //}
+        }
+    }
+
 
     public void ToggleSpawnPoint(GameTile tile) {
         if (tile.Content.Type == GameTileContentType.SpawnPoint)
@@ -231,6 +251,8 @@ public class GameBoard : MonoBehaviour
             _spawnPoints.Add(tile);
         }
     }
+
+
 
     public GameTile GetSpawnPoint(int index)
     {
