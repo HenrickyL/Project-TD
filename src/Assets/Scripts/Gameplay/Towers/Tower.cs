@@ -5,7 +5,7 @@ public class Tower : GameTileContent
     float targetingRange = 1.5f;
 
     [SerializeField]
-    Transform turret = default;
+    Transform turret, laserBeam = default;
 
     private TargetPoint _target;
 
@@ -15,6 +15,13 @@ public class Tower : GameTileContent
 
     static bool isDebugMode = true;
 
+    Vector3 _laserBeamScale;
+
+    void Awake()
+    {
+        _laserBeamScale = laserBeam.localScale;
+    }
+
     public override void GameUpdate()
     {
         base.GameUpdate();
@@ -22,8 +29,9 @@ public class Tower : GameTileContent
         {
             Shoot();
         }
-
-        
+        else {
+            laserBeam.localScale = Vector3.zero;
+        }
     }
 
     /* --------------------------------------------- */
@@ -31,6 +39,15 @@ public class Tower : GameTileContent
     private void Shoot() {
         Vector3 point = _target.Position;
         turret.LookAt(point);
+        laserBeam.localRotation = turret.localRotation;
+
+        float d = Vector3.Distance(turret.position, point);
+        _laserBeamScale.z = d;
+        laserBeam.localScale = _laserBeamScale;
+
+        laserBeam.localPosition =
+            turret.localPosition + 0.5f * d * laserBeam.forward;
+
         if (isDebugMode && _target != null)
         {
             Debug.DrawLine(turret.transform.position, _target.Position, Color.red);
