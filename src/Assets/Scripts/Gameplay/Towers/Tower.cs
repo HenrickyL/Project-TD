@@ -8,6 +8,8 @@ public class Tower : GameTileContent
 
     const int _enemyLayerMask = 1 << 9;
 
+    static Collider[] _targetsBuffer = new Collider[1];
+
 
     public override void GameUpdate()
     {
@@ -22,13 +24,17 @@ public class Tower : GameTileContent
 
     private bool AcquireTarget()
     {
-        Collider[] targets = Physics.OverlapSphere(
-            Position, targetingRange, _enemyLayerMask
+        Vector3 towerPos = Position;
+        Vector3 aux = towerPos;
+        aux.y += 2f;
+        // OverlapSphere
+        int hits = Physics.OverlapCapsuleNonAlloc(
+            towerPos, aux, targetingRange, _targetsBuffer, _enemyLayerMask
         );
-        if (targets.Length > 0)
+        if (hits > 0)
         {
-            _target = targets[0].GetComponent<TargetPoint>();
-            Debug.Assert(_target != null, "Targeted non-enemy!", targets[0]);
+            _target = _targetsBuffer[0].GetComponent<TargetPoint>();
+            Debug.Assert(_target != null, "Targeted non-enemy!", _targetsBuffer[0]);
             return true;
         }
         _target = null;
@@ -39,9 +45,14 @@ public class Tower : GameTileContent
         if (_target == null || !_target.Enemy.IsAlive) {
             return false;
         }
-        Vector3 towerPos = Position;
-        Vector3 targetPos = _target.Position;
-        if (Vector3.Distance(towerPos, targetPos) > targetingRange + _target.Radius)
+        //Vector3 towerPos = Position;
+        //Vector3 targetPos = _target.Position;
+        Vector3 a = Position;
+        Vector3 b = _target.Position;
+        float x = a.x - b.x;
+        float z = a.z - b.z;
+        float r = targetingRange + _target.Radius;
+        if (x * x + z * z > r * r)
         {
             _target = null;
             return false;
