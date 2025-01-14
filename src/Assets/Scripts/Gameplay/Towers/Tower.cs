@@ -4,9 +4,12 @@ public class Tower : GameTileContent
     [SerializeField, Range(1.5f, 10.5f)]
     float targetingRange = 1.5f;
 
+    [SerializeField]
+    Transform turret = default;
+
     private TargetPoint _target;
 
-    const int _enemyLayerMask = 1 << 9;
+    const int _enemyLayerMask = 1 << (int)LayersEnum.Targets;
 
     static Collider[] _targetsBuffer = new Collider[1];
 
@@ -17,14 +20,22 @@ public class Tower : GameTileContent
         base.GameUpdate();
         if (TrackTarget() || AcquireTarget())
         {
-            Debug.Log("Locked on target!");
+            Shoot();
         }
 
-        if (isDebugMode && _target != null) { 
-            Debug.DrawLine(transform.position, _target.Position, Color.red); }
+        
     }
 
     /* --------------------------------------------- */
+
+    private void Shoot() {
+        Vector3 point = _target.Position;
+        turret.LookAt(point);
+        if (isDebugMode && _target != null)
+        {
+            Debug.DrawLine(turret.transform.position, _target.Position, Color.red);
+        }
+    }
 
     private bool AcquireTarget()
     {
