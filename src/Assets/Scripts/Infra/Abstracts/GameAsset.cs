@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[SelectionBase]
 public abstract class GameAsset : MonoBehaviour
 {
     private AbstractGameAssetFactory _originFactory;
@@ -13,10 +14,14 @@ public abstract class GameAsset : MonoBehaviour
         }
     }
 
-    
-    /* --------------------------------------------------- */
+    public Vector3 LocalPosition => gameObject.transform.localPosition;
+    public Vector3 Position => gameObject.transform.position;
 
-    //public abstract void Initialize();
+    public float Scale { get; protected set; }
+
+    /* --------------------------------------------------- */
+    public virtual void GameUpdate() { 
+    }
 
     public virtual void Recycle()
     {

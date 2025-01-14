@@ -15,7 +15,6 @@ public class Enemy : GameEntity
     //    GameUpdate();
     //}
 
-
     public override void SpawnOn(GameTile tile)
     {
         Debug.Assert(tile.NextTileOnPath != null, "Nowhere to go!", this);
@@ -30,6 +29,7 @@ public class Enemy : GameEntity
     {
         ModelLocalScale = new Vector3(scale, scale, scale);
         Speed = speed;
+        Scale = scale;
         PathOffset = pathOffset;
     }
 

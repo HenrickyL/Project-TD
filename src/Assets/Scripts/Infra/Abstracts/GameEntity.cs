@@ -15,7 +15,7 @@ public abstract class GameEntity : GameAsset
         get => _model.localScale;
         set { _model.localScale = value; }
     }
-    public Vector3 Position => gameObject.transform.localPosition;
+
 
     [SerializeField]
     AnimationStateController _animController;
@@ -38,7 +38,8 @@ public abstract class GameEntity : GameAsset
 
     /* ------------------------------------------------- */
     public abstract void SpawnOn(GameTile tile);
-    public virtual void GameUpdate() {
+    public override void GameUpdate() {
+        base.GameUpdate();
         _currentState?.UpdateState();
     }
 
