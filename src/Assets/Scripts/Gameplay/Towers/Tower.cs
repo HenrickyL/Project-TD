@@ -10,6 +10,7 @@ public class Tower : GameTileContent
 
     static Collider[] _targetsBuffer = new Collider[1];
 
+    static bool isDebugMode = true;
 
     public override void GameUpdate()
     {
@@ -18,6 +19,9 @@ public class Tower : GameTileContent
         {
             Debug.Log("Locked on target!");
         }
+
+        if (isDebugMode && _target != null) { 
+            Debug.DrawLine(transform.position, _target.Position, Color.red); }
     }
 
     /* --------------------------------------------- */
