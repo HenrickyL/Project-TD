@@ -47,11 +47,6 @@ public class Tower : GameTileContent
 
         laserBeam.localPosition =
             turret.localPosition + 0.5f * d * laserBeam.forward;
-
-        if (isDebugMode && _target != null)
-        {
-            Debug.DrawLine(turret.transform.position, _target.Position, Color.red);
-        }
     }
 
     private bool AcquireTarget()
