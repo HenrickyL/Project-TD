@@ -19,7 +19,8 @@ public class MovimentState : AEnemyState
     public override void Enter(GameEntity entity)
     {
         base.Enter(entity);
-        _progress = 0f;
+        enemy.TileTo = enemy.TileFrom.NextTileOnPath;
+        _progress =  enemy.Progress > 0 ? enemy.Progress :  0f;
         PrepareIntro();
         animationController.ChangeAnimator(AnimationStateEnum.Walk);
     }
@@ -49,6 +50,13 @@ public class MovimentState : AEnemyState
             );
             enemy.transform.localRotation = Quaternion.Euler(0f, angle, 0f);
         }
+    }
+
+
+    public override void Exit()
+    {
+        base.Exit();
+        enemy.Progress = _progress;
     }
 
     /* ------------------------------------------------------------------- */

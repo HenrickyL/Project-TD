@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class Enemy : GameEntity
 {
     public GameTile TileTo { get; set; }
@@ -15,12 +16,13 @@ public class Enemy : GameEntity
     //    GameUpdate();
     //}
 
+    public float Progress { get; set; } = 0f;
+
     public override void SpawnOn(GameTile tile)
     {
         Debug.Assert(tile.NextTileOnPath != null, "Nowhere to go!", this);
         TileFrom = tile;
         TileTo = tile.NextTileOnPath;
-        AnimationController.ChangeAnimator(AnimationStateEnum.Walk);
         ChangeState(new SpawnState(tile));
     }
 
@@ -31,8 +33,22 @@ public class Enemy : GameEntity
         Speed = speed;
         Scale = scale;
         PathOffset = pathOffset;
+        Health = 100f * scale;
     }
 
     /* -------------------------------------------- */
-    
+
+    private void ApplyDamage(float damage) {
+        Debug.Assert(damage >= 0f, "Negative damage applied.");
+        Health -= damage;
+    }
+    public void HandleDamage(float damage)
+    {
+        ApplyDamage(damage);
+        if (!this.IsAlive)
+        {
+            this.ChangeState(new DeathState(this));
+        }
+        //ChangeState(new HitState(this, damage, ApplyDamage));
+    }
 }

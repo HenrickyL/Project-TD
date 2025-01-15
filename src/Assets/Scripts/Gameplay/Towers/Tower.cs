@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 public class Tower : GameTileContent
 {
     [SerializeField, Range(1.5f, 10.5f)]
@@ -7,15 +8,19 @@ public class Tower : GameTileContent
     [SerializeField]
     Transform turret, laserBeam = default;
 
+    [SerializeField, Range(1f, 100f)]
+    float damagePerSecond = 10f;
+
+
     private TargetPoint _target;
 
     const int _enemyLayerMask = 1 << (int)LayersEnum.Targets;
 
     static Collider[] _targetsBuffer = new Collider[1];
 
-    static bool isDebugMode = true;
-
     Vector3 _laserBeamScale;
+
+    bool onHit = false;
 
     void Awake()
     {
@@ -47,6 +52,12 @@ public class Tower : GameTileContent
 
         laserBeam.localPosition =
             turret.localPosition + 0.5f * d * laserBeam.forward;
+
+        if (!onHit) { 
+            onHit = true;
+        }
+        _target.Enemy.HandleDamage(damagePerSecond * Time.deltaTime);
+
     }
 
     private bool AcquireTarget()
