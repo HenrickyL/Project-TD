@@ -15,9 +15,8 @@ public class DeathState : AEnemyState
         _coroutineHost.StartCoroutine(HandleDeath());
     }
 
-
     private IEnumerator HandleDeath() {
-        enemy.IsAlive = false;
+        enemy.SetDeath();
         animationController.ChangeAnimator(AnimationStateEnum.Death);
         yield return new WaitForSeconds(animationController.GetAnimationLength(AnimationTypeEnum.Death) + 0.15f);
         enemy.Recycle();
