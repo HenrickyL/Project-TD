@@ -5,8 +5,8 @@ public class MovimentState : AEnemyState
     public MovimentState() : base("Moviment") { 
         
     }
-    GameTile TileTo => Entity.TileTo;
-    GameTile TileFrom => Entity.TileFrom;
+    GameTile TileTo => enemy.TileTo;
+    GameTile TileFrom => enemy.TileFrom;
 
 
     Vector3 _positionFrom, _positionTo;
@@ -16,11 +16,11 @@ public class MovimentState : AEnemyState
     DirectionChange _directionChange;
     float _directionAngleFrom, _directionAngleTo;
 
-    public override void Enter(Enemy entity)
+    public override void Enter(GameAsset entity)
     {
         base.Enter(entity);
-        Entity.TileTo = Entity.TileFrom.NextTileOnPath;
-        _progress =  Entity.Progress > 0 ? Entity.Progress :  0f;
+        enemy.TileTo = enemy.TileFrom.NextTileOnPath;
+        _progress =  enemy.Progress > 0 ? enemy.Progress :  0f;
         PrepareIntro();
         animationController.ChangeAnimator(AnimationStateEnum.Walk);
     }
@@ -56,7 +56,7 @@ public class MovimentState : AEnemyState
     public override void Exit()
     {
         base.Exit();
-        Entity.Progress = _progress;
+        enemy.Progress = _progress;
     }
 
     /* ------------------------------------------------------------------- */
@@ -73,9 +73,9 @@ public class MovimentState : AEnemyState
         _direction = TileFrom.PathDirection;
         _directionChange = DirectionChange.None;
         _directionAngleFrom = _directionAngleTo = _direction.GetAngle();
-        Entity.ModelLocalPosition = new Vector3(Entity.PathOffset, 0f);
+        enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f);
         Entity.transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f * Entity.Speed;
+        _progressFactor = 2f * enemy.Speed;
     }
     /// <summary>
     /// Configura o estado final (outro) do inimigo.
@@ -86,15 +86,15 @@ public class MovimentState : AEnemyState
         _positionTo = TileFrom.transform.localPosition;
         _directionChange = DirectionChange.None;
         _directionAngleTo = _direction.GetAngle();
-        Entity.ModelLocalPosition = new Vector3(Entity.PathOffset, 0f);
+        enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f);
         Entity.transform.localRotation = _direction.GetRotation();
-        _progressFactor = 2f * Entity.Speed;
+        _progressFactor = 2f * enemy.Speed;
     }
 
     private void PrepareNextState()
     {
-        Entity.TileFrom = TileTo;
-        Entity.TileTo = TileTo.NextTileOnPath;
+        enemy.TileFrom = TileTo;
+        enemy.TileTo = TileTo.NextTileOnPath;
         _positionFrom = _positionTo;
         if (TileTo == null)
         {
@@ -120,31 +120,31 @@ public class MovimentState : AEnemyState
     {
         Entity.transform.localRotation = _direction.GetRotation();
         _directionAngleTo = _direction.GetAngle();
-        Entity.ModelLocalPosition = new Vector3(Entity.PathOffset, 0f); ;
-        _progressFactor = Entity.Speed;
+        enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f); ;
+        _progressFactor = enemy.Speed;
     }
 
     private void PrepareTurnRight()
     {
         _directionAngleTo = _directionAngleFrom + 90f;
-        Entity.ModelLocalPosition = new Vector3(Entity.PathOffset - 0.5f, 0f);
+        enemy.ModelLocalPosition = new Vector3(enemy.PathOffset - 0.5f, 0f);
         Entity.transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = Entity.Speed / (Mathf.PI * 0.5f * (0.5f - Entity.PathOffset));
+        _progressFactor = enemy.Speed / (Mathf.PI * 0.5f * (0.5f - enemy.PathOffset));
     }
 
     void PrepareTurnLeft()
     {
         _directionAngleTo = _directionAngleFrom - 90f;
-        Entity.ModelLocalPosition = new Vector3(Entity.PathOffset + 0.5f, 0f);
+        enemy.ModelLocalPosition = new Vector3(enemy.PathOffset + 0.5f, 0f);
         Entity.transform.localPosition = _positionFrom + _direction.GetHalfVector();
-        _progressFactor = Entity.Speed / (Mathf.PI * 0.5f * (0.5f + Entity.PathOffset));
+        _progressFactor = enemy.Speed / (Mathf.PI * 0.5f * (0.5f + enemy.PathOffset));
     }
 
     private void PrepareTurnAround()
     {
-        _directionAngleTo = _directionAngleFrom + (Entity.PathOffset < 0f ? 180f : -180f);
-        Entity.ModelLocalPosition = new Vector3(Entity.PathOffset, 0f);
+        _directionAngleTo = _directionAngleFrom + (enemy.PathOffset < 0f ? 180f : -180f);
+        enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f);
         Entity.transform.localPosition = _positionFrom;
-        _progressFactor = Entity.Speed / (Mathf.PI * Mathf.Max(Mathf.Abs(Entity.PathOffset), 0.2f));
+        _progressFactor = enemy.Speed / (Mathf.PI * Mathf.Max(Mathf.Abs(enemy.PathOffset), 0.2f));
     }
 }

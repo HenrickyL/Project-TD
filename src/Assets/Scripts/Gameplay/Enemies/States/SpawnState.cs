@@ -11,11 +11,11 @@ public class SpawnState : AEnemyState
         _tile = tile;
     }
 
-    public override void Enter(Enemy entity)
+    public override void Enter(GameAsset entity)
     {
         base.Enter(entity);
-        Entity.TileFrom = _tile;
-        Entity.TileTo = _tile.NextTileOnPath;
+        enemy.TileFrom = _tile;
+        enemy.TileTo = _tile.NextTileOnPath;
         Entity.transform.position = _tile.transform.position;
         float angle = _tile.PathDirection.GetAngle();
         Entity.transform.localRotation = Quaternion.Euler(0f, angle, 0f);

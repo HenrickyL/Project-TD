@@ -1,10 +1,10 @@
-public sealed class StateMachine<T> where T : GameAsset
+public sealed class StateMachine
 {
-    private IEntityState<T> _currentState;
-    private T _context;
+    private BaseState _currentState;
+    private GameAsset _context;
 
-    public IEntityState<T> CurrentState { get { return _currentState; } }
-    public T Context { get { return _context; } }
+    public BaseState CurrentState { get { return _currentState; } }
+    public GameAsset Context { get { return _context; } }
 
     public string CurrentStateName => _currentState.Name();
 
@@ -13,7 +13,7 @@ public sealed class StateMachine<T> where T : GameAsset
         _currentState?.UpdateState();
     }
 
-    public void ChangeState(T context, BaseState<T> newState)
+    public void ChangeState(GameAsset context, BaseState newState)
     {
         _context = context;
         _currentState?.Exit();

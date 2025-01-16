@@ -4,8 +4,8 @@ using UnityEngine;
 [SelectionBase]
 public abstract class GameAsset : MonoBehaviour
 {
-    private StateMachine<GameAsset> _stateMachine = null;
-    protected StateMachine<GameAsset> StateMachine
+    private StateMachine _stateMachine = null;
+    protected StateMachine StateMachine
     {
         get {
             if (_stateMachine == null)
@@ -33,7 +33,7 @@ public abstract class GameAsset : MonoBehaviour
     /* --------------------------------------------------- */
 
     private void CreateStateMachine() { 
-        _stateMachine = new StateMachine<GameAsset>();
+        _stateMachine = new StateMachine();
     }
 
     /* --------------------------------------------------- */
@@ -47,10 +47,10 @@ public abstract class GameAsset : MonoBehaviour
         OriginFactory.Reclaim(this);
     }
 
-    public void ChangeState<T>(BaseState<T> state) where T: GameAsset  {
+    public void ChangeState(BaseState state) {
         //BaseState<GameAsset> s = (BaseState<GameAsset>)Convert.ChangeType(state, typeof(BaseState<GameAsset>));
-        BaseState<GameAsset> s = state as BaseState<GameAsset>;
-        StateMachine.ChangeState(this, s);
+        //BaseState<GameAsset> s = state as BaseState<GameAsset>;
+        StateMachine.ChangeState(this, state);
     }
 }
 

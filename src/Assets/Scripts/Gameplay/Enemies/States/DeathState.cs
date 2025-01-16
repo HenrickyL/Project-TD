@@ -9,14 +9,14 @@ public class DeathState : AEnemyState
         _coroutineHost = coroutineHost;
     }
 
-    public override void Enter(Enemy entity)
+    public override void Enter(GameAsset entity)
     {
         base.Enter(entity);
         _coroutineHost.StartCoroutine(HandleDeath());
     }
 
     private IEnumerator HandleDeath() {
-        Entity.SetDeath();
+        enemy.SetDeath();
         animationController.ChangeAnimator(AnimationStateEnum.Death);
         yield return new WaitForSeconds(animationController.GetAnimationLength(AnimationTypeEnum.Death) + 0.15f);
         Entity.Recycle();

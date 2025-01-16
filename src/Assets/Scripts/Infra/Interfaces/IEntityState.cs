@@ -1,23 +1,23 @@
-public interface IEntityState<T> where T: GameAsset
+public interface IEntityState
 { 
-    void Enter(T context);
+    void Enter(GameAsset context);
     void UpdateState();
     void Exit();
     string Name();
 }
 
 
-public abstract class BaseState<T> : IEntityState<T> where T : GameAsset
+public abstract class BaseState : IEntityState
 {
-    private T _entity = default;
+    private GameAsset _entity = default;
     private string _name = default;
 
-    protected T Entity => _entity;
+    protected GameAsset Entity => _entity;
 
     public BaseState(string name) { 
         _name = name;
     }
-    public virtual void Enter(T context) {
+    public virtual void Enter(GameAsset context) {
         _entity = context;
     }
     public virtual void UpdateState() { }
