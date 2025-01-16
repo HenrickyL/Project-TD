@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [SelectionBase]
@@ -48,11 +47,6 @@ public abstract class GameAsset : MonoBehaviour
     }
 
     public void ChangeState(BaseState state) {
-        //BaseState<GameAsset> s = (BaseState<GameAsset>)Convert.ChangeType(state, typeof(BaseState<GameAsset>));
-        //BaseState<GameAsset> s = state as BaseState<GameAsset>;
         StateMachine.ChangeState(this, state);
     }
 }
-
-
-//BaseState<GameAsset> s = state as BaseState<GameAsset>;
