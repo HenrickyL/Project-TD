@@ -77,21 +77,25 @@ public class GameController : MonoBehaviour
     public void UpdateGame()
     {
         // Atualizações do loop principal do jogo
-        // Exemplo: Atualizar a lógica dos inimigos e defesas
         if (Input.GetMouseButtonDown(0))
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                HandleAlternativeTouch();
+                HandleTower();
             }
             else if (Input.GetKey(KeyCode.LeftControl)) {
                 HandleSpawnTouch();
             }
             else
             {
-                HandleTouch();
+                HandleWall();
             }
         }
+
+        if (Input.GetMouseButtonDown(1)) {
+            HandleDestination();
+        }
+
 
         if (Input.GetKeyDown(KeyCode.G)){
              _board.ShowGrid = !_board.ShowGrid;
@@ -104,6 +108,8 @@ public class GameController : MonoBehaviour
 
         UpdateSpawn();
         UpdateEnemies();
+        Physics.SyncTransforms();
+        _board.GameUpdate();
     }
 
 
@@ -121,7 +127,7 @@ public class GameController : MonoBehaviour
     private void UpdateEnemies() { 
         enemies.GameUpdate();
     }
-    private void HandleAlternativeTouch()
+    private void HandleDestination()
     {
         GameTile tile = _board.GetTile(TouchRay);
         if (tile != null){
@@ -137,20 +143,32 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void HandleTouch() {
+    private void HandleWall() {
         GameTile tile = _board.GetTile(TouchRay);
         if (tile != null) {
             _board.ToggleWall(tile);
         }
     }
 
+    private void HandleTower()
+    {
+        GameTile tile = _board.GetTile(TouchRay);
+        if (tile != null)
+        {
+            _board.ToggleTower(tile);
+        }
+    }
+
     private void SpawnEnemy() {
-        if (_board.SpawnPointCount > 0 && _board.HasDestinations) { 
+        if (_board.SpawnPointCount > 0 && _board.HasDestinations) {
             GameTile spawnPoint =
-                _board.GetSpawnPoint(Random.Range(0, _board.SpawnPointCount));
-            Enemy enemy = enemyFactory.Get();
-            enemy.SpawnOn(spawnPoint);
-            enemies.Add(enemy);
+                //_board.GetSpawnPoint(Random.Range(0, _board.SpawnPointCount));
+                _board.GetRandomSpawnPoint();
+            if (spawnPoint != null) { 
+                Enemy enemy = enemyFactory.Get();
+                enemy.SpawnOn(spawnPoint);
+                enemies.Add(enemy);
+            }
         }
     }
 }

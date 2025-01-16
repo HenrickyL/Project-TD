@@ -1,7 +1,18 @@
 using UnityEngine;
 
+[SelectionBase]
 public abstract class GameAsset : MonoBehaviour
 {
+    private StateMachine _stateMachine = null;
+    protected StateMachine StateMachine
+    {
+        get {
+            if (_stateMachine == null)
+                CreateStateMachine();
+            return _stateMachine;
+        }
+    }
+
     private AbstractGameAssetFactory _originFactory;
     public AbstractGameAssetFactory OriginFactory
     {
@@ -13,13 +24,29 @@ public abstract class GameAsset : MonoBehaviour
         }
     }
 
-    
+    public Vector3 LocalPosition => gameObject.transform.localPosition;
+    public Vector3 Position => gameObject.transform.position;
+
+    public float Scale { get; protected set; }
+
     /* --------------------------------------------------- */
 
-    //public abstract void Initialize();
+    private void CreateStateMachine() { 
+        _stateMachine = new StateMachine();
+    }
+
+    /* --------------------------------------------------- */
+    
+    public virtual void GameUpdate() {
+        _stateMachine?.UpdateState();
+    }
 
     public virtual void Recycle()
     {
         OriginFactory.Reclaim(this);
+    }
+
+    public void ChangeState(BaseState state) {
+        StateMachine.ChangeState(this, state);
     }
 }

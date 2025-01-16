@@ -12,5 +12,8 @@ public class GameTileContent : GameAsset
     private TileElement _tileElement = default;
 
     public TileElement Element => _tileElement;
-    
+
+    public bool BlocksPath =>
+        Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
+
 }

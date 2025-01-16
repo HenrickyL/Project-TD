@@ -1,14 +1,13 @@
-public abstract class AEnemyState : IEntityState
+public abstract class AEnemyState : BaseState
 {
-    protected private Enemy enemy;
     protected AnimationStateController animationController;
+    protected Enemy enemy => (Enemy)Entity;
 
-    public virtual void Enter(GameEntity entity) { 
-        enemy  = entity as Enemy;
-        animationController = enemy.AnimationController;
+    public AEnemyState(string name): base(name) { 
     }
 
-    public virtual void Exit() { }
-
-    public virtual void UpdateState() { }
+    public override void Enter(GameAsset entity) { 
+        base.Enter(entity);
+        animationController = enemy.AnimationController;
+    }
 }

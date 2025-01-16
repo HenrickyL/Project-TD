@@ -15,7 +15,7 @@ public abstract class GameEntity : GameAsset
         get => _model.localScale;
         set { _model.localScale = value; }
     }
-    public Vector3 Position => gameObject.transform.localPosition;
+
 
     [SerializeField]
     AnimationStateController _animController;
@@ -27,23 +27,23 @@ public abstract class GameEntity : GameAsset
 
     public float PathOffset { get; set; }
     public float Speed { get; set; }
-    public bool IsAlive { get; set; } = true;
 
 
-    private IEntityState _currentState;
+    private float _healthMax = 0f;
 
-    public IEntityState CurrentState => _currentState;
+    public float HealthMax { get { return _healthMax; } set { _healthMax = value; } }
+
+    private float _health = 0f;
+    public float Health { 
+        get { return _health; }
+        protected set { _health = value; }
+    }
+    public bool IsAlive=> _health > 0;
 
     /* ------------------------------------------------- */
+    public virtual void SetDeath() {
+        _health = 0f;
+    }
     public abstract void SpawnOn(GameTile tile);
-    public virtual void GameUpdate() {
-        _currentState?.UpdateState();
-    }
-
-    public void ChangeState(IEntityState newState)
-    {
-        _currentState?.Exit();
-        _currentState = newState;
-        _currentState.Enter(this);
-    }
+    
 }

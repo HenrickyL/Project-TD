@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -57,6 +56,9 @@ public class GameBoard : MonoBehaviour
     private List<GameTile> _spawnPoints = new();
     public bool HasDestinations => _tiles.FirstOrDefault(x => x.isDestination) != null;
     public int SpawnPointCount => _spawnPoints.Count;
+
+    private List<GameTileContent> _updatingContent = new();
+
 
 
     private void ApplyShowPath() {
@@ -151,7 +153,7 @@ public class GameBoard : MonoBehaviour
 
     private GameTile GetTile(int x, int y) {
         if (x < 0 || x > _size.x || y < 0 || y >= _size.y)
-            throw new ArgumentOutOfRangeException("Invalid Coordinates");
+            throw new System.ArgumentOutOfRangeException("Invalid Coordinates");
 
         int index = x + y * _size.x;
         return _tiles[index];
@@ -160,7 +162,7 @@ public class GameBoard : MonoBehaviour
     public void SetEnable(bool value) { gameObject.SetActive(value); }
 
     public GameTile GetTile(Ray ray) {
-        if (Physics.Raycast(ray, out RaycastHit hit)) {
+        if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, 1)) {
             int x = (int)(hit.point.x + _size.x * 0.5f);
             int y = (int)(hit.point.z + _size.y * 0.5f);
             if (x >= 0 && x < _size.x && y >= 0 && y < _size.y)
@@ -216,6 +218,30 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+    public void ToggleTower(GameTile tile)
+    {
+        if (tile.Content.Type == GameTileContentType.Tower)
+        {
+            _updatingContent.Remove(tile.Content);
+            tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+            FindPath();
+        }
+        else if (tile.Content.Type == GameTileContentType.Empty)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+            if (TileSearch.ExistDetination(_tiles))
+            {
+                FindPath();
+            }
+            _updatingContent.Add(tile.Content);
+        }
+        else if (tile.Content.Type == GameTileContentType.Wall)
+        {
+            tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+            _updatingContent.Add(tile.Content);
+        }
+    }
+
 
     public void ToggleSpawnPoint(GameTile tile) {
         if (tile.Content.Type == GameTileContentType.SpawnPoint)
@@ -232,12 +258,30 @@ public class GameBoard : MonoBehaviour
         }
     }
 
+
+
     public GameTile GetSpawnPoint(int index)
     {
         return _spawnPoints[index];
     }
 
+    public GameTile GetRandomSpawnPoint()
+    {
+        //TODO: Save bellow hasPathList in attibute of board, calculate with (Add this bool) bool isChangedSpawn change.
+        List<GameTile> hasPath = _spawnPoints.Where(x => x.HasPath).ToList();
+        int index = UnityEngine.Random.Range(0, hasPath.Count);
+        return _spawnPoints[index];
+    }
+
     private bool FindPath() {
         return TileSearch.FindPath(_tiles, ShowPaths);
+    }
+
+    //TODO: Verify a general approach to more Contents
+    public void GameUpdate() {
+        for (int i = 0; i < _updatingContent.Count; i++)
+        {
+            _updatingContent[i].GameUpdate();
+        }
     }
 } 

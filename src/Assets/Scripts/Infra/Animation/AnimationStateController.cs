@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 public enum AnimationStateEnum { 
-    Idle, Walk, Attack, Death, Spawn
+    Idle, Walk, Attack,Hit, Death, Spawn
 }
 
 public enum AnimationParamsEnum
@@ -12,7 +12,7 @@ public enum AnimationParamsEnum
 
 public enum AnimationTypeEnum
 {
-    Idle, Walk, Attack, JumpIdle, JumpLand, Death
+    Idle, Walk, Attack, Hit, JumpIdle, JumpLand, Death
 }
 
 [RequireComponent(typeof(Animator))]
@@ -35,6 +35,9 @@ public class AnimationStateController : MonoBehaviour
         switch (state) {
             case AnimationStateEnum.Spawn:
                 animator.SetFloat(distanceYHash, value);
+                break;
+            case AnimationStateEnum.Hit:
+                animator.SetBool(stateHash[(int)state], value != 0);
                 break;
             default:
                 animator.SetBool(stateHash[(int)state], true);
