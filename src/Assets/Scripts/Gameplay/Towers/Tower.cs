@@ -14,7 +14,8 @@ public class Tower : GameTileContent
 
     const int _enemyLayerMask = 1 << (int)LayersEnum.Targets;
 
-    static Collider[] _targetsBuffer = new Collider[1];
+
+    static Collider[] _targetsBuffer = new Collider[10];
 
     Vector3 _laserBeamScale;
 
@@ -84,7 +85,7 @@ public class Tower : GameTileContent
         );
         if (hits > 0)
         {
-            _target = _targetsBuffer[0].GetComponent<TargetPoint>();
+            _target = _targetsBuffer[Random.Range(0, hits)].GetComponent<TargetPoint>();
             Debug.Assert(_target != null, "Targeted non-enemy!", _targetsBuffer[0]);
             return true;
         }
