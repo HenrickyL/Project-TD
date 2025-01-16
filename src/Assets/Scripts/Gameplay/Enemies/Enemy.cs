@@ -6,15 +6,6 @@ public class Enemy : GameEntity
     public GameTile TileFrom { get; set; }
 
 
-    //private void Awake()
-    //{
-    //    ChangeState(new SpawnState(null));
-    //}
-
-    //private void Update()
-    //{
-    //    GameUpdate();
-    //}
 
     public float Progress { get; set; } = 0f;
 
@@ -26,7 +17,7 @@ public class Enemy : GameEntity
         ChangeState(new SpawnState(tile));
     }
 
-    
+
     public void Initialize(float scale, float speed, float pathOffset)
     {
         ModelLocalScale = new Vector3(scale, scale, scale);
@@ -47,7 +38,7 @@ public class Enemy : GameEntity
         ApplyDamage(damage);
         if (!this.IsAlive)
         {
-            this.ChangeState(new DeathState(this));
+            base.ChangeState(new DeathState(this));
         }
         //ChangeState(new HitState(this, damage, ApplyDamage));
     }

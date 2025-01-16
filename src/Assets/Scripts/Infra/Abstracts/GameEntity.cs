@@ -40,28 +40,10 @@ public abstract class GameEntity : GameAsset
     }
     public bool IsAlive=> _health > 0;
 
-    private IEntityState _currentState;
-
-    [SerializeField]
-    private string _stateName = default;
-
-    public IEntityState CurrentState => _currentState;
-
     /* ------------------------------------------------- */
     public virtual void SetDeath() {
         _health = 0f;
     }
     public abstract void SpawnOn(GameTile tile);
-    public override void GameUpdate() {
-        base.GameUpdate();
-        _currentState?.UpdateState();
-    }
-
-    public void ChangeState(IEntityState newState)
-    {
-        _currentState?.Exit();
-        _currentState = newState;
-        _stateName = _currentState.Name();
-        _currentState.Enter(this);
-    }
+    
 }

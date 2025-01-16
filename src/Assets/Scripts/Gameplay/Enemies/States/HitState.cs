@@ -21,7 +21,7 @@ public class HitState : AEnemyState
     }
 
 
-    public override void Enter(GameEntity entity)
+    public override void Enter(Enemy entity)
     {
         base.Enter(entity);
         _callback(_damage);
@@ -42,13 +42,13 @@ public class HitState : AEnemyState
         animationController.ChangeAnimator(AnimationStateEnum.Hit, 1);
         yield return new WaitForSeconds(animationController.GetAnimationLength(AnimationTypeEnum.Hit) + 0.15f);
 
-        if (enemy.IsAlive)
+        if (Entity.IsAlive)
         {
-            enemy.ChangeState(new MovimentState());
+            Entity.ChangeState(new MovimentState());
         }
         else
         {
-            enemy.ChangeState(new DeathState(enemy));
+            Entity.ChangeState(new DeathState(Entity));
         }
     }
     

@@ -4,26 +4,26 @@ public class SpawnState : AEnemyState
 {
     private GameTile _tile;
 
-    private Vector3 Position => enemy.LocalPosition;
+    private Vector3 Position => Entity.LocalPosition;
 
     public SpawnState(GameTile tile) : base("Spawn")
     {
         _tile = tile;
     }
 
-    public override void Enter(GameEntity entity)
+    public override void Enter(Enemy entity)
     {
         base.Enter(entity);
-        enemy.TileFrom = _tile;
-        enemy.TileTo = _tile.NextTileOnPath;
-        enemy.transform.position = _tile.transform.position;
+        Entity.TileFrom = _tile;
+        Entity.TileTo = _tile.NextTileOnPath;
+        Entity.transform.position = _tile.transform.position;
         float angle = _tile.PathDirection.GetAngle();
-        enemy.transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+        Entity.transform.localRotation = Quaternion.Euler(0f, angle, 0f);
 
         Vector3 oldPos = Position;
         oldPos.y += 1;
 
-        enemy.transform.localPosition = oldPos;
+        Entity.transform.localPosition = oldPos;
     }
 
     public override void UpdateState()
@@ -34,11 +34,11 @@ public class SpawnState : AEnemyState
         }
         else
         {
-            Vector3 old = enemy.transform.localPosition;
+            Vector3 old = Entity.transform.localPosition;
             old.y = 0.05f;
-            enemy.transform.localPosition = old;
+            Entity.transform.localPosition = old;
             animationController.ChangeAnimator(AnimationStateEnum.Spawn, Position.y);
-            enemy.ChangeState(new MovimentState());
+            Entity.ChangeState(new MovimentState());
         }
     }
 }
