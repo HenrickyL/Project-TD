@@ -1,12 +1,16 @@
-public interface IUIManager : ILocalizateObject
-{
-    void Initialize();  // Inicializa o Main Menu
-    void Show();
-    void Hide();
-    //void AddSubMenu(IUIManager submenu);
-}
+using Perikan.Infra.Localization;
 
-public interface IUISubMenu
-{
-    void AddParent(IUIManager submenu);
+namespace Perikan.Infra.Menu { 
+    public interface IUIManager : ILocalizateObject
+    {
+        void Initialize();  // Inicializa o Main Menu
+        void Show();
+        void Hide();
+        //void AddSubMenu(IUIManager submenu);
+    }
+
+    public interface IUISubMenu
+    {
+        void AddParent(IUIManager submenu);
+    }
 }

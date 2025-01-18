@@ -1,10 +1,11 @@
+using Perikan.Infra.Gameplay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+namespace Perikan.Infra.Factory { 
 public abstract class AbstractGameAssetFactory : ScriptableObject
 {
     Scene scene;
-
     protected T CreateGameAssetInstance<T>(T prefab) where T : GameAsset
     {
         if (!scene.isLoaded)
@@ -44,4 +45,5 @@ public abstract class AbstractGameAssetFactory : ScriptableObject
         Debug.Assert(content.OriginFactory == this, "Wrong factory reclaimed!");
         Destroy(content.gameObject);
     }
+}
 }

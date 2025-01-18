@@ -1,6 +1,7 @@
-using UnityEngine;
-
-public abstract class AbstractGameEntityFactory : AbstractGameAssetFactory
+namespace Perikan.Infra.Factory
 {
-    
+    public abstract class AbstractGameEntityFactory : AbstractGameAssetFactory
+    {
+
+    }
 }

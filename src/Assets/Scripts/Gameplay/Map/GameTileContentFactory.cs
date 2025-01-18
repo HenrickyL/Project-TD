@@ -1,44 +1,47 @@
+using Perikan.Gameplay.Entity;
+using Perikan.Gameplay.Map;
+using Perikan.Infra.Factory;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GameTileContentFactory", menuName = "Factory/GameTileContentFactory")]
-public class GameTileContentFactory : AbstractGameAssetFactory
-{
-
-    [SerializeField]
-    GameTileContent destinationPrefab = default;
-
-    [SerializeField]
-    GameTileContent emptyPrefab = default;
-
-    [SerializeField]
-    GameTileContent wallPrefab = default;
-
-    [SerializeField]
-    GameTileContent spawnPoint = default;
-
-    [SerializeField]
-    Tower towerPrefab = default;
-
-
-    /* --------------------------------------------------------------------------------- */
-
-    private GameTileContent Get(GameTileContent prefab)
+namespace Perikan.Gameplay.Factory { 
+    [CreateAssetMenu(fileName = "GameTileContentFactory", menuName = "Factory/GameTileContentFactory")]
+    public class GameTileContentFactory : AbstractGameAssetFactory
     {
-        return base.Get<GameTileContent>(prefab);
-    }
 
-    public GameTileContent Get(GameTileContentType type)
-    {
-        switch (type)
+        [SerializeField]
+        GameTileContent destinationPrefab = default;
+
+        [SerializeField]
+        GameTileContent emptyPrefab = default;
+
+        [SerializeField]
+        GameTileContent wallPrefab = default;
+
+        [SerializeField]
+        GameTileContent spawnPoint = default;
+
+        [SerializeField]
+        Tower towerPrefab = default;
+
+        /* --------------------------------------------------------------------------------- */
+
+        private GameTileContent Get(GameTileContent prefab)
         {
-            case GameTileContentType.Destination: return Get(destinationPrefab);
-            case GameTileContentType.Empty: return Get(emptyPrefab);
-            case GameTileContentType.Wall: return Get(wallPrefab);
-            case GameTileContentType.SpawnPoint:return Get(spawnPoint);
-            case GameTileContentType.Tower: return Get(towerPrefab);
+            return base.Get<GameTileContent>(prefab);
         }
-        Debug.Assert(false, "Unsupported type: " + type);
-        return null;
+
+        public GameTileContent Get(GameTileContentType type)
+        {
+            switch (type)
+            {
+                case GameTileContentType.Destination: return Get(destinationPrefab);
+                case GameTileContentType.Empty: return Get(emptyPrefab);
+                case GameTileContentType.Wall: return Get(wallPrefab);
+                case GameTileContentType.SpawnPoint:return Get(spawnPoint);
+                case GameTileContentType.Tower: return Get(towerPrefab);
+            }
+            Debug.Assert(false, "Unsupported type: " + type);
+            return null;
+        }
     }
-  
 }
