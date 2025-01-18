@@ -1,3 +1,5 @@
+using Perikan.Gameplay.Controller;
+using Perikan.Infra.Game;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour //Singleton

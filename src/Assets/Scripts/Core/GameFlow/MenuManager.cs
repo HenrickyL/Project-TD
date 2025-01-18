@@ -1,3 +1,4 @@
+using Perikan.Infra.Localization;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour

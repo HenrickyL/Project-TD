@@ -1,4 +1,7 @@
+using Perikan.Infra.Localization;
+using Perikan.Infra.Menu;
 using UnityEngine;
+
 public class UIManager : MonoBehaviour, IUIManager
 {
     public static UIManager Instance { get; private set; }

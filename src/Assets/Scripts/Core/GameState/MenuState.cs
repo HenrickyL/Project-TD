@@ -1,3 +1,4 @@
+using Perikan.Infra.Game;
 using UnityEngine;
 
 public class MenuState : IGameState

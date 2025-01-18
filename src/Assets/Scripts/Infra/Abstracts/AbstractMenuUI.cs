@@ -2,88 +2,92 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Perikan.Infra.Localization;
 
-public record TextResponse {
-    public TMP_Text Text { get; set; }
-    public LocalizationFields Key { get; set; }
-}
-
-public abstract class AbstractMenuUI : MonoBehaviour, IUIManager
-{
-    [SerializeField] protected GameObject panel;
-    [SerializeField] protected GameObject buttonPrefab;
-    [SerializeField] protected Transform body;
-
-
-    //private IUISubMenu subMenu;
-    protected ButtonResponse[] buttons;
-    protected List<TextResponse> texts = new();
-
-    protected float offset = 10;
-
-
-    public virtual void Initialize()
-    {
-        throw new System.NotImplementedException();
+namespace Perikan.Infra.Menu 
+{ 
+    public record TextResponse {
+        public TMP_Text Text { get; set; }
+        public LocalizationFields Key { get; set; }
     }
 
-    public void UpdateTexts()
+    public abstract class AbstractMenuUI : MonoBehaviour, IUIManager
     {
-        foreach (TextResponse item in texts) {
-            item.Text.text = GetLocalizadValue(item.Key).ToUpper();
-        }
-    }
-    public void Show()
-    {
-        panel.SetActive(true);
-    }
+        [SerializeField] protected GameObject panel;
+        [SerializeField] protected GameObject buttonPrefab;
+        [SerializeField] protected Transform body;
 
-    public void Hide()
-    {
-        panel.SetActive(false);
-    }
 
-    /*-----------------------------*/
+        //private IUISubMenu subMenu;
+        protected ButtonResponse[] buttons;
+        protected List<TextResponse> texts = new();
 
-    protected void AdjustButtonPositions()
-    {
-        RectTransform rectTransform = body.GetComponent<RectTransform>();
-        float posY = rectTransform.transform.localPosition.y;
-        float offsetY = buttons[0].Height + offset;
+        protected float offset = 10;
 
-        for (int i = 0; i < buttons.Length; i++)
+
+        public virtual void Initialize()
         {
-            Button button = buttons[i].Button;
-            RectTransform buttonTransform = button.GetComponent<RectTransform>();
-            buttonTransform.localPosition = new Vector3(0, posY - i * offsetY, 0);
+            throw new System.NotImplementedException();
         }
-    }
 
-    protected string GetLocalizadValue(LocalizationFields key)
-    {
-        return LocalizationManager.GetLocalizadMenuValue(key);
-    }
-
-    protected void RegisterLocalizationInButtons() {
-        foreach(ButtonResponse item in buttons)
+        public void UpdateTexts()
         {
-            texts.Add(new TextResponse()
+            foreach (TextResponse item in texts) {
+                item.Text.text = GetLocalizadValue(item.Key).ToUpper();
+            }
+        }
+        public void Show()
+        {
+            panel.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            panel.SetActive(false);
+        }
+
+        /*-----------------------------*/
+
+        protected void AdjustButtonPositions()
+        {
+            RectTransform rectTransform = body.GetComponent<RectTransform>();
+            float posY = rectTransform.transform.localPosition.y;
+            float offsetY = buttons[0].Height + offset;
+
+            for (int i = 0; i < buttons.Length; i++)
             {
-                Text = item.Text,
-                Key = item.KeyText
-            });
+                Button button = buttons[i].Button;
+                RectTransform buttonTransform = button.GetComponent<RectTransform>();
+                buttonTransform.localPosition = new Vector3(0, posY - i * offsetY, 0);
+            }
         }
+
+        protected string GetLocalizadValue(LocalizationFields key)
+        {
+            return LocalizationManager.GetLocalizadMenuValue(key);
+        }
+
+        protected void RegisterLocalizationInButtons() {
+            foreach(ButtonResponse item in buttons)
+            {
+                texts.Add(new TextResponse()
+                {
+                    Text = item.Text,
+                    Key = item.KeyText
+                });
+            }
+        }
+
     }
 
-}
 
-
-public abstract class AbstractSubMenuUI : AbstractMenuUI, IUISubMenu
-{
-    protected IUIManager parent;
-
-    public void AddParent(IUIManager submenu)
+    public abstract class AbstractSubMenuUI : AbstractMenuUI, IUISubMenu
     {
-        parent = submenu;
+        protected IUIManager parent;
+
+        public void AddParent(IUIManager submenu)
+        {
+            parent = submenu;
+        }
     }
 }
