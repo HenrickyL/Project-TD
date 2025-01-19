@@ -61,7 +61,7 @@ namespace Perikan.Gameplay.Map {
         public bool HasDestinations => _tiles.FirstOrDefault(x => x.isDestination) != null;
         public int SpawnPointCount => _spawnPoints.Count;
 
-        private List<GameElement> _updatingContent = new();
+        private List<GameTileContent> _updatingContent = new();
 
 
 
@@ -292,7 +292,7 @@ namespace Perikan.Gameplay.Map {
         public void GameUpdate() {
             for (int i = 0; i < _updatingContent.Count; i++)
             {
-                _updatingContent[i].GameUpdate();
+                _updatingContent[i].Element.GameUpdate();
             }
         }
     } 

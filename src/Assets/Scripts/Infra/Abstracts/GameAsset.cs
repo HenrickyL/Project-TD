@@ -9,5 +9,7 @@ namespace Perikan.Infra.Gameplay
         public Vector3 Position => gameObject.transform.position;
         public virtual void Initialize() { }
         public abstract void Recycle();
+
+        public virtual void GameUpdate() { }
     }
 }

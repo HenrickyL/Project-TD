@@ -40,8 +40,9 @@ namespace Perikan.Infra.Gameplay
 
         /* --------------------------------------------------- */
 
-        public virtual void GameUpdate()
+        public override void GameUpdate()
         {
+            base.GameUpdate();
             _stateMachine?.UpdateState();
         }
 
