@@ -1,7 +1,7 @@
 using Perikan.Gameplay.Map;
 using UnityEngine;
 
-namespace Perikan.Gameplay.Entity { 
+namespace Perikan.Gameplay.Entity.Tower { 
     public abstract class Tower : GameTileContent
     {
         [SerializeField, Range(1.5f, 10.5f)]

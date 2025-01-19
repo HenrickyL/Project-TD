@@ -1,6 +1,6 @@
 using Perikan.Infra.Gameplay;
 
-namespace Perikan.Gameplay.TowerState { 
+namespace Perikan.Gameplay.Entity.Tower.States { 
     public class AlertState : ATowerState
     {
         public AlertState() : base("Alert")

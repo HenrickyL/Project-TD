@@ -33,7 +33,7 @@ namespace Perikan.Infra.Gameplay
         private float _healthMax = 0f;
 
         public float HealthMax { get { return _healthMax; } set { _healthMax = value; } }
-
+        [SerializeField]
         private float _health = 0f;
         public float Health { 
             get { return _health; }

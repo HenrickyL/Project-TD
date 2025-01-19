@@ -1,4 +1,4 @@
-using Perikan.Gameplay.Entity;
+using Perikan.Gameplay.Entity.Tower;
 using Perikan.Gameplay.Map;
 using Perikan.Infra.Factory;
 using UnityEngine;

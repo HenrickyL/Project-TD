@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Perikan.Gameplay.Entity { 
+namespace Perikan.Gameplay.Entity.Tower { 
     public class LaserTower : Tower
     {
         [SerializeField, Range(1f, 100f)]
