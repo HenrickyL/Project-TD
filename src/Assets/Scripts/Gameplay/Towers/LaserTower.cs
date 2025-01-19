@@ -50,7 +50,7 @@ namespace Perikan.Gameplay.Entity.Tower {
 
             _target.Enemy.HandleDamage(damagePerSecond* Time.deltaTime);
         }
-        protected override void Initialize()
+        public override void Initialize()
         {
             base.Initialize();
             _laserBeamScale = laserBeam.localScale;

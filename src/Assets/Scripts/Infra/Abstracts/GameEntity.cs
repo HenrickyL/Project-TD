@@ -3,7 +3,7 @@ using Perikan.Infra.Animation;
 
 namespace Perikan.Infra.Gameplay
 {
-    public abstract class GameEntity : GameAsset
+    public abstract class GameEntity : GameElement
     {
         [SerializeField]
         Transform _model = default;

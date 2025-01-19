@@ -12,7 +12,7 @@ namespace Perikan.Gameplay.EnemyState {
             _coroutineHost = coroutineHost;
         }
 
-        public override void Enter(GameAsset entity)
+        public override void Enter(GameElement entity)
         {
             base.Enter(entity);
             _coroutineHost.StartCoroutine(HandleDeath());

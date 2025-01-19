@@ -2,7 +2,7 @@ using Perikan.Infra.Gameplay;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Map { 
-    public class GameTileContent : GameAsset
+    public class GameTileContent : GameElement
     {
         [SerializeField]
         private GameTileContentType _type = default;
@@ -11,9 +11,9 @@ namespace Perikan.Gameplay.Map {
         public GameTile Tile { get; set; } = null;
 
         [SerializeField]
-        private TileElement _tileElement = default;
+        private GameAsset _tileElement = default;
 
-        public TileElement Element => _tileElement;
+        public GameAsset Content => _tileElement;
 
         public bool BlocksPath =>
             Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;

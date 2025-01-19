@@ -1,4 +1,5 @@
 using Perikan.Gameplay.Factory;
+using Perikan.Infra.Gameplay;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -59,7 +60,7 @@ namespace Perikan.Gameplay.Map {
         public bool HasDestinations => _tiles.FirstOrDefault(x => x.isDestination) != null;
         public int SpawnPointCount => _spawnPoints.Count;
 
-        private List<GameTileContent> _updatingContent = new();
+        private List<GameElement> _updatingContent = new();
 
 
 

@@ -27,7 +27,7 @@ namespace Perikan.Gameplay.Map {
         {
             if (_isAnimating && rotationProgress < 1)
             {
-                rotationProgress += Time.deltaTime * 0.5f; // Interpolação suave da rotação
+                rotationProgress += Time.deltaTime; // Interpolação suave da rotação
                 transform.localRotation = Quaternion.Lerp(initialRotation, targetRotation, rotationProgress);
             }
         }
@@ -61,12 +61,6 @@ namespace Perikan.Gameplay.Map {
         {
             _direction = dir;
             ResetRotation();
-        }
-
-
-        public override void Toggle() {
-            base.Toggle();
-            ResetMaterial();
         }
 
         private void ResetMaterial() {

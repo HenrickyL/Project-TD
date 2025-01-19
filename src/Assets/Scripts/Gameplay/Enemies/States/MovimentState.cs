@@ -20,7 +20,7 @@ namespace Perikan.Gameplay.EnemyState {
         DirectionChange _directionChange;
         float _directionAngleFrom, _directionAngleTo;
 
-        public override void Enter(GameAsset entity)
+        public override void Enter(GameElement entity)
         {
             base.Enter(entity);
             enemy.TileTo = enemy.TileFrom.NextTileOnPath;

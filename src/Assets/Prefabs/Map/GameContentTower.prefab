@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3951467592164737258}
-  - component: {fileID: 6795918307881250316}
+  - component: {fileID: 5819983985330588444}
   m_Layer: 0
   m_Name: GameContentTower
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 3299855618505952155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6795918307881250316
+--- !u!114 &5819983985330588444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,15 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7773234461165408339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87d314b340819f64da007024562b88d0, type: 3}
+  m_Script: {fileID: 11500000, guid: f65d4c82e2e5a1d43b94a4639a91553c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
   _tileElement: {fileID: 306931398722522564}
-  targetingRange: 2.5
-  damagePerSecond: 2
-  turret: {fileID: 528457931942390473}
-  laserBeam: {fileID: 3769411485251521616}
 --- !u!1001 &1164620704166897409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,18 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d479dab993d36184b8480194c8ee1627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &528457931942390473 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1692480363265723848, guid: 1fcc149675c9eed41ad76053c9026ee5, type: 3}
-  m_PrefabInstance: {fileID: 1164620704166897409}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3299855618505952155 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4459374450977090714, guid: 1fcc149675c9eed41ad76053c9026ee5, type: 3}
-  m_PrefabInstance: {fileID: 1164620704166897409}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3769411485251521616 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2622840571242163025, guid: 1fcc149675c9eed41ad76053c9026ee5, type: 3}
   m_PrefabInstance: {fileID: 1164620704166897409}
   m_PrefabAsset: {fileID: 0}

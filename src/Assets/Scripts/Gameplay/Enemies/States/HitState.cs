@@ -24,7 +24,7 @@ namespace Perikan.Gameplay.EnemyState {
         }
 
 
-        public override void Enter(GameAsset entity)
+        public override void Enter(GameElement entity)
         {
             base.Enter(entity);
             _callback(_damage);

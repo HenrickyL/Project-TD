@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4459374450977090714}
   - component: {fileID: 1471516162292181701}
+  - component: {fileID: 2953242824071732503}
   m_Layer: 0
   m_Name: LaserTower
   m_TagString: Untagged
@@ -48,6 +49,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d479dab993d36184b8480194c8ee1627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2953242824071732503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880923331681769458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d314b340819f64da007024562b88d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetingRange: 2.5
+  damagePerSecond: 3
+  turret: {fileID: 1692480363265723848}
+  laserBeam: {fileID: 2622840571242163025}
 --- !u!1 &5539480361328459447
 GameObject:
   m_ObjectHideFlags: 0

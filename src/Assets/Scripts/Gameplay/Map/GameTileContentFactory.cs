@@ -1,9 +1,9 @@
-using Perikan.Gameplay.Entity.Tower;
 using Perikan.Gameplay.Map;
 using Perikan.Infra.Factory;
 using UnityEngine;
 
-namespace Perikan.Gameplay.Factory { 
+namespace Perikan.Gameplay.Factory
+{
     [CreateAssetMenu(fileName = "GameTileContentFactory", menuName = "Factory/GameTileContentFactory")]
     public class GameTileContentFactory : AbstractGameAssetFactory
     {
@@ -21,7 +21,7 @@ namespace Perikan.Gameplay.Factory {
         GameTileContent spawnPoint = default;
 
         [SerializeField]
-        Tower towerPrefab = default;
+        GameTileContent towerPrefab = default;
 
         /* --------------------------------------------------------------------------------- */
 

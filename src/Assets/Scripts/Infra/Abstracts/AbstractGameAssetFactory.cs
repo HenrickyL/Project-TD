@@ -6,8 +6,8 @@ namespace Perikan.Infra.Factory {
 public abstract class AbstractGameAssetFactory : ScriptableObject
 {
     Scene scene;
-    protected T CreateGameAssetInstance<T>(T prefab) where T : GameAsset
-    {
+    protected T CreateGameAssetInstance<T>(T prefab) where T : GameElement
+        {
         if (!scene.isLoaded)
         {
             if (Application.isEditor)
@@ -29,8 +29,8 @@ public abstract class AbstractGameAssetFactory : ScriptableObject
     }
 
 
-    protected T Get<T>(T prefab) where T : GameAsset
-    {
+    protected T Get<T>(T prefab) where T : GameElement
+        {
         if (!(prefab is T))
             throw new System.InvalidCastException($"O prefab configurado não é do tipo esperado: {typeof(T)}");
 
@@ -40,7 +40,7 @@ public abstract class AbstractGameAssetFactory : ScriptableObject
     }
 
 
-    public virtual void Reclaim(GameAsset content)
+    public virtual void Reclaim(GameElement content)
     {
         Debug.Assert(content.OriginFactory == this, "Wrong factory reclaimed!");
         Destroy(content.gameObject);

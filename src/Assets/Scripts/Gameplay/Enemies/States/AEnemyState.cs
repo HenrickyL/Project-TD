@@ -12,7 +12,7 @@ namespace Perikan.Gameplay.EnemyState {
         public AEnemyState(string name): base(name) { 
         }
 
-        public override void Enter(GameAsset entity) { 
+        public override void Enter(GameElement entity) { 
             base.Enter(entity);
             animationController = enemy.AnimationController;
         }

@@ -1,8 +1,9 @@
-using Perikan.Gameplay.Map;
+using Perikan.Infra.Gameplay;
 using UnityEngine;
 
-namespace Perikan.Gameplay.Entity.Tower { 
-    public abstract class Tower : GameTileContent
+namespace Perikan.Gameplay.Entity.Tower
+{
+    public abstract class Tower : GameElement
     {
         [SerializeField, Range(1.5f, 10.5f)]
         protected float targetingRange = 1.5f;
@@ -14,8 +15,6 @@ namespace Perikan.Gameplay.Entity.Tower {
         {
             Initialize();
         }
-
-        protected virtual void Initialize() { }
 
         /* --------------------------------------------- */
 

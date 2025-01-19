@@ -15,7 +15,7 @@ namespace Perikan.Gameplay.EnemyState {
             _tile = tile;
         }
 
-        public override void Enter(GameAsset entity)
+        public override void Enter(GameElement entity)
         {
             base.Enter(entity);
             enemy.TileFrom = _tile;
