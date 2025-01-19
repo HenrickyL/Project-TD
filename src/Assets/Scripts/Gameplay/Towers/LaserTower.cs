@@ -12,10 +12,6 @@ namespace Perikan.Gameplay.Entity.Tower {
 
         private TargetPoint _target;
 
-        float rotationSpeed = 30.0f;
-        float initialTurretY;
-        float frequency = 1.3f;
-        float amplitude = 0.05f;
         float lookAtSmoothFactor = 8.0f;
 
         public override TowerType TowerType => TowerType.Laser;
@@ -28,10 +24,19 @@ namespace Perikan.Gameplay.Entity.Tower {
             {
                 Shoot();
             }
-            AnimateTurret();
+            else
+            {
+                ResetLaser();
+            }
         }
 
         /* --------------------PRIVATE--------------------------- */
+
+        protected override bool AcquireTarget(out TargetPoint target)
+        {
+            ResetLaser();
+            return base.AcquireTarget(out target);
+        }
 
         protected override void Shoot()
         {
@@ -57,24 +62,11 @@ namespace Perikan.Gameplay.Entity.Tower {
         {
             base.Initialize();
             _laserBeamScale = laserBeam.localScale;
-            initialTurretY = turret.localPosition.y;
         }
         private void ResetLaser()
         {
-            laserBeam.localScale = Vector3.zero;
+            laserBeam.localScale = Vector3.Lerp(laserBeam.localScale, Vector3.zero,Time.deltaTime*2f);
         }
-        private void AnimateTurret()
-        {
-            if (_target != null) return;
-            //vertical Moviment - sin wave
-            float newY = initialTurretY + Mathf.Sin(Time.time * frequency) * amplitude; ;
-            Vector3 newPosition = new Vector3(turret.localPosition.x, newY, turret.localPosition.z);
-            turret.localPosition = newPosition;
-
-            //rotation
-            Vector3 targetEulerAngles = new Vector3(0f, Time.time * rotationSpeed, 0f);
-            Quaternion newRotation = Quaternion.Euler(targetEulerAngles);
-            turret.localRotation = newRotation;
-        }
+        
     }
 }

@@ -21,7 +21,7 @@ namespace Perikan.Gameplay.Entity.Tower
 
         protected abstract void Shoot();
 
-        protected bool AcquireTarget(out TargetPoint target)
+        protected virtual bool AcquireTarget(out TargetPoint target)
         {
             Vector3 towerPos = Position;
             Vector3 aux = towerPos;
