@@ -8,8 +8,6 @@ namespace Perikan.Gameplay.Entity {
         public GameTile TileTo { get; set; }
         public GameTile TileFrom { get; set; }
 
-
-
         public float Progress { get; set; } = 0f;
 
         public void SpawnOn(GameTile tile)
