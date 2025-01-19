@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3951467592164737258}
   - component: {fileID: 5819983985330588444}
   m_Layer: 0
-  m_Name: GameContentTower
+  m_Name: GameContentLaserTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 4
-  _tileElement: {fileID: 306931398722522564}
+  _tileElement: {fileID: 4095345392385440278}
 --- !u!1001 &1164620704166897409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,19 +104,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fcc149675c9eed41ad76053c9026ee5, type: 3}
---- !u!114 &306931398722522564 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1471516162292181701, guid: 1fcc149675c9eed41ad76053c9026ee5, type: 3}
-  m_PrefabInstance: {fileID: 1164620704166897409}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d479dab993d36184b8480194c8ee1627, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3299855618505952155 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4459374450977090714, guid: 1fcc149675c9eed41ad76053c9026ee5, type: 3}
   m_PrefabInstance: {fileID: 1164620704166897409}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4095345392385440278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2953242824071732503, guid: 1fcc149675c9eed41ad76053c9026ee5, type: 3}
+  m_PrefabInstance: {fileID: 1164620704166897409}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d314b340819f64da007024562b88d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

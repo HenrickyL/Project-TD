@@ -1,4 +1,5 @@
 using Perikan.Gameplay.Entity;
+using Perikan.Gameplay.Entity.Tower;
 using Perikan.Gameplay.Factory;
 using Perikan.Gameplay.Generator;
 using Perikan.Gameplay.Map;
@@ -37,6 +38,8 @@ namespace Perikan.Gameplay.Controller {
         Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
         EnemyCollection enemies = new EnemyCollection();
+
+        TowerType selectedTowerType;
 
 
         private void Awake()
@@ -81,7 +84,7 @@ namespace Perikan.Gameplay.Controller {
         // Loop principal do jogo
         public void UpdateGame()
         {
-            // Atualizações do loop principal do jogo
+            SelectTowerType();
             if (Input.GetMouseButtonDown(0))
             {
                 if (Input.GetKey(KeyCode.LeftShift))
@@ -160,7 +163,18 @@ namespace Perikan.Gameplay.Controller {
             GameTile tile = _board.GetTile(TouchRay);
             if (tile != null)
             {
-                _board.ToggleTower(tile);
+                _board.ToggleTower(tile, selectedTowerType);
+            }
+        }
+
+        private void SelectTowerType() {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                selectedTowerType = TowerType.Laser;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                selectedTowerType = TowerType.Mortar;
             }
         }
 

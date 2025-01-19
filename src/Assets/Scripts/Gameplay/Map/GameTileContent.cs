@@ -13,7 +13,7 @@ namespace Perikan.Gameplay.Map {
         [SerializeField]
         private GameAsset _tileElement = default;
 
-        public GameAsset Content => _tileElement;
+        public GameAsset Element => _tileElement;
 
         public bool BlocksPath =>
             Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;

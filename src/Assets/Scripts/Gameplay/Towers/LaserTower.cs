@@ -17,6 +17,9 @@ namespace Perikan.Gameplay.Entity.Tower {
         float frequency = 1.3f;
         float amplitude = 0.05f;
         float lookAtSmoothFactor = 8.0f;
+
+        public override TowerType TowerType => TowerType.Laser;
+
         /* --------------------PUBLIC--------------------------- */
         public override void GameUpdate()
         {

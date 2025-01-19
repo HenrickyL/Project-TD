@@ -7,7 +7,8 @@ namespace Perikan.Gameplay.Entity.Tower
     {
         [SerializeField, Range(1.5f, 10.5f)]
         protected float targetingRange = 1.5f;
-        
+        public abstract TowerType TowerType { get; }
+
         const int _enemyLayerMask = 1 << (int)LayersEnum.Targets;
         static Collider[] _targetsBuffer = new Collider[10];
         /* --------------------------------------------- */

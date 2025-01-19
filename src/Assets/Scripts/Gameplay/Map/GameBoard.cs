@@ -1,3 +1,4 @@
+using Perikan.Gameplay.Entity.Tower;
 using Perikan.Gameplay.Factory;
 using Perikan.Infra.Gameplay;
 using System.Collections.Generic;
@@ -221,17 +222,24 @@ namespace Perikan.Gameplay.Map {
             }
         }
 
-        public void ToggleTower(GameTile tile)
+        public void ToggleTower(GameTile tile, TowerType towerType)
         {
             if (tile.Content.Type == GameTileContentType.Tower)
             {
                 _updatingContent.Remove(tile.Content);
-                tile.Content = _contentFactory.Get(GameTileContentType.Empty);
-                FindPath();
+                if (((Tower)tile.Content.Element).TowerType == towerType)
+                {
+                    tile.Content = _contentFactory.Get(GameTileContentType.Empty);
+                    FindPath();
+                }
+                else {
+                    tile.Content = _contentFactory.Get(towerType);
+                    _updatingContent.Add(tile.Content);
+                }
             }
             else if (tile.Content.Type == GameTileContentType.Empty)
             {
-                tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+                tile.Content = _contentFactory.Get(towerType);
                 if (TileSearch.ExistDetination(_tiles))
                 {
                     FindPath();
@@ -240,7 +248,7 @@ namespace Perikan.Gameplay.Map {
             }
             else if (tile.Content.Type == GameTileContentType.Wall)
             {
-                tile.Content = _contentFactory.Get(GameTileContentType.Tower);
+                tile.Content = _contentFactory.Get(towerType);
                 _updatingContent.Add(tile.Content);
             }
         }

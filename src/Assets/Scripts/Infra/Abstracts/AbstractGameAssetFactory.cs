@@ -30,7 +30,7 @@ public abstract class AbstractGameAssetFactory : ScriptableObject
 
 
     protected T Get<T>(T prefab) where T : GameElement
-        {
+    {
         if (!(prefab is T))
             throw new System.InvalidCastException($"O prefab configurado não é do tipo esperado: {typeof(T)}");
 

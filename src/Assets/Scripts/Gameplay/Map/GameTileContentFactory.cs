@@ -1,3 +1,4 @@
+using Perikan.Gameplay.Entity.Tower;
 using Perikan.Gameplay.Map;
 using Perikan.Infra.Factory;
 using UnityEngine;
@@ -21,13 +22,28 @@ namespace Perikan.Gameplay.Factory
         GameTileContent spawnPoint = default;
 
         [SerializeField]
-        GameTileContent towerPrefab = default;
+        GameTileContent[] towerPrefabs = default;
 
         /* --------------------------------------------------------------------------------- */
 
         private GameTileContent Get(GameTileContent prefab)
         {
             return base.Get<GameTileContent>(prefab);
+        }
+
+        public GameTileContent Get(TowerType type)
+        {
+            Debug.Assert((int)type < towerPrefabs.Length, "Unsupported tower type!");
+            GameTileContent prefab = towerPrefabs[(int)type];
+            Tower tower = prefab.Element as Tower;
+            if (tower != null) { 
+                Debug.Assert(type == tower.TowerType, "Tower prefab at wrong index!");
+                return Get(prefab);
+            }
+            else
+            {
+                throw new System.Exception("Invalid Context Type");
+            }
         }
 
         public GameTileContent Get(GameTileContentType type)
@@ -38,9 +54,8 @@ namespace Perikan.Gameplay.Factory
                 case GameTileContentType.Empty: return Get(emptyPrefab);
                 case GameTileContentType.Wall: return Get(wallPrefab);
                 case GameTileContentType.SpawnPoint:return Get(spawnPoint);
-                case GameTileContentType.Tower: return Get(towerPrefab);
             }
-            Debug.Assert(false, "Unsupported type: " + type);
+            Debug.Assert(false, "Unsupported non-tower type: " + type);
             return null;
         }
     }

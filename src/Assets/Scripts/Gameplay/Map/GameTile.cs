@@ -125,7 +125,7 @@ namespace Perikan.Gameplay.Map {
         }
 
         public void ShowPath() {
-            TileArrow arrow = _content?.Content as TileArrow;
+            TileArrow arrow = _content?.Element as TileArrow;
             if (isEmpty && arrow != null)
                 arrow.Enable();
             if (_distance == 0)
@@ -137,7 +137,7 @@ namespace Perikan.Gameplay.Map {
         }
 
         public void HidePath() {
-            if (Content.Content is TileArrow arrow) {
+            if (Content.Element is TileArrow arrow) {
                 arrow.Disable();
             }
         }
