@@ -132,7 +132,8 @@ namespace Perikan.Gameplay.Map {
             {
                 return;
             }
-            arrow?.RotateTo(_nextOnPath.PathDirection);
+            if(_nextOnPath != null)
+                arrow?.RotateTo(_nextOnPath.PathDirection);
         }
 
         public void HidePath() {
