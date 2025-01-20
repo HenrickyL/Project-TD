@@ -1,3 +1,4 @@
+using Perikan.Infra.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

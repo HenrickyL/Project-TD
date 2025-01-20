@@ -1,23 +1,28 @@
-public sealed class StateMachine
+using Perikan.Infra.Gameplay;
+
+namespace Perikan.Infra.GameStateManagement
 {
-    private BaseState _currentState;
-    private GameAsset _context;
-
-    public BaseState CurrentState { get { return _currentState; } }
-    public GameAsset Context { get { return _context; } }
-
-    public string CurrentStateName => _currentState.Name();
-
-    public void UpdateState()
+    public sealed class StateMachine
     {
-        _currentState?.UpdateState();
-    }
+        private BaseState _currentState;
+        private GameElement _context;
 
-    public void ChangeState(GameAsset context, BaseState newState)
-    {
-        _context = context;
-        _currentState?.Exit();
-        _currentState = newState;
-        _currentState.Enter(_context);
+        public BaseState CurrentState { get { return _currentState; } }
+        public GameElement Context { get { return _context; } }
+
+        public string CurrentStateName => _currentState.Name();
+
+        public void UpdateState()
+        {
+            _currentState?.UpdateState();
+        }
+
+        public void ChangeState(GameElement context, BaseState newState)
+        {
+            _context = context;
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState.Enter(_context);
+        }
     }
 }

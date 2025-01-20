@@ -1,8 +1,11 @@
-public class ATowerState : BaseState
+using Perikan.Infra.GameStateManagement;
+
+namespace Perikan.Gameplay.Entity.Tower.States
 {
-    protected Tower tower => (Tower)Entity;
-    public ATowerState(string name) : base(name)
-    {}
+    public class ATowerState : BaseState
+    {
+        protected Tower tower => (Tower)Entity;
+        public ATowerState(string name) : base(name)
+        {}
+    }
 }
-
-

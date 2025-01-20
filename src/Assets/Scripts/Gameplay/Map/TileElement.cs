@@ -1,24 +1,23 @@
-using UnityEngine;
+using Perikan.Infra.Gameplay;
 
-public class TileElement : MonoBehaviour
-{
-    public bool IsActive { get; set; } = false;
-
-    public virtual void Initialize() { 
-    
-    }
-
-    public virtual void Toggle()
+namespace Perikan.Gameplay.Map{
+    public class TileElement : GameAsset
     {
-        IsActive = !IsActive;
-    }
+        public bool IsActive { get; set; } = false;
 
-    public virtual void Enable() { 
-        this.gameObject.SetActive(true);
-    }
+        public virtual void Enable()
+        {
+            this.gameObject.SetActive(true);
+        }
 
-    public virtual void Disable()
-    {
-        this.gameObject.SetActive(false);
+        public virtual void Disable()
+        {
+            this.gameObject.SetActive(false);
+        }
+
+        public override void Recycle()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
