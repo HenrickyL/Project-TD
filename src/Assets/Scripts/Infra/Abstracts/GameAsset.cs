@@ -8,6 +8,7 @@ namespace Perikan.Infra.Gameplay
     {
         public Vector3 LocalPosition => gameObject.transform.localPosition;
         public Vector3 Position => gameObject.transform.position;
+        public abstract bool IsAlive { get; }
 
         private AbstractGameAssetFactory _originFactory;
         public AbstractGameAssetFactory OriginFactory
@@ -20,9 +21,11 @@ namespace Perikan.Infra.Gameplay
             }
         }
 
+
+
+
         public virtual void Initialize() { }
         public virtual void GameUpdate() { }
-
         public virtual void Recycle()
         {
             OriginFactory.Reclaim(this);

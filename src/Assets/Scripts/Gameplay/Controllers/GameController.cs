@@ -3,6 +3,7 @@ using Perikan.Gameplay.Entity.Tower;
 using Perikan.Gameplay.Factory;
 using Perikan.Gameplay.Generator;
 using Perikan.Gameplay.Map;
+using Perikan.Infra.Collections;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Controller { 
@@ -37,7 +38,7 @@ namespace Perikan.Gameplay.Controller {
 
         Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        EnemyCollection enemies = new EnemyCollection();
+        GameAssetCollection enemies = new GameAssetCollection();
 
         TowerType selectedTowerType;
 

@@ -39,7 +39,7 @@ namespace Perikan.Infra.Gameplay
             get { return _health; }
             protected set { _health = value; }
         }
-        public bool IsAlive=> _health > 0;
+        public override bool IsAlive => _health > 0;
 
         /* ------------------------------------------------- */
         public virtual void SetDeath() {

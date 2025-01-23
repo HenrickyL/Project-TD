@@ -6,6 +6,8 @@ namespace Perikan.Gameplay.Entity
     [RequireComponent(typeof(Rigidbody))]
     public class Projectile : GameAsset
     {
+        public override bool IsAlive => true;
+
         private void Update()
         {
             if(transform.position.y <=0 )

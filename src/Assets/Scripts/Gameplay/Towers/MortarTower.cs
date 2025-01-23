@@ -20,6 +20,7 @@ namespace Perikan.Gameplay.Entity.Tower
 
         public override TowerType TowerType => TowerType.Mortar;
 
+
         private TargetPoint _target;
 
         protected override void Shoot()
