@@ -44,12 +44,12 @@ namespace Perikan.Gameplay.Entity.Tower {
             Quaternion targetRotation = Quaternion.LookRotation(point - turret.position);
 
             turret.rotation = Quaternion.Lerp(turret.rotation, targetRotation, Time.deltaTime* lookAtSmoothFactor);
-                laserBeam.localRotation = turret.localRotation;
+            laserBeam.localRotation = turret.localRotation;
 
-                //turret.LookAt(point);
-                //laserBeam.localRotation = turret.localRotation;
+            //turret.LookAt(point);
+            //laserBeam.localRotation = turret.localRotation;
 
-                float d = Vector3.Distance(turret.position, point);
+            float d = Vector3.Distance(turret.position, point);
             _laserBeamScale.z = d;
                 laserBeam.localScale = _laserBeamScale;
 

@@ -18,17 +18,7 @@ namespace Perikan.Infra.Gameplay
             }
         }
 
-        private AbstractGameAssetFactory _originFactory;
-        public AbstractGameAssetFactory OriginFactory
-        {
-            get => _originFactory;
-            set
-            {
-                Debug.Assert(_originFactory == null, "Redefined origin factory!");
-                _originFactory = value;
-            }
-        }
-
+        
         public float Scale { get; protected set; }
 
         /* --------------------------------------------------- */
@@ -44,11 +34,6 @@ namespace Perikan.Infra.Gameplay
         {
             base.GameUpdate();
             _stateMachine?.UpdateState();
-        }
-
-        public override void Recycle()
-        {
-            OriginFactory.Reclaim(this);
         }
 
         public void ChangeState(BaseState state)

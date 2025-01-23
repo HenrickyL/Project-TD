@@ -264,7 +264,7 @@ MonoBehaviour:
   _arrowDisable: {fileID: 2100000, guid: 0e469bcfcdf74814aa09775c3f868079, type: 2}
   tileContentFactory: {fileID: 11400000, guid: f9566aa00a1bfee45a0fa47ae0c70bf9, type: 2}
   enemyFactory: {fileID: 11400000, guid: ff2e424191591cd4885d659906b481f8, type: 2}
-  spawnSpeed: 0.4
+  spawnSpeed: 0.2
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
