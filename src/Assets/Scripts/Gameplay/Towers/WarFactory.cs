@@ -1,5 +1,6 @@
 using Perikan.Gameplay.Entity;
 using Perikan.Infra.Factory;
+using Perikan.Infra.Gameplay;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Factory

@@ -1,5 +1,6 @@
 using Perikan.Gameplay.Entity;
 using Perikan.Infra.Factory;
+using Perikan.Infra.Gameplay;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Factory { 
@@ -25,5 +26,6 @@ namespace Perikan.Gameplay.Factory {
             enemy.Initialize(scale.RandomValueInRange, speed.RandomValueInRange, pathOffset.RandomValueInRange);
             return enemy;
         }
+        
     }
 }

@@ -7,7 +7,7 @@ public abstract class AbstractGameAssetFactory : ScriptableObject
 {
     Scene scene;
     protected T CreateGameAssetInstance<T>(T prefab) where T : GameAsset
-        {
+    {
         if (!scene.isLoaded)
         {
             if (Application.isEditor)
@@ -38,7 +38,6 @@ public abstract class AbstractGameAssetFactory : ScriptableObject
         instance.OriginFactory = this;
         return instance;
     }
-
 
     public virtual void Reclaim(GameAsset content)
     {

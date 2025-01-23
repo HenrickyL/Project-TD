@@ -4,6 +4,8 @@ using Perikan.Gameplay.Factory;
 using Perikan.Gameplay.Generator;
 using Perikan.Gameplay.Map;
 using Perikan.Infra.Collections;
+using Perikan.Infra.Gameplay;
+using UnityEditor;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Controller { 
@@ -39,6 +41,7 @@ namespace Perikan.Gameplay.Controller {
         Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
         GameAssetCollection enemies = new GameAssetCollection();
+        GameAssetCollection nonEnemies = new GameAssetCollection();
 
         TowerType selectedTowerType;
 
@@ -119,8 +122,14 @@ namespace Perikan.Gameplay.Controller {
             UpdateEnemies();
             Physics.SyncTransforms();
             _board.GameUpdate();
+            nonEnemies.GameUpdate();
         }
 
+
+        public static void AddProjectile(Projectile projectile)
+        {
+            Instance.nonEnemies.Add(projectile);
+        }
 
         /* ----------------------------------------------------- */
 
