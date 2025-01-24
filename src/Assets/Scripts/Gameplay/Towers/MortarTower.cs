@@ -1,6 +1,5 @@
-using Perikan.Gameplay.Factory;
+using Perikan.Gameplay.Controller;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Perikan.Gameplay.Entity.Tower
 {
@@ -9,8 +8,6 @@ namespace Perikan.Gameplay.Entity.Tower
         [SerializeField, Range(0.5f, 2f)]
         float shotsPerSecond = 1f;
 
-        [SerializeField]
-        WarFactory projectileFactory = default;
         [SerializeField]
         Transform mortar = default;
         [SerializeField]
@@ -97,14 +94,12 @@ namespace Perikan.Gameplay.Entity.Tower
             mortar.localRotation =
                 Quaternion.LookRotation(new Vector3(dir.x, tanTheta, dir.y));
 
-            Projectile projectile = projectileFactory.Get();
-            projectile.SpawnOn(
+            Projectile projectile = GameController.SpawnProjectile();
+            projectile.Initialize(
                 launchPoint, targetPoint,
                 new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y),
                 shellBlastRadius, shellDamage);
         }
-
-        
 
     }
 

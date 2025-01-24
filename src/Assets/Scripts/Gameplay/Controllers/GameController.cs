@@ -4,11 +4,10 @@ using Perikan.Gameplay.Factory;
 using Perikan.Gameplay.Generator;
 using Perikan.Gameplay.Map;
 using Perikan.Infra.Collections;
-using Perikan.Infra.Gameplay;
-using UnityEditor;
 using UnityEngine;
 
-namespace Perikan.Gameplay.Controller { 
+namespace Perikan.Gameplay.Controller
+{
     public class GameController : MonoBehaviour
     {
         public static GameController Instance { get; private set; }
@@ -29,6 +28,9 @@ namespace Perikan.Gameplay.Controller {
 
         [SerializeField]
         GameTileContentFactory tileContentFactory = default;
+
+        [SerializeField]
+        WarFactory warFactory = default;
 
         [SerializeField]
         EnemyFactory enemyFactory = default;
@@ -126,9 +128,11 @@ namespace Perikan.Gameplay.Controller {
         }
 
 
-        public static void AddProjectile(Projectile projectile)
+        public static Projectile SpawnProjectile()
         {
-            Instance.nonEnemies.Add(projectile);
+            Projectile p = Instance.warFactory.Get();
+            Instance.nonEnemies.Add(p);
+            return p;
         }
 
         /* ----------------------------------------------------- */

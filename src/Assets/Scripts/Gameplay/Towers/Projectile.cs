@@ -11,9 +11,7 @@ namespace Perikan.Gameplay.Entity
         Vector3 launchPoint, targetPoint, launchVelocity;
         float age, blastRadius, damage;
 
-        public void SpawnOn(Vector3 launchPoint, Vector3 targetPoint, Vector3 launchVelocity, float blastRadius, float damage) {
-            
-            GameController.AddProjectile(this);
+        public void Initialize(Vector3 launchPoint, Vector3 targetPoint, Vector3 launchVelocity, float blastRadius, float damage) {
             this.launchPoint = launchPoint;
             this.targetPoint = targetPoint;
             this.launchVelocity = launchVelocity;
