@@ -1,5 +1,6 @@
 using Perikan.Gameplay.Controller;
 using Perikan.Infra.Gameplay;
+using TMPro;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Entity
@@ -23,18 +24,24 @@ namespace Perikan.Gameplay.Entity
             Vector3 p = launchPoint + launchVelocity * age;
             p.y -= 0.5f * 9.81f * age * age;
 
-            if (p.y <= 0f)
+
+            if (p.y <= 0f || IsInvalidPosition(p))
             {
                 //Game.SpawnExplosion().Initialize(targetPoint, blastRadius, damage);
                 Recycle();
+                return;
             }
 
-            transform.localPosition = p;
+            transform.position = p;
             Vector3 d = launchVelocity;
             d.y -= 9.81f * age;
             transform.localRotation = Quaternion.LookRotation(d);
 
             //Game.SpawnExplosion().Initialize(p, 0.1f, 0f);
+        }
+
+        private bool IsInvalidPosition(Vector3 pos) {
+            return float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z);
         }
 
         public override void Recycle()

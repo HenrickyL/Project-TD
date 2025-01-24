@@ -40,12 +40,7 @@ namespace Perikan.Gameplay.Entity.Tower
         protected override void Shoot()
         {
             LookTarget();
-            if (launchProgress < shotsPerSecond)
-            {
-                return;
-            }
             ShootTarget();
-
             _target = null;
             launchProgress = 0;
         }
@@ -53,10 +48,17 @@ namespace Perikan.Gameplay.Entity.Tower
         public override void GameUpdate()
         {
             base.GameUpdate();
-            if (_target != null) launchProgress += Time.deltaTime;
-            if (TrackTarget(ref _target) || AcquireTarget(out _target))
+            launchProgress += shotsPerSecond*Time.deltaTime;
+            while (launchProgress >= 1f)
             {
-                Shoot();
+                if (TrackTarget(ref _target) || AcquireTarget(out _target))
+                {
+                    Shoot();
+                }
+                else
+                {
+                    launchProgress = 0.999f;
+                }
             }
         }
 
@@ -69,13 +71,40 @@ namespace Perikan.Gameplay.Entity.Tower
             mortar.rotation = Quaternion.Lerp(mortar.rotation, targetRotation, Time.deltaTime * lookAtSmoothFactor);
         }
 
+        private Vector3 GetAdjustedLaunchDirection(Vector3 launchPoint, Vector3 targetPoint, Vector3 targetVelocity, float launchSpeed)
+        {
+            // Calcula a distância entre o ponto de lançamento e o ponto inicial do alvo
+            Vector3 launchDirection = targetPoint - launchPoint;
+            float distance = launchDirection.magnitude;
+
+            // Se a distância for muito pequena, retorna a direção simples (sem ajuste)
+            if (distance < 0.1f)
+            {
+                return (targetPoint - launchPoint).normalized;  // Direção direta
+            }
+
+            // Calcula o tempo de voo necessário para o projétil alcançar o alvo
+            float travelTime = distance / launchSpeed;
+
+            // Calcula a posição futura do alvo no momento em que o projétil chegaria
+            Vector3 futureTargetPosition = targetPoint + targetVelocity * travelTime;
+
+            // Ajusta a direção do lançamento para a posição futura do alvo
+            Vector3 adjustedLaunchDirection = futureTargetPosition - launchPoint;
+
+            // Retorna a direção normalizada ajustada
+            return adjustedLaunchDirection.normalized;
+        }
+
+
         private void ShootTarget() {
             Vector3 launchPoint = mortar.position;
             Vector3 targetPoint = _target.Position;
 
-            Vector3 targetDirection = (targetPoint - launchPoint).normalized;
+            //adjust to speed to enemy
+            Vector3 targetVelocity = _target.Enemy.Speed * 2f;
             float travelTime = Vector3.Distance(launchPoint, targetPoint) / launchSpeed;
-            targetPoint += targetDirection * _target.Enemy.Speed.magnitude * travelTime;
+            targetPoint += targetVelocity * travelTime;
 
             targetPoint.y = 0f;
 

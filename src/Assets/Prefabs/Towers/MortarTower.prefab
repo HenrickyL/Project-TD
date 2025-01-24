@@ -49,9 +49,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetingRange: 3.5
   shotsPerSecond: 1
-  projectileFactory: {fileID: 11400000, guid: d2b4b4711be92cc49ab0fcd17f965a53, type: 2}
   mortar: {fileID: 8830035496991240158}
   _laucherPoint: {fileID: 1724476202605698146}
+  shellBlastRadius: 1
+  shellDamage: 10
 --- !u!1 &6214874089044271995
 GameObject:
   m_ObjectHideFlags: 0

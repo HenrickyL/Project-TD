@@ -30,6 +30,8 @@ namespace Perikan.Infra.Gameplay
         public Vector3 Speed { get; set; }
         public float SpeedMagnitude { get; set; }
 
+        public Vector3 Velocity => Speed * SpeedMagnitude;
+
         public void SetSpeed(Direction direction)
         {
             Speed = direction.GetVector() * SpeedMagnitude; // Converte a direção em vetor e ajusta pela magnitude
