@@ -27,7 +27,13 @@ namespace Perikan.Infra.Gameplay
         }
 
         public float PathOffset { get; set; }
-        public float Speed { get; set; }
+        public Vector3 Speed { get; set; }
+        public float SpeedMagnitude { get; set; }
+
+        public void SetSpeed(Direction direction)
+        {
+            Speed = direction.GetVector() * SpeedMagnitude; // Converte a direção em vetor e ajusta pela magnitude
+        }
 
 
         private float _healthMax = 0f;

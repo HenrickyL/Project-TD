@@ -39,7 +39,19 @@ public static class DirectionExtensions
         Vector3.back * 0.5f,
         Vector3.left * 0.5f
     };
+
     /* ------------------------------------------ */
+    public static Vector3 GetVector(this Direction direction)
+    {
+        return direction switch
+        {
+            Direction.North => Vector3.forward,
+            Direction.East => Vector3.right,
+            Direction.South => Vector3.back,
+            Direction.West => Vector3.left,
+            _ => Vector3.zero
+        };
+    }
     public static Vector3 GetHalfVector(this Direction direction)
     {
         return halfVectors[(int)direction];

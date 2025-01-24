@@ -19,11 +19,12 @@ namespace Perikan.Gameplay.Entity {
         }
 
 
-        public void Initialize(float scale, float speed, float pathOffset)
+        public void Initialize(float scale, float speedMagnitude, float pathOffset)
         {
             ModelLocalScale = new Vector3(scale, scale, scale);
-            Speed = speed;
+            Speed = Vector3.zero;
             Scale = scale;
+            SpeedMagnitude = speedMagnitude;
             PathOffset = pathOffset;
             Health = 100f * scale;
         }

@@ -72,6 +72,11 @@ namespace Perikan.Gameplay.Entity.Tower
         private void ShootTarget() {
             Vector3 launchPoint = mortar.position;
             Vector3 targetPoint = _target.Position;
+
+            Vector3 targetDirection = (targetPoint - launchPoint).normalized;
+            float travelTime = Vector3.Distance(launchPoint, targetPoint) / launchSpeed;
+            targetPoint += targetDirection * _target.Enemy.Speed.magnitude * travelTime;
+
             targetPoint.y = 0f;
 
             Vector2 dir;
@@ -90,9 +95,6 @@ namespace Perikan.Gameplay.Entity.Tower
             float tanTheta = (s2 + Mathf.Sqrt(r)) / (g * x);
             float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
             float sinTheta = cosTheta * tanTheta;
-
-            mortar.localRotation =
-                Quaternion.LookRotation(new Vector3(dir.x, tanTheta, dir.y));
 
             Projectile projectile = GameController.SpawnProjectile();
             projectile.Initialize(
