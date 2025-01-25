@@ -1,5 +1,4 @@
 using UnityEngine;
-using Perikan.Infra.Animation;
 
 namespace Perikan.Infra.Gameplay
 {
@@ -17,15 +16,6 @@ namespace Perikan.Infra.Gameplay
             set { _model.localScale = value; }
         }
 
-
-        [SerializeField]
-        AnimationStateController _animController;
-        public AnimationStateController AnimationController
-        {
-            get => _animController;
-            protected set { _animController = value; }
-        }
-
         public float PathOffset { get; set; }
         public Vector3 Speed { get; set; }
         public float SpeedMagnitude { get; set; }
@@ -37,9 +27,7 @@ namespace Perikan.Infra.Gameplay
             Speed = direction.GetVector() * SpeedMagnitude; // Converte a direção em vetor e ajusta pela magnitude
         }
 
-
         private float _healthMax = 0f;
-
         public float HealthMax { get { return _healthMax; } set { _healthMax = value; } }
         [SerializeField]
         private float _health = 0f;

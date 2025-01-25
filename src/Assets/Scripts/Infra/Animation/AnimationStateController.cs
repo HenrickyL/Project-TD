@@ -33,16 +33,13 @@ namespace Perikan.Infra.Animation
             distanceYHash = Animator.StringToHash(AnimationParamsEnum.MovimentY.ToString());
         }
 
-        public void ChangeAnimator(AnimationStateEnum state, float value = 0) {
+        public void ChangeAnimator(AnimationStateEnum state, float value = 1) {
             switch (state) {
                 case AnimationStateEnum.Spawn:
                     animator.SetFloat(distanceYHash, value);
                     break;
-                case AnimationStateEnum.Hit:
-                    animator.SetBool(stateHash[(int)state], value != 0);
-                    break;
                 default:
-                    animator.SetBool(stateHash[(int)state], true);
+                    animator.SetBool(stateHash[(int)state], value != 0);
                     break;
             }
         }

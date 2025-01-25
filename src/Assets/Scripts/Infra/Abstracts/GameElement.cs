@@ -1,12 +1,20 @@
-using Perikan.Infra.Factory;
-using UnityEngine;
+using Perikan.Infra.Animation;
 using Perikan.Infra.GameStateManagement;
+using UnityEngine;
 
 namespace Perikan.Infra.Gameplay
 {
     [SelectionBase]
     public abstract class GameElement : GameAsset
     {
+        [SerializeField]
+        AnimationStateController _animController;
+        public AnimationStateController AnimationController
+        {
+            get => _animController;
+            protected set { _animController = value; }
+        }
+
         private StateMachine _stateMachine = null;
         protected StateMachine StateMachine
         {

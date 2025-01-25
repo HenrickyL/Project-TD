@@ -7,11 +7,10 @@ namespace Perikan.Gameplay.Entity.Tower {
         float damagePerSecond = 10f;
 
         [SerializeField]
-        Transform turret, laserBeam = default;
+        Transform laserBeam = default;
+        
         Vector3 _laserBeamScale;
-
         private TargetPoint _target;
-
         float lookAtSmoothFactor = 8.0f;
 
         public override TowerType TowerType => TowerType.Laser;
@@ -38,23 +37,23 @@ namespace Perikan.Gameplay.Entity.Tower {
             return base.AcquireTarget(out target);
         }
 
-        protected override void Shoot()
+        protected void Shoot()
         {
             Vector3 point = _target.Position;
-            Quaternion targetRotation = Quaternion.LookRotation(point - turret.position);
+            Quaternion targetRotation = Quaternion.LookRotation(point - Turret.position);
 
-            turret.rotation = Quaternion.Lerp(turret.rotation, targetRotation, Time.deltaTime* lookAtSmoothFactor);
-            laserBeam.localRotation = turret.localRotation;
+            Turret.rotation = Quaternion.Lerp(Turret.rotation, targetRotation, Time.deltaTime* lookAtSmoothFactor);
+            laserBeam.localRotation = Turret.localRotation;
 
             //turret.LookAt(point);
             //laserBeam.localRotation = turret.localRotation;
 
-            float d = Vector3.Distance(turret.position, point);
+            float d = Vector3.Distance(Turret.position, point);
             _laserBeamScale.z = d;
                 laserBeam.localScale = _laserBeamScale;
 
                 laserBeam.localPosition =
-                    turret.localPosition + 0.5f * d* laserBeam.forward;
+                    Turret.localPosition + 0.5f * d* laserBeam.forward;
 
             _target.Enemy.HandleDamage(damagePerSecond* Time.deltaTime);
         }

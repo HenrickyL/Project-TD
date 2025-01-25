@@ -47,9 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2033896f58c352c448033f43391197cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetingRange: 3.5
-  shotsPerSecond: 1
-  mortar: {fileID: 8830035496991240158}
+  _animController: {fileID: 5642421255201341916}
+  _targetingRange: 2.5
+  _turret: {fileID: 8830035496991240158}
+  _shotsPerSecond: 1
   _laucherPoint: {fileID: 1724476202605698146}
   shellBlastRadius: 1
   shellDamage: 10
@@ -246,6 +247,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6227228851488285791, guid: 9b79a824b287c954cad49d0ce14c39d0, type: 3}
   m_PrefabInstance: {fileID: 4721213171764344893}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5642421255201341916 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1137429802493114849, guid: 9b79a824b287c954cad49d0ce14c39d0, type: 3}
+  m_PrefabInstance: {fileID: 4721213171764344893}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5a19e1c7411d34fa80c86f4a9c0055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4763007302054963179
 PrefabInstance:
   m_ObjectHideFlags: 0

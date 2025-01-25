@@ -182,6 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5446699956203567412}
   - component: {fileID: 7272834353362678529}
+  - component: {fileID: 1137429802493114849}
   m_Layer: 0
   m_Name: Catapult
   m_TagString: Untagged
@@ -230,6 +231,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1137429802493114849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198461512470775458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5a19e1c7411d34fa80c86f4a9c0055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1611546083320883975
 GameObject:
   m_ObjectHideFlags: 0
