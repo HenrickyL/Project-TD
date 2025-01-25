@@ -51,7 +51,7 @@ namespace Perikan.Gameplay.Entity.Tower.Mortar.States
         {
             AnimationStateController animationController = tower.AnimationController;
             animationController.ChangeAnimator(AnimationStateEnum.Attack);
-            yield return new WaitForSeconds(animationController.GetAnimationLength(AnimationTypeEnum.Attack)-1f);
+            yield return new WaitForSeconds(animationController.GetAnimationLength(AnimationTypeEnum.Attack)-0.35f);
             ShootTarget();
         }
 
