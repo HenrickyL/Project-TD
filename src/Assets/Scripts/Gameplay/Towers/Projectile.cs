@@ -1,6 +1,4 @@
-using Perikan.Gameplay.Controller;
 using Perikan.Infra.Gameplay;
-using TMPro;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Entity
@@ -16,6 +14,7 @@ namespace Perikan.Gameplay.Entity
             this.launchPoint = launchPoint;
             this.targetPoint = targetPoint;
             this.launchVelocity = launchVelocity;
+            this.transform.position = launchPoint;
         }
 
         public override void GameUpdate()

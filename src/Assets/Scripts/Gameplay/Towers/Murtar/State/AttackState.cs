@@ -53,7 +53,7 @@ namespace Perikan.Gameplay.Entity.Tower.Mortar.States
             AnimationTypeEnum anim = AnimationTypeEnum.Attack;
             animationController.SetAnimationSpeed(anim, tower.ShotsPerSecond);
             animationController.ChangeAnimator(AnimationStateEnum.Attack,1);
-            float time = animationController.GetAnimationLength(anim) *0.95f;
+            float time = animationController.GetAnimationLength(anim)*0.95f;
             yield return new WaitForSeconds(time);
             ShootTarget();
         }
@@ -112,10 +112,11 @@ namespace Perikan.Gameplay.Entity.Tower.Mortar.States
             float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
             float sinTheta = cosTheta * tanTheta;
 
+            Vector3 launchVelocity = new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y);
             Projectile projectile = GameController.SpawnProjectile();
             projectile.Initialize(
                 launchPoint, targetPoint,
-                new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y),
+                 launchVelocity,
                 _attributes.ShellBlastRadius, _attributes.ShellDamage);
             tower.ChangeToAlertState();
         }

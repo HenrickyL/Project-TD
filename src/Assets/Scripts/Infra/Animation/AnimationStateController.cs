@@ -58,9 +58,9 @@ namespace Perikan.Infra.Animation
             }
             return clip.length/animator.speed;
         }
-        public void SetAnimationSpeed(AnimationTypeEnum state, float finalTime)
+        public void SetAnimationSpeed(AnimationTypeEnum state, float shootPerSecond)
         {
-            if (finalTime <= 0)
+            if (shootPerSecond <= 0)
             {
                 Debug.LogWarning("A velocidade da animação deve ser maior que zero.");
                 return;
@@ -81,13 +81,8 @@ namespace Perikan.Infra.Animation
                 Debug.LogWarning($"Animator parameter '{parameterName}' not found.");
                 return;
             }
-            float x = animator.GetFloat(_speedParameter);
-            float y = animator.GetFloat("speed");
-            float z = animator.speed;
-            animator.speed = clip.length * finalTime;
-
-
-            //animator.SetFloat(_speedParameter, finalTime / clip.length);
+            float finalTime = 1f / shootPerSecond;
+            animator.speed = clip.length / finalTime;
         }
 
         public void ResetAnimationSpeed(AnimationTypeEnum state)
@@ -109,7 +104,7 @@ namespace Perikan.Infra.Animation
                 return;
             }
 
-            animator.SetFloat(_speedParameter, 1);
+            animator.speed = 1;
         }
 
         /* ---------------------------------------- */
