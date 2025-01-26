@@ -50,8 +50,11 @@ namespace Perikan.Gameplay.Entity.Tower.Mortar.States
         private IEnumerator HandleAttack()
         {
             AnimationStateController animationController = tower.AnimationController;
-            animationController.ChangeAnimator(AnimationStateEnum.Attack);
-            yield return new WaitForSeconds(animationController.GetAnimationLength(AnimationTypeEnum.Attack)-0.35f);
+            AnimationTypeEnum anim = AnimationTypeEnum.Attack;
+            animationController.SetAnimationSpeed(anim, tower.ShotsPerSecond);
+            animationController.ChangeAnimator(AnimationStateEnum.Attack,1);
+            float time = animationController.GetAnimationLength(anim) *0.95f;
+            yield return new WaitForSeconds(time);
             ShootTarget();
         }
 
