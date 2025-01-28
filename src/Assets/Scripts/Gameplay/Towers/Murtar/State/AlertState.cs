@@ -8,7 +8,7 @@ namespace Perikan.Gameplay.Entity.Tower.Mortar.States
         TargetHandler _validateTrack;
         TargetPoint _target;
 
-        float launchProgress = 5;
+        //float launchProgress = 5;
 
         public AlertState(
             TargetHandler validateTrack

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WarFactory
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 730502307842276473, guid: c1187a0797e2526458d3c41a2c333c45, type: 3}
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 22216683136456273, guid: ed34e19a5de1aaa458c89cdd24f3c895, type: 3}

@@ -136,6 +136,13 @@ namespace Perikan.Gameplay.Controller
             return p;
         }
 
+        public static Explosion SpawnExplosion()
+        {
+            Explosion e = Instance.warFactory.Get<Explosion>() as Explosion;
+            Instance.nonEnemies.Add(e);
+            return e;
+        }
+
         /* ----------------------------------------------------- */
 
         private void UpdateSpawn() {

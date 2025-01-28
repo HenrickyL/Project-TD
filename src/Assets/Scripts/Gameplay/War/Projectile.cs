@@ -1,3 +1,4 @@
+using Perikan.Gameplay.Controller;
 using UnityEngine;
 
 namespace Perikan.Gameplay.Entity.War
@@ -25,12 +26,8 @@ namespace Perikan.Gameplay.Entity.War
 
             if (p.y <= 0f || IsInvalidPosition(p))
             {
-                TargetPoint.FillBuffer(targetPoint, _blastRadius);
-                for (int i = 0; i < TargetPoint.BufferedCount; i++)
-                {
-                    TargetPoint.GetBuffered(i).Enemy.ApplyDamage(_damage);
-                }
-                //Game.SpawnExplosion().Initialize(targetPoint, blastRadius, damage);
+                Explosion explosion =  GameController.SpawnExplosion();
+                explosion.Initialize(targetPoint, _blastRadius, _damage);
                 Recycle();
                 return;
             }
@@ -45,6 +42,14 @@ namespace Perikan.Gameplay.Entity.War
 
         private bool IsInvalidPosition(Vector3 pos) {
             return float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z);
-        }        
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.yellow;
+            Vector3 position = transform.position;
+            position.y += 0.01f;
+            Gizmos.DrawWireSphere(position, _blastRadius);
+        }
     }
 }
