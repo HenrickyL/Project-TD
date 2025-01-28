@@ -1,5 +1,6 @@
 using Perikan.Gameplay.Entity;
 using Perikan.Gameplay.Entity.Tower;
+using Perikan.Gameplay.Entity.War;
 using Perikan.Gameplay.Factory;
 using Perikan.Gameplay.Generator;
 using Perikan.Gameplay.Map;
@@ -130,7 +131,7 @@ namespace Perikan.Gameplay.Controller
 
         public static Projectile SpawnProjectile()
         {
-            Projectile p = Instance.warFactory.Get();
+            Projectile p = Instance.warFactory.Get<Projectile>() as Projectile;
             Instance.nonEnemies.Add(p);
             return p;
         }

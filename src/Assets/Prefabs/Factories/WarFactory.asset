@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660ccc00c466ab9449dd0ec84da6d6e9, type: 3}
   m_Name: WarFactory
   m_EditorClassIdentifier: 
-  prefab: {fileID: 730502307842276473, guid: c1187a0797e2526458d3c41a2c333c45, type: 3}
+  projectilePrefab: {fileID: 730502307842276473, guid: c1187a0797e2526458d3c41a2c333c45, type: 3}
+  explosionPrefab: {fileID: 0}

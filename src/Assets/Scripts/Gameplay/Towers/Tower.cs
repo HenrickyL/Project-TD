@@ -56,6 +56,7 @@ namespace Perikan.Gameplay.Entity.Tower
             position.y += 0.01f;
             Gizmos.DrawWireSphere(position, TargetingRange);
         }
-                
+
+        public virtual void Initialize(){}
     }
 }

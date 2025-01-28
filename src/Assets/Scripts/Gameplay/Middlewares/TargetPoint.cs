@@ -2,6 +2,7 @@ using Perikan.Gameplay.Entity;
 using Perikan.Gameplay.Enums;
 using UnityEngine;
 
+///TODO: refactor to Infra
 namespace Perikan.Gameplay { 
     [RequireComponent(typeof(SphereCollider))]
     public class TargetPoint : MonoBehaviour

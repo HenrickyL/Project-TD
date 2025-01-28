@@ -34,7 +34,8 @@ namespace Perikan.Gameplay.Entity.Tower
             return TrackTarget(ref target);
         }
 
-        public override void Initialize() { 
+        public override void Initialize()
+        {
             base.Initialize();
             ChangeToAlertState();
         }

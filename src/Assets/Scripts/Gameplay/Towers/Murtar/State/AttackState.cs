@@ -1,4 +1,5 @@
 using Perikan.Gameplay.Controller;
+using Perikan.Gameplay.Entity.War;
 using Perikan.Infra.Animation;
 using Perikan.Infra.Gameplay;
 using System.Collections;

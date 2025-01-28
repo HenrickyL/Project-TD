@@ -24,7 +24,7 @@ namespace Perikan.Infra.Gameplay
 
 
 
-        public virtual void Initialize() { }
+        //public virtual void Initialize() { }
         public virtual void GameUpdate() { }
         public virtual void Recycle()
         {

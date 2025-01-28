@@ -37,12 +37,6 @@ namespace Perikan.Gameplay.Map {
             ResetRotation();
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            ResetRotation();
-        }
-
         private void ResetRotation()
         {
             targetRotation = Quaternion.Euler(90, Angle, 0);

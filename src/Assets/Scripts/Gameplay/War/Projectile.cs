@@ -1,12 +1,9 @@
-using Perikan.Infra.Gameplay;
 using UnityEngine;
 
-namespace Perikan.Gameplay.Entity
+namespace Perikan.Gameplay.Entity.War
 {
-    public class Projectile : GameAsset
+    public class Projectile : WarEntity
     {
-        private bool _isLive = true;
-        public override bool IsAlive => _isLive;
         Vector3 launchPoint, targetPoint, launchVelocity;
         float _age, _blastRadius, _damage;
 
@@ -48,12 +45,6 @@ namespace Perikan.Gameplay.Entity
 
         private bool IsInvalidPosition(Vector3 pos) {
             return float.IsNaN(pos.x) || float.IsNaN(pos.y) || float.IsNaN(pos.z);
-        }
-
-        public override void Recycle()
-        {
-            base.Recycle();
-            _isLive = false;
-        }
+        }        
     }
 }
