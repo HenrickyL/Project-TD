@@ -55,7 +55,7 @@ namespace Perikan.Gameplay.Entity.Tower {
                 laserBeam.localPosition =
                     Turret.localPosition + 0.5f * d* laserBeam.forward;
 
-            _target.Enemy.HandleDamage(damagePerSecond* Time.deltaTime);
+            _target.Enemy.ApplyDamage(damagePerSecond* Time.deltaTime);
         }
         public override void Initialize()
         {

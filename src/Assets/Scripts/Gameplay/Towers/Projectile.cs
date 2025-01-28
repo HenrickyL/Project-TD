@@ -8,7 +8,7 @@ namespace Perikan.Gameplay.Entity
         private bool _isLive = true;
         public override bool IsAlive => _isLive;
         Vector3 launchPoint, targetPoint, launchVelocity;
-        float age, blastRadius, damage;
+        float _age, _blastRadius, _damage;
 
         public void Initialize(Vector3 launchPoint, Vector3 targetPoint, Vector3 launchVelocity, float blastRadius, float damage) {
             this.launchPoint = launchPoint;
@@ -19,13 +19,18 @@ namespace Perikan.Gameplay.Entity
 
         public override void GameUpdate()
         {
-            age += Time.deltaTime;
-            Vector3 p = launchPoint + launchVelocity * age;
-            p.y -= 0.5f * 9.81f * age * age;
+            _age += Time.deltaTime;
+            Vector3 p = launchPoint + launchVelocity * _age;
+            p.y -= 0.5f * 9.81f * _age * _age;
 
 
             if (p.y <= 0f || IsInvalidPosition(p))
             {
+                TargetPoint.FillBuffer(targetPoint, _blastRadius);
+                for (int i = 0; i < TargetPoint.BufferedCount; i++)
+                {
+                    TargetPoint.GetBuffered(i).Enemy.ApplyDamage(_damage);
+                }
                 //Game.SpawnExplosion().Initialize(targetPoint, blastRadius, damage);
                 Recycle();
                 return;
@@ -33,7 +38,7 @@ namespace Perikan.Gameplay.Entity
 
             transform.position = p;
             Vector3 d = launchVelocity;
-            d.y -= 9.81f * age;
+            d.y -= 9.81f * _age;
             transform.localRotation = Quaternion.LookRotation(d);
 
             //Game.SpawnExplosion().Initialize(p, 0.1f, 0f);

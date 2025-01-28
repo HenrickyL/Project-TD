@@ -31,13 +31,13 @@ namespace Perikan.Gameplay.Entity {
 
         /* -------------------------------------------- */
 
-        private void ApplyDamage(float damage) {
+        private void HandleApplyDamage(float damage) {
             Debug.Assert(damage >= 0f, "Negative damage applied.");
             Health -= damage;
         }
-        public void HandleDamage(float damage)
+        public void ApplyDamage(float damage)
         {
-            ApplyDamage(damage);
+            HandleApplyDamage(damage);
             if (!this.IsAlive)
             {
                 base.ChangeState(new DeathState(this));
