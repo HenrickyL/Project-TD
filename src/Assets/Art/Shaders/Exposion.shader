@@ -1,21 +1,23 @@
-Shader "Custom/URP_TextureMovement" {
+Shader "Custom/URP_ExplosionEffectRadial" {
     Properties {
         _Color1 ("Inner Color (Center)", Color) = (1, 0.8, 0, 1)
         _Color2 ("Outer Color (Edges)", Color) = (1, 0.4, 0, 1)
         _MainTex ("Texture", 2D) = "white" {}
+        _NoiseTex ("Noise Texture", 2D) = "white" {} // Textura de ruído
         _FadeSpeed ("Fade Speed", Range(0, 5)) = 1.0
         _ExpansionSpeed ("Expansion Speed", Range(0, 10)) = 2.0
         _WaveFrequency ("Wave Frequency", Range(0, 20)) = 10.0
         _WaveAmplitude ("Wave Amplitude", Range(0, 1)) = 0.1
         _EmissionColor ("Emission Color", Color) = (1, 0.5, 0, 1)
         _EmissionIntensity ("Emission Intensity", Range(0, 5)) = 1.0
+        _NoiseScale ("Noise Scale", Range(0, 10)) = 1.0 // Escala do ruído
     }
     SubShader {
         Tags { "RenderType"="Transparent" "Queue"="Transparent" }
         LOD 200
 
         Pass {
-            Name "TextureMovement"
+            Name "ExplosionEffectRadial"
             Tags { "LightMode"="UniversalForward" }
             Blend SrcAlpha OneMinusSrcAlpha
             ZWrite Off
@@ -29,6 +31,9 @@ Shader "Custom/URP_TextureMovement" {
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
 
+            TEXTURE2D(_NoiseTex); // Textura de ruído
+            SAMPLER(sampler_NoiseTex);
+
             float4 _Color1;
             float4 _Color2;
             float _FadeSpeed;
@@ -37,6 +42,7 @@ Shader "Custom/URP_TextureMovement" {
             float _WaveAmplitude;
             float4 _EmissionColor;
             float _EmissionIntensity;
+            float _NoiseScale; // Escala do ruído
 
             struct Attributes {
                 float4 positionOS : POSITION;
@@ -85,8 +91,12 @@ Shader "Custom/URP_TextureMovement" {
                 texColor.rgb *= dynamicColor.rgb; // Multiplica pela cor dinâmica
                 texColor.a *= fade;
 
-                // Emissão
-                float4 emission = _EmissionColor * _EmissionIntensity * fade;
+                // Amostra a textura de ruído
+                float2 noiseUV = i.uv * _NoiseScale; // Aplica escala ao UV do ruído
+                float noiseValue = SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, noiseUV).r;
+
+                // Emissão com base no ruído
+                float4 emission = _EmissionColor * _EmissionIntensity * fade * noiseValue;
 
                 // Cor final
                 return texColor + emission;
