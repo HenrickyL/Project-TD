@@ -15,6 +15,8 @@ namespace Perikan.Gameplay.Entity
             this.targetPoint = targetPoint;
             this.launchVelocity = launchVelocity;
             this.transform.position = launchPoint;
+            this._blastRadius = blastRadius;
+            this._damage = damage;
         }
 
         public override void GameUpdate()
