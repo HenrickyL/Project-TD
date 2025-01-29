@@ -1,11 +1,14 @@
 using Perikan.Gameplay.Entity;
 using Perikan.Gameplay.Entity.Tower;
+using Perikan.Gameplay.Entity.War;
 using Perikan.Gameplay.Factory;
 using Perikan.Gameplay.Generator;
 using Perikan.Gameplay.Map;
+using Perikan.Infra.Collections;
 using UnityEngine;
 
-namespace Perikan.Gameplay.Controller { 
+namespace Perikan.Gameplay.Controller
+{
     public class GameController : MonoBehaviour
     {
         public static GameController Instance { get; private set; }
@@ -28,6 +31,9 @@ namespace Perikan.Gameplay.Controller {
         GameTileContentFactory tileContentFactory = default;
 
         [SerializeField]
+        WarFactory warFactory = default;
+
+        [SerializeField]
         EnemyFactory enemyFactory = default;
 
         [SerializeField, Range(0.1f, 10f)]
@@ -37,7 +43,8 @@ namespace Perikan.Gameplay.Controller {
 
         Ray TouchRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        EnemyCollection enemies = new EnemyCollection();
+        GameAssetCollection enemies = new GameAssetCollection();
+        GameAssetCollection nonEnemies = new GameAssetCollection();
 
         TowerType selectedTowerType;
 
@@ -118,8 +125,23 @@ namespace Perikan.Gameplay.Controller {
             UpdateEnemies();
             Physics.SyncTransforms();
             _board.GameUpdate();
+            nonEnemies.GameUpdate();
         }
 
+
+        public static Projectile SpawnProjectile()
+        {
+            Projectile p = Instance.warFactory.Get<Projectile>() as Projectile;
+            Instance.nonEnemies.Add(p);
+            return p;
+        }
+
+        public static Explosion SpawnExplosion()
+        {
+            Explosion e = Instance.warFactory.Get<Explosion>() as Explosion;
+            Instance.nonEnemies.Add(e);
+            return e;
+        }
 
         /* ----------------------------------------------------- */
 

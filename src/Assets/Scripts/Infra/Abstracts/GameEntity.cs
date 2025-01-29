@@ -1,5 +1,4 @@
 using UnityEngine;
-using Perikan.Infra.Animation;
 
 namespace Perikan.Infra.Gameplay
 {
@@ -17,21 +16,18 @@ namespace Perikan.Infra.Gameplay
             set { _model.localScale = value; }
         }
 
+        public float PathOffset { get; set; }
+        public Vector3 Speed { get; set; }
+        public float SpeedMagnitude { get; set; }
 
-        [SerializeField]
-        AnimationStateController _animController;
-        public AnimationStateController AnimationController
+        public Vector3 Velocity => Speed * SpeedMagnitude;
+
+        public void SetSpeed(Direction direction)
         {
-            get => _animController;
-            protected set { _animController = value; }
+            Speed = direction.GetVector() * SpeedMagnitude; // Converte a direção em vetor e ajusta pela magnitude
         }
 
-        public float PathOffset { get; set; }
-        public float Speed { get; set; }
-
-
         private float _healthMax = 0f;
-
         public float HealthMax { get { return _healthMax; } set { _healthMax = value; } }
         [SerializeField]
         private float _health = 0f;
@@ -39,7 +35,7 @@ namespace Perikan.Infra.Gameplay
             get { return _health; }
             protected set { _health = value; }
         }
-        public bool IsAlive=> _health > 0;
+        public override bool IsAlive => _health > 0;
 
         /* ------------------------------------------------- */
         public virtual void SetDeath() {

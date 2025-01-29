@@ -1,6 +1,5 @@
 using Perikan.Gameplay.Entity.Tower;
 using Perikan.Gameplay.Factory;
-using Perikan.Infra.Gameplay;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;

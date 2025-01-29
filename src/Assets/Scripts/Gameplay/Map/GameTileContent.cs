@@ -18,5 +18,6 @@ namespace Perikan.Gameplay.Map {
         public bool BlocksPath =>
             Type == GameTileContentType.Wall || Type == GameTileContentType.Tower;
 
+        public override bool IsAlive => true;
     }
 }

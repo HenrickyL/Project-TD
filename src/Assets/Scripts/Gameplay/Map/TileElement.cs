@@ -5,6 +5,8 @@ namespace Perikan.Gameplay.Map{
     {
         public bool IsActive { get; set; } = false;
 
+        public override bool IsAlive => true;
+
         public virtual void Enable()
         {
             this.gameObject.SetActive(true);

@@ -1,12 +1,20 @@
-using Perikan.Infra.Factory;
-using UnityEngine;
+using Perikan.Infra.Animation;
 using Perikan.Infra.GameStateManagement;
+using UnityEngine;
 
 namespace Perikan.Infra.Gameplay
 {
     [SelectionBase]
     public abstract class GameElement : GameAsset
     {
+        [SerializeField]
+        AnimationStateController _animController;
+        public AnimationStateController AnimationController
+        {
+            get => _animController;
+            protected set { _animController = value; }
+        }
+
         private StateMachine _stateMachine = null;
         protected StateMachine StateMachine
         {
@@ -18,17 +26,7 @@ namespace Perikan.Infra.Gameplay
             }
         }
 
-        private AbstractGameAssetFactory _originFactory;
-        public AbstractGameAssetFactory OriginFactory
-        {
-            get => _originFactory;
-            set
-            {
-                Debug.Assert(_originFactory == null, "Redefined origin factory!");
-                _originFactory = value;
-            }
-        }
-
+        
         public float Scale { get; protected set; }
 
         /* --------------------------------------------------- */
@@ -44,11 +42,6 @@ namespace Perikan.Infra.Gameplay
         {
             base.GameUpdate();
             _stateMachine?.UpdateState();
-        }
-
-        public override void Recycle()
-        {
-            OriginFactory.Reclaim(this);
         }
 
         public void ChangeState(BaseState state)

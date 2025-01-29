@@ -169,9 +169,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d314b340819f64da007024562b88d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetingRange: 2.5
+  _animController: {fileID: 1398233432738471083}
+  _targetingRange: 1.5
+  _turret: {fileID: 3112413925169172520}
   damagePerSecond: 3
-  turret: {fileID: 3112413925169172520}
   laserBeam: {fileID: 2622840571242163025}
 --- !u!1 &5539480361328459447
 GameObject:
@@ -369,6 +370,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b0581f1b14c37404fbd544a5d47a886a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4762047781244922372}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b0581f1b14c37404fbd544a5d47a886a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1398233432738471083}
   m_SourcePrefab: {fileID: 100100000, guid: b0581f1b14c37404fbd544a5d47a886a, type: 3}
 --- !u!4 &1692480363265723848 stripped
 Transform:
@@ -402,6 +406,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1398233432738471083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033152309054625650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5a19e1c7411d34fa80c86f4a9c0055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4763007302054963179
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -19,24 +19,25 @@ namespace Perikan.Gameplay.Entity {
         }
 
 
-        public void Initialize(float scale, float speed, float pathOffset)
+        public void Initialize(float scale, float speedMagnitude, float pathOffset)
         {
             ModelLocalScale = new Vector3(scale, scale, scale);
-            Speed = speed;
+            Speed = Vector3.zero;
             Scale = scale;
+            SpeedMagnitude = speedMagnitude;
             PathOffset = pathOffset;
             Health = 100f * scale;
         }
 
         /* -------------------------------------------- */
 
-        private void ApplyDamage(float damage) {
+        private void HandleApplyDamage(float damage) {
             Debug.Assert(damage >= 0f, "Negative damage applied.");
             Health -= damage;
         }
-        public void HandleDamage(float damage)
+        public void ApplyDamage(float damage)
         {
-            ApplyDamage(damage);
+            HandleApplyDamage(damage);
             if (!this.IsAlive)
             {
                 base.ChangeState(new DeathState(this));
