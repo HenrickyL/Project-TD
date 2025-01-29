@@ -36,8 +36,7 @@ namespace Perikan.Gameplay.Entity.War
             Vector3 d = launchVelocity;
             d.y -= 9.81f * _age;
             transform.localRotation = Quaternion.LookRotation(d);
-
-            //Game.SpawnExplosion().Initialize(p, 0.1f, 0f);
+            //GameController.SpawnExplosion().Initialize(p, 0.1f);
         }
 
         private bool IsInvalidPosition(Vector3 pos) {

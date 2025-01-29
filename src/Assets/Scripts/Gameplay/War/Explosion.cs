@@ -10,12 +10,15 @@ namespace Perikan.Gameplay.Entity.War
         Vector3 finalScale;
 
         /* -------------------------------------------------------------------------- */
-        public void Initialize(Vector3 position, float blastRadius, float damage)
+        public void Initialize(Vector3 position, float blastRadius, float damage = 0f)
         {
-            TargetPoint.FillBuffer(position, blastRadius);
-            for (int i = 0; i < TargetPoint.BufferedCount; i++)
+            if (damage >0)
             {
-                TargetPoint.GetBuffered(i).Enemy.ApplyDamage(damage);
+                TargetPoint.FillBuffer(position, blastRadius);
+                for (int i = 0; i < TargetPoint.BufferedCount; i++)
+                {
+                    TargetPoint.GetBuffered(i).Enemy.ApplyDamage(damage);
+                }
             }
             transform.position = position;
             transform.localScale = Vector3.zero;
@@ -26,11 +29,13 @@ namespace Perikan.Gameplay.Entity.War
         {
             base.GameUpdate();
             age += Time.deltaTime;
-
+           
             float t = Mathf.Clamp01(age / _duration);
             transform.localScale = Vector3.Lerp(Vector3.zero, finalScale, t);
+            
             if (age >= _duration) {
                 this.Recycle();
+                return;
             }
         }
 

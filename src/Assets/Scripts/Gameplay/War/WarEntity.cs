@@ -8,8 +8,8 @@ namespace Perikan.Gameplay.Entity.War {
 
         public override void Recycle()
         {
-            _isAlive = false;
             base.Recycle();
+            _isAlive = false;
         }
     }
 }
