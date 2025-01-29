@@ -1,5 +1,5 @@
 using Perikan.AI;
-using Perikan.CustomCollections;
+using Perikan.infra.Collections;
 using System.Collections.Generic;
 
 namespace Perikan.Gameplay.Map { 
@@ -150,12 +150,12 @@ namespace Perikan.Gameplay.Map {
                     if (tile.isEmpty && !tile.HasPath)
                     {
                         //return false;
-                        tile.Content.Element.Disable();
+                        //tile.Content.Content.Disable();
                     }
                     else
                     {
                         tile.ShowPath();
-                        tile.SetEnableArrow(true);
+                        //tile.SetEnableArrow(true);
                     }
                 }
             }

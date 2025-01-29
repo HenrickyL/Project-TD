@@ -5,10 +5,10 @@ namespace Perikan.Infra.GameStateManagement
     public sealed class StateMachine
     {
         private BaseState _currentState;
-        private GameAsset _context;
+        private GameElement _context;
 
         public BaseState CurrentState { get { return _currentState; } }
-        public GameAsset Context { get { return _context; } }
+        public GameElement Context { get { return _context; } }
 
         public string CurrentStateName => _currentState.Name();
 
@@ -17,7 +17,7 @@ namespace Perikan.Infra.GameStateManagement
             _currentState?.UpdateState();
         }
 
-        public void ChangeState(GameAsset context, BaseState newState)
+        public void ChangeState(GameElement context, BaseState newState)
         {
             _context = context;
             _currentState?.Exit();

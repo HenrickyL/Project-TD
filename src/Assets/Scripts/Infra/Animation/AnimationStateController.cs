@@ -25,24 +25,24 @@ namespace Perikan.Infra.Animation
         private int distanceYHash;
         private AnimationClip[] animationClips;
 
+        private int _speedParameter;
+
         void Awake()
         {
             animator = GetComponent<Animator>();
             SetStateHash();
             CacheAnimationClips();
             distanceYHash = Animator.StringToHash(AnimationParamsEnum.MovimentY.ToString());
+            _speedParameter = Animator.StringToHash("speed");
         }
 
-        public void ChangeAnimator(AnimationStateEnum state, float value = 0) {
+        public void ChangeAnimator(AnimationStateEnum state, float value = 1) {
             switch (state) {
                 case AnimationStateEnum.Spawn:
                     animator.SetFloat(distanceYHash, value);
                     break;
-                case AnimationStateEnum.Hit:
-                    animator.SetBool(stateHash[(int)state], value != 0);
-                    break;
                 default:
-                    animator.SetBool(stateHash[(int)state], true);
+                    animator.SetBool(stateHash[(int)state], value != 0);
                     break;
             }
         }
@@ -56,7 +56,55 @@ namespace Perikan.Infra.Animation
                 Debug.LogWarning($"Animation clip for state '{state}' not found.");
                 return 0f; // Retorna 0 se o clipe não for encontrado
             }
-            return clip.length;
+            return clip.length/animator.speed;
+        }
+        public void SetAnimationSpeed(AnimationTypeEnum state, float shootPerSecond)
+        {
+            if (shootPerSecond <= 0)
+            {
+                Debug.LogWarning("A velocidade da animação deve ser maior que zero.");
+                return;
+            }
+
+            AnimationClip clip = animationClips[(int)state];
+            if (clip == null)
+            {
+                Debug.LogWarning($"Animation clip for state '{state}' not found.");
+                return;
+            }
+
+            string parameterName = state.ToString();
+            int parameterHash = Animator.StringToHash(parameterName);
+
+            if (!animator.parameters.Any(p => p.nameHash == parameterHash))
+            {
+                Debug.LogWarning($"Animator parameter '{parameterName}' not found.");
+                return;
+            }
+            float finalTime = 1f / shootPerSecond;
+            animator.speed = clip.length / finalTime;
+        }
+
+        public void ResetAnimationSpeed(AnimationTypeEnum state)
+        {
+
+            AnimationClip clip = animationClips[(int)state];
+            if (clip == null)
+            {
+                Debug.LogWarning($"Animation clip for state '{state}' not found.");
+                return;
+            }
+
+            string parameterName = state.ToString();
+            int parameterHash = Animator.StringToHash(parameterName);
+
+            if (!animator.parameters.Any(p => p.nameHash == parameterHash))
+            {
+                Debug.LogWarning($"Animator parameter '{parameterName}' not found.");
+                return;
+            }
+
+            animator.speed = 1;
         }
 
         /* ---------------------------------------- */

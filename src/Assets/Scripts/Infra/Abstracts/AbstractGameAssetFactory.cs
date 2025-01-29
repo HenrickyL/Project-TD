@@ -39,7 +39,6 @@ public abstract class AbstractGameAssetFactory : ScriptableObject
         return instance;
     }
 
-
     public virtual void Reclaim(GameAsset content)
     {
         Debug.Assert(content.OriginFactory == this, "Wrong factory reclaimed!");

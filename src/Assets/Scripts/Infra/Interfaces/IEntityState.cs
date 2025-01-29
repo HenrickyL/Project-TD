@@ -4,7 +4,7 @@ namespace Perikan.Infra.GameStateManagement
 {
     public interface IEntityState
     { 
-        void Enter(GameAsset context);
+        void Enter(GameElement context);
         void UpdateState();
         void Exit();
         string Name();
@@ -12,15 +12,15 @@ namespace Perikan.Infra.GameStateManagement
 
     public abstract class BaseState : IEntityState
     {
-        private GameAsset _entity = default;
+        private GameElement _entity = default;
         private string _name = default;
 
-        protected GameAsset Entity => _entity;
+        protected GameElement Entity => _entity;
 
         public BaseState(string name) { 
             _name = name;
         }
-        public virtual void Enter(GameAsset context) {
+        public virtual void Enter(GameElement context) {
             _entity = context;
         }
         public virtual void UpdateState() { }

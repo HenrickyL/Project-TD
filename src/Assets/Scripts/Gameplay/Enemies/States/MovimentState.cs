@@ -20,11 +20,12 @@ namespace Perikan.Gameplay.EnemyState {
         DirectionChange _directionChange;
         float _directionAngleFrom, _directionAngleTo;
 
-        public override void Enter(GameAsset entity)
+        public override void Enter(GameElement entity)
         {
             base.Enter(entity);
             enemy.TileTo = enemy.TileFrom.NextTileOnPath;
             _progress =  enemy.Progress > 0 ? enemy.Progress :  0f;
+            enemy.SetSpeed(TileTo.PathDirection);
             PrepareIntro();
             animationController.ChangeAnimator(AnimationStateEnum.Walk);
         }
@@ -77,9 +78,10 @@ namespace Perikan.Gameplay.EnemyState {
             _direction = TileFrom.PathDirection;
             _directionChange = DirectionChange.None;
             _directionAngleFrom = _directionAngleTo = _direction.GetAngle();
+            enemy.SetSpeed(_direction);
             enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f);
             Entity.transform.localRotation = _direction.GetRotation();
-            _progressFactor = 2f * enemy.Speed;
+            _progressFactor = 2f * enemy.Speed.magnitude;
         }
         /// <summary>
         /// Configura o estado final (outro) do inimigo.
@@ -92,7 +94,7 @@ namespace Perikan.Gameplay.EnemyState {
             _directionAngleTo = _direction.GetAngle();
             enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f);
             Entity.transform.localRotation = _direction.GetRotation();
-            _progressFactor = 2f * enemy.Speed;
+            _progressFactor = 2f * enemy.Speed.magnitude;
         }
 
         private void PrepareNextState()
@@ -108,6 +110,7 @@ namespace Perikan.Gameplay.EnemyState {
             _positionTo = TileFrom.ExitPoint;
             _directionChange = _direction.GetDirectionChangeTo(TileFrom.PathDirection);
             _direction = TileFrom.PathDirection;
+            enemy.SetSpeed(_direction);
             _directionAngleFrom = _directionAngleTo;
 
             switch (_directionChange)
@@ -125,7 +128,7 @@ namespace Perikan.Gameplay.EnemyState {
             Entity.transform.localRotation = _direction.GetRotation();
             _directionAngleTo = _direction.GetAngle();
             enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f); ;
-            _progressFactor = enemy.Speed;
+            _progressFactor = enemy.Speed.magnitude;
         }
 
         private void PrepareTurnRight()
@@ -133,7 +136,7 @@ namespace Perikan.Gameplay.EnemyState {
             _directionAngleTo = _directionAngleFrom + 90f;
             enemy.ModelLocalPosition = new Vector3(enemy.PathOffset - 0.5f, 0f);
             Entity.transform.localPosition = _positionFrom + _direction.GetHalfVector();
-            _progressFactor = enemy.Speed / (Mathf.PI * 0.5f * (0.5f - enemy.PathOffset));
+            _progressFactor = enemy.Speed.magnitude / (Mathf.PI * 0.5f * (0.5f - enemy.PathOffset));
         }
 
         void PrepareTurnLeft()
@@ -141,7 +144,7 @@ namespace Perikan.Gameplay.EnemyState {
             _directionAngleTo = _directionAngleFrom - 90f;
             enemy.ModelLocalPosition = new Vector3(enemy.PathOffset + 0.5f, 0f);
             Entity.transform.localPosition = _positionFrom + _direction.GetHalfVector();
-            _progressFactor = enemy.Speed / (Mathf.PI * 0.5f * (0.5f + enemy.PathOffset));
+            _progressFactor = enemy.Speed.magnitude / (Mathf.PI * 0.5f * (0.5f + enemy.PathOffset));
         }
 
         private void PrepareTurnAround()
@@ -149,7 +152,7 @@ namespace Perikan.Gameplay.EnemyState {
             _directionAngleTo = _directionAngleFrom + (enemy.PathOffset < 0f ? 180f : -180f);
             enemy.ModelLocalPosition = new Vector3(enemy.PathOffset, 0f);
             Entity.transform.localPosition = _positionFrom;
-            _progressFactor = enemy.Speed / (Mathf.PI * Mathf.Max(Mathf.Abs(enemy.PathOffset), 0.2f));
+            _progressFactor = enemy.Speed.magnitude / (Mathf.PI * Mathf.Max(Mathf.Abs(enemy.PathOffset), 0.2f));
         }
     }
 }

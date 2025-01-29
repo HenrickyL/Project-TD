@@ -10,9 +10,9 @@ namespace Perikan.Gameplay.Map {
 
         GameTileContent _content;
 
-        public bool isWall => Content.Type == GameTileContentType.Wall;
-        public bool isEmpty => Content.Type == GameTileContentType.Empty;
-        public bool isDestination => Content.Type == GameTileContentType.Destination;
+        public bool isWall => _content.Type == GameTileContentType.Wall;
+        public bool isEmpty => _content.Type == GameTileContentType.Empty;
+        public bool isDestination => _content.Type == GameTileContentType.Destination;
         public Vector3 ExitPoint { get; private set; }
 
 
@@ -34,8 +34,6 @@ namespace Perikan.Gameplay.Map {
             }
         }
 
-        public TileArrow Arrow { get; set; }
-
         public Direction[] NeighborsOrder {
             get {
                 return IsAlternative ?
@@ -45,9 +43,6 @@ namespace Perikan.Gameplay.Map {
         }
 
         public GameTile[] Neighbors => _neighbors;
-
-
-        public GameTile Ne { get; set; }
 
         public GameTile North { get { return _neighbors[(int)Direction.North]; } set { _neighbors[(int)Direction.North] = value; } }
         public GameTile East { get { return _neighbors[(int)Direction.East]; } set { _neighbors[(int)Direction.East] = value; } }
@@ -116,10 +111,6 @@ namespace Perikan.Gameplay.Map {
         {
             _distance = int.MaxValue;
             _nextOnPath = null;
-            if (Content.Element.IsActive)
-            {
-                Content.Element.Toggle();
-            }
         }
 
         public void BecomeDestination()
@@ -134,34 +125,20 @@ namespace Perikan.Gameplay.Map {
         }
 
         public void ShowPath() {
-            if (isEmpty)
-                Content.Element.Enable();
+            TileArrow arrow = _content?.Element as TileArrow;
+            if (isEmpty && arrow != null)
+                arrow.Enable();
             if (_distance == 0)
             {
-                //_arrow.gameObject.SetActive(false);
                 return;
             }
-            for (int dir = (int)Direction.North; dir <= (int)Direction.West; dir++)
-            {
-                GameTile tile = _neighbors[dir];
-                if (_nextOnPath == tile && Content.Element is TileArrow)
-                    {
-                    TileArrow arrow = Content.Element as TileArrow;
-                    arrow.RotateTo((Direction)dir);
-                }
-            }
+            if(_nextOnPath != null)
+                arrow?.RotateTo(_nextOnPath.PathDirection);
         }
 
         public void HidePath() {
-            if (Content.Element is TileArrow) {
-                Content.Element.Disable();
-            }
-        }
-
-        public void SetEnableArrow(bool value) { 
-            if(Content.Element.IsActive != value)
-            {
-                Content.Element.Toggle();
+            if (Content.Element is TileArrow arrow) {
+                arrow.Disable();
             }
         }
 

@@ -263,8 +263,9 @@ MonoBehaviour:
   _arrowEnable: {fileID: 2100000, guid: 7cc096686626d994eb8f5b7847c94c87, type: 2}
   _arrowDisable: {fileID: 2100000, guid: 0e469bcfcdf74814aa09775c3f868079, type: 2}
   tileContentFactory: {fileID: 11400000, guid: f9566aa00a1bfee45a0fa47ae0c70bf9, type: 2}
+  warFactory: {fileID: 11400000, guid: d2b4b4711be92cc49ab0fcd17f965a53, type: 2}
   enemyFactory: {fileID: 11400000, guid: ff2e424191591cd4885d659906b481f8, type: 2}
-  spawnSpeed: 0.4
+  spawnSpeed: 0.2
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,8 +302,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

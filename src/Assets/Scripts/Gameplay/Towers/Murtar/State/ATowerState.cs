@@ -1,11 +1,10 @@
-using Perikan.Gameplay.Entity;
 using Perikan.Infra.GameStateManagement;
 
-namespace Perikan.Gameplay.TowerState {
+namespace Perikan.Gameplay.Entity.Tower.Mortar.States{
 
     public class ATowerState : BaseState
     {
-        protected Tower tower => (Tower)Entity;
+        protected MortarTower tower => (MortarTower)Entity;
         public ATowerState(string name) : base(name)
         {}
     }
