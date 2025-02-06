@@ -71,7 +71,8 @@ MonoBehaviour:
   - {fileID: 4792528142671987276}
   - {fileID: -4066601808926583242}
   - {fileID: 5437860418796316325}
-  m_RendererFeatureMap: ad6b866f10d7b46c4cc20630f47a82423656f857338790c7a5e682683d29774b
+  - {fileID: 0}
+  m_RendererFeatureMap: ad6b866f10d7b46c4cc20630f47a82423656f857338790c7a5e682683d29774bf083e7c29f030e1b
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -97,6 +98,45 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &1949499673402639344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b321c9d2e8bf24f8a979a1fb6f9311, type: 3}
+  m_Name: ScreenSpaceOutlines
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  renderPassEvent: 350
+  outlinesLayerMask:
+    m_Bits: 513
+  outlineSettings:
+    outlineColor:
+      r: 0
+      g: 0
+      b: 0
+      a: 1
+    outlineScale: 1
+    depthThreshold: 1.5
+    robertsCrossMultiplier: 100
+    normalThreshold: 0.4
+    steepAngleThreshold: 0.2
+    steepAngleMultiplier: 25
+    colorFormat: 0
+    depthBufferBits: 0
+    filterMode: 0
+    backgroundColor:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    perObjectData: 0
+    enableDynamicBatching: 0
+    enableInstancing: 0
 --- !u!114 &4792528142671987276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,11 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: FullScreenPassRendererFeature
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   injectionPoint: 600
   fetchColorBuffer: 1
   requirements: 0
-  passMaterial: {fileID: 0}
+  passMaterial: {fileID: 2100000, guid: 521e0b85149d3dc4080d097c77dfa2bf, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
