@@ -5726,6 +5726,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7193219355903357832, guid: 1afc2166f0e607141ae8f827a010030a, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7193219355903357832, guid: 1afc2166f0e607141ae8f827a010030a, type: 3}
       propertyPath: CustomDataModule.enabled
       value: 1
       objectReference: {fileID: 0}
