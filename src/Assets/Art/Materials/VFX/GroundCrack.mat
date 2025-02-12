@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GroundCrack
-  m_Shader: {fileID: -6465566751694194690, guid: a038f718cbdbac940991274509aef049, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 1c89a7de5c4178348b96a56956c22f1c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -18,7 +18,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -28,6 +28,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _HeightMap:
+        m_Texture: {fileID: 2800000, guid: 2a34694921e952e43a288595d7a4d210, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 2a34694921e952e43a288595d7a4d210, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -49,19 +53,23 @@ Material:
     - _AlphaClip: 1
     - _AlphaToMask: 0
     - _Alpha_Clip: 0
-    - _Blend: 2
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 0
     - _CastShadows: 1
     - _Cull: 0
-    - _DstBlend: 1
+    - _DstBlend: 10
+    - _ParallaxAmplitude: 1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _SrcBlend: 5
     - _Surface: 1
+    - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _Color: {r: 47.93726, g: 47.93726, b: 47.93726, a: 1}
+    - _Color: {r: 170.89003, g: 170.89003, b: 170.89003, a: 1}
     - _MainTexSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
