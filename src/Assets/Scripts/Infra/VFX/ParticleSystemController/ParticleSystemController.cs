@@ -18,6 +18,7 @@ namespace Perikan.Infra.VFX
         private void InitializeParticleSystems()
         {
             _particleSystems = GetComponentsInChildren<ParticleSystem>();
+            Stop();
         }
 
         private void OnValidate()
