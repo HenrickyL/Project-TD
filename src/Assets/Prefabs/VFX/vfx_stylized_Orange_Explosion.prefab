@@ -68486,7 +68486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5162554460510183315}
   m_Layer: 0
-  m_Name: vfx_stylizedExplosion
+  m_Name: vfx_stylized_Orange_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
