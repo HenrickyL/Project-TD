@@ -6,9 +6,9 @@ namespace Perikan.Infra.VFX
 {
     public class ParticleSystemController : MonoBehaviour
     {
-        [SerializeField] private float _startDelay = 0f;
-        [SerializeField] private ParticleSystem[] _particlesExceptions;
-        [ReadOnly,SerializeField] private ParticleSystem[] _particleSystems;
+        [SerializeField] protected float _startDelay = 0f;
+        [SerializeField] protected ParticleSystem[] _particlesExceptions;
+        [ReadOnly,SerializeField] protected ParticleSystem[] _particleSystems;
 
         void Awake()
         {
@@ -17,8 +17,7 @@ namespace Perikan.Infra.VFX
 
         private void InitializeParticleSystems()
         {
-            ParticleSystem[] allParticles = GetComponentsInChildren<ParticleSystem>();
-            _particleSystems = allParticles.Except(_particlesExceptions).ToArray();
+            _particleSystems = GetComponentsInChildren<ParticleSystem>();
         }
 
         private void OnValidate()
@@ -48,7 +47,8 @@ namespace Perikan.Infra.VFX
 
         public void ApplyStartDelay()
         {
-            foreach (var ps in _particleSystems)
+            ParticleSystem[] ParticleSystemToChange = _particleSystems.Except(_particlesExceptions).ToArray();
+            foreach (var ps in ParticleSystemToChange)
             {
                 var main = ps.main;
                 main.startDelay = _startDelay;
