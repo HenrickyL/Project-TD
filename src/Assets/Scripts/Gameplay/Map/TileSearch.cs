@@ -1,5 +1,5 @@
 using Perikan.AI;
-using Perikan.infra.Collections;
+using Perikan.Infra.Collections;
 using System.Collections.Generic;
 
 namespace Perikan.Gameplay.Map { 
