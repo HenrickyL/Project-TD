@@ -5838,7 +5838,7 @@ Transform:
   m_GameObject: {fileID: 1671508807}
   serializedVersion: 2
   m_LocalRotation: {x: 0.09531145, y: 0.74183494, z: -0.10795758, w: 0.6549365}
-  m_LocalPosition: {x: -9.74, y: 9.13, z: 3.56}
+  m_LocalPosition: {x: -14.24, y: 9.13, z: 3.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45320,7 +45320,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 14
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -59593,13 +59593,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3476287689976371737}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.86272997, y: -0.043577887, z: -0.07547913, w: 0.4980973}
-  m_LocalPosition: {x: 0, y: 0, z: 13}
+  m_LocalRotation: {x: -0.4685467, y: 0, z: 0, w: 0.88343877}
+  m_LocalPosition: {x: 0, y: 0, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6741134947293999134}
-  m_LocalEulerAnglesHint: {x: -120, y: -10, z: 0}
+  m_LocalEulerAnglesHint: {x: -55.88, y: 0, z: 0}
 --- !u!1 &2627087780106948022
 GameObject:
   m_ObjectHideFlags: 0
@@ -108604,8 +108604,8 @@ MonoBehaviour:
   - {fileID: 3683027187862348803}
   _projectile: {fileID: 2112974579135642021}
   _startSpeed: 15
-  _launchPoint: {fileID: 0}
-  _targetPoint: {fileID: 0}
+  _launchPoint: {fileID: 1658888352}
+  _targetPoint: {fileID: 953074945}
 --- !u!198 &6829747782913417221
 ParticleSystem:
   m_ObjectHideFlags: 0
