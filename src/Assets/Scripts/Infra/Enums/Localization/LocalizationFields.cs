@@ -1,23 +1,26 @@
 using System.ComponentModel;
 
-public enum LocalizationFields
+namespace Perikan.Infra.Localization
 {
-    [Description("start_game")]
-    StartGame,
-    [Description("options")]
-    Options,
-    [Description("back")]
-    Back,
-    [Description("quit")]
-    Quit,
-    [Description("resume")]
-    Resume,
-    [Description("main_menu")]
-    MainMenu,
-    [Description("option_menu")]
-    OptionMenu,
-    [Description("pause")]
-    Pause,
-    [Description("quit_to_main_menu")]
-    QuitToMainMenu
+    public enum LocalizationFields
+    {
+        [Description("start_game")]
+        StartGame,
+        [Description("options")]
+        Options,
+        [Description("back")]
+        Back,
+        [Description("quit")]
+        Quit,
+        [Description("resume")]
+        Resume,
+        [Description("main_menu")]
+        MainMenu,
+        [Description("option_menu")]
+        OptionMenu,
+        [Description("pause")]
+        Pause,
+        [Description("quit_to_main_menu")]
+        QuitToMainMenu
+    }
 }

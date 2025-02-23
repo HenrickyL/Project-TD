@@ -1,6 +1,7 @@
 using System.Reflection;
 using System;
 using System.ComponentModel;
+using Perikan.Infra.Localization;
 
 public static class EnumExtensions
 {
