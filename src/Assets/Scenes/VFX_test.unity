@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 15511307}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48828,7 +48828,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -48841,7 +48841,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -48894,7 +48894,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -48947,7 +48947,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -49002,11 +49002,11 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 3605
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -59593,13 +59593,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3476287689976371737}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.4685467, y: 0, z: 0, w: 0.88343877}
+  m_LocalRotation: {x: -0.46174863, y: 0, z: 0, w: 0.8870109}
   m_LocalPosition: {x: 0, y: 0, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6741134947293999134}
-  m_LocalEulerAnglesHint: {x: -55.88, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -55, y: 0, z: 0}
 --- !u!1 &2627087780106948022
 GameObject:
   m_ObjectHideFlags: 0
@@ -69365,6 +69365,7 @@ GameObject:
   - component: {fileID: 2520215707473107608}
   - component: {fileID: 2112974579135642021}
   - component: {fileID: 2909994241416829309}
+  - component: {fileID: 3476287689976371738}
   m_Layer: 0
   m_Name: ArcherdProjectile
   m_TagString: Untagged
@@ -69372,6 +69373,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3476287689976371738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3476287689976371737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa355273e9f7f94e987fc7938d56bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectile: {fileID: 2112974579135642021}
 --- !u!199 &3585168469764732379
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -108602,7 +108616,7 @@ MonoBehaviour:
   - {fileID: 5266384320721477043}
   - {fileID: 5495211994886453033}
   - {fileID: 3683027187862348803}
-  _projectile: {fileID: 2112974579135642021}
+  _projectile: {fileID: 3476287689976371738}
   _startSpeed: 15
   _launchPoint: {fileID: 1658888352}
   _targetPoint: {fileID: 953074945}

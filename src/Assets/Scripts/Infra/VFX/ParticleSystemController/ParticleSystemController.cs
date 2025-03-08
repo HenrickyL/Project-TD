@@ -38,6 +38,17 @@ namespace Perikan.Infra.VFX
             }
         }
 
+        public void PlaySelective()
+        {
+            ParticleSystem[] ParticleSystemToChange = _particleSystems.Except(_particlesExceptions).ToArray();
+            foreach (var ps in ParticleSystemToChange)
+            {
+                ps.Play();
+            }
+        }
+
+
+
         public void Stop()
         {
             foreach (var ps in _particleSystems)
