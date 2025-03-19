@@ -12,7 +12,6 @@ namespace Perikan.Infra.Projectiles
         [SerializeField]protected float _startSpeed = 0f;
         [SerializeField]protected Transform _launchPoint = default;
         [SerializeField]protected Transform _targetPoint = default;
-
         private ParticleSystem Projectile => _projectile.Particle;
 
         private void Start()
@@ -109,7 +108,7 @@ namespace Perikan.Infra.Projectiles
         }
 
 
-        public void HandleProjectileHit(Vector3 position, GameObject hitObject)
+        private void HandleProjectileHit(Vector3 position, GameObject hitObject)
         {
             //_projectile.Stop();
             _explosion.transform.position = position;

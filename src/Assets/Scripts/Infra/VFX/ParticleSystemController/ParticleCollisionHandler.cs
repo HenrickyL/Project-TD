@@ -7,9 +7,7 @@ namespace Perikan.Infra.VFX
     public class ParticleCollisionHandler : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _projectile;
-
     public ParticleSystem Particle => _projectile;
-
     public Action<Vector3, GameObject> OnCollision { get; set; }
 
     private void Start()
