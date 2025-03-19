@@ -244,7 +244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &487081623
 Transform:
   m_ObjectHideFlags: 0
@@ -257,8 +257,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2520215707473107608}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &487081624
@@ -5637,7 +5636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c97d1b18286bc2747a7c1972a28a0cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectile: {fileID: 487081624}
+  _projectile: {fileID: 3476287689976371738}
   _explosion: {fileID: 6741134947293999135}
   _startSpeed: 15
   _launchPoint: {fileID: 1658888352}
@@ -59666,12 +59665,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3476287689976371737}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 487081623}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2627087780106948022
 GameObject:
@@ -69438,6 +69437,7 @@ GameObject:
   - component: {fileID: 2520215707473107608}
   - component: {fileID: 2112974579135642021}
   - component: {fileID: 2909994241416829309}
+  - component: {fileID: 3476287689976371738}
   m_Layer: 0
   m_Name: ArcherdProjectile
   m_TagString: Untagged
@@ -69445,6 +69445,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3476287689976371738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3476287689976371737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa355273e9f7f94e987fc7938d56bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectile: {fileID: 2112974579135642021}
 --- !u!199 &3585168469764732379
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -143085,6 +143098,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1998824163}
   - {fileID: 662584647}
+  - {fileID: 2520215707473107608}
   - {fileID: 487081623}
   - {fileID: 6741134947293999134}
   - {fileID: 1658888352}

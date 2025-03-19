@@ -19,8 +19,6 @@ namespace Perikan.Infra.VFX
 
     void OnParticleCollision(GameObject other)
     {
-        //Vector3 collisionPosition = transform.position;
-        //OnCollision.Invoke(collisionPosition, other);
         List<ParticleCollisionEvent> _collisionEvents = new List<ParticleCollisionEvent>();
         int numCollisionEvents = _projectile.GetCollisionEvents(other, _collisionEvents);
         for (int i = 0; i < numCollisionEvents; i++)

@@ -14,7 +14,6 @@ namespace Perikan.Infra.VFX
         {
             InitializeParticleSystems();
         }
-
         private void InitializeParticleSystems()
         {
             _particleSystems = GetComponentsInChildren<ParticleSystem>();
@@ -49,12 +48,11 @@ namespace Perikan.Infra.VFX
             }
         }
 
-
-
         public void Stop()
         {
             foreach (var ps in _particleSystems)
             {
+                ps.Clear();
                 ps.Stop();
             }
         }

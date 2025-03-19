@@ -33,16 +33,9 @@ namespace Perikan.Infra.Projectiles
 
         private void ApplyTransformations(Vector3 launchPoint, Vector3 targetPoint, float distance, float angleX, float angleY) {
             AllReset();
-            //_projectile.transform.position = launchPoint;//new Vector3(0,0, distance);
-            //transform.position = targetPoint;
-            //_projectile.transform.position = launchPoint; // Posição local relativa ao prefab
-            //transform.rotation = Quaternion.Euler(0, angleY, 0); // Aplica a rotação Y
-            //_projectile.Particle.transform.localRotation = Quaternion.Euler(180 + angleX, 0, 0);
-
             _explosion.transform.position = targetPoint;
             _projectile.transform.position = launchPoint; // Posição local relativa ao prefab
-            _projectile.transform.rotation = Quaternion.Euler(0, angleY, 0); // Aplica a rotação Y
-            Projectile.transform.localRotation = Quaternion.Euler(180+angleX, 0, 0);
+            Projectile.transform.localRotation = Quaternion.Euler(180+angleX, angleY, 0);
         }
 
         private void AllReset()
@@ -53,10 +46,6 @@ namespace Perikan.Infra.Projectiles
 
         public void Initialize(Vector3 launchPoint, Vector3 targetPoint)
         {
-            //// Define a posição do prefab no targetPoint
-            //transform.position = targetPoint;
-            //_projectile.transform.position = launchPoint; // Posição local relativa ao prefab
-
             // Calcula a direção no plano XZ e determina a rotação em Y
             Vector3 direction = launchPoint - targetPoint;
             direction.y = 0; // Ignora a diferença de altura
@@ -65,7 +54,6 @@ namespace Perikan.Infra.Projectiles
             float heightDifference = launchPoint.y - targetPoint.y;
 
             float angleY = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            //transform.rotation = Quaternion.Euler(0, angleY, 0); // Aplica a rotação Y
 
             // Gravidade do sistema de partículas
             float gravity = Projectile.main.gravityModifier.constant;
@@ -73,14 +61,9 @@ namespace Perikan.Infra.Projectiles
             // Calcula ângulo X e velocidade inicial
             float angleX, startSpeed;
             CalculateLaunchParameters(distanceXZ, heightDifference, gravity, out angleX, out startSpeed);
-
-            // Define a rotação X do projétil (ângulo de lançamento)
-            //_projectile.transform.localRotation = Quaternion.Euler(180+angleX, 0, 0);
-            Debug.Log($"H: {heightDifference} - D: {distanceXZ} - X: {angleX} - speed: {startSpeed} - g: {gravity}");
             // Aplica a velocidade inicial no sistema de partículas
             var main = Projectile.main;
             main.startSpeed = startSpeed;
-
             ApplyTransformations(launchPoint, targetPoint, distanceXZ, angleX, angleY); 
         }
         
