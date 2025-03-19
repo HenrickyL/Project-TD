@@ -18,7 +18,9 @@ namespace Perikan.Infra.VFX
         private void InitializeParticleSystems()
         {
             _particleSystems = GetComponentsInChildren<ParticleSystem>();
-            Stop();
+            ResetPlayOnWake();
+            _startDelay = 0;
+            ApplyStartDelay();
         }
 
         private void OnValidate()
@@ -65,6 +67,17 @@ namespace Perikan.Infra.VFX
                 var main = ps.main;
                 main.startDelay = _startDelay;
             }
+        }
+
+        private void ResetPlayOnWake()
+        {
+            ParticleSystem[] ParticleSystemToChange = _particleSystems.Except(_particlesExceptions).ToArray();
+            foreach (var ps in ParticleSystemToChange)
+            {
+                var main = ps.main;
+                main.playOnAwake = false;
+            }
+            Stop();
         }
     }
 
