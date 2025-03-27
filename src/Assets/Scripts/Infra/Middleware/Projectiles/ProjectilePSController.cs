@@ -27,7 +27,7 @@ namespace Perikan.Infra.Projectiles
                 Vector3 launchPoint = _launchPoint.position;
                 AllReset();
                 Initialize(launchPoint, targetPoint);
-                _projectile.ResetAndPlay();
+                _projectile.Play();
             }
         }
 
@@ -90,7 +90,7 @@ namespace Perikan.Infra.Projectiles
             startSpeed = Mathf.Sqrt(2*vSquared);
         }
 
-
+         
         private void HandleProjectileHit(Vector3 position, GameObject hitObject)
         {
             //_projectile.Stop();

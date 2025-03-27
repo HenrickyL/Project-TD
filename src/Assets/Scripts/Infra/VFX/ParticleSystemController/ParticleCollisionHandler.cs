@@ -31,7 +31,12 @@ namespace Perikan.Infra.VFX
     public void ResetAndPlay()
     {
         this.Stop();
-        _projectile.Play();
+        Particle.Play();
+    }
+
+    public void Play()
+    {
+        Particle.Play();
     }
 
     public void Stop()
