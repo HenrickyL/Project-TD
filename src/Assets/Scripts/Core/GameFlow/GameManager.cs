@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour //Singleton
     private bool OnInitialize { get; set; } = false;
 
 
-
     private void Awake()
     {
         if (Instance == null)

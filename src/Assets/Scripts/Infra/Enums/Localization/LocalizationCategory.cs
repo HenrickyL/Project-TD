@@ -1,4 +1,7 @@
-public enum LocalizationCategory
+namespace Perikan.Infra.Localization
 {
-    Menus
+    public enum LocalizationCategory
+    {
+        Menus
+    }
 }

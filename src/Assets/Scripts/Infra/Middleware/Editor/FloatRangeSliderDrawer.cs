@@ -1,6 +1,9 @@
 using UnityEditor;
 using UnityEngine;
 
+
+namespace Perikan.Infra.Editor { 
+
 [CustomPropertyDrawer(typeof(FloatRangeSliderAttribute))]
 public class FloatRangeSliderDrawer : PropertyDrawer
 {
@@ -51,4 +54,5 @@ public class FloatRangeSliderDrawer : PropertyDrawer
         EditorGUI.EndProperty();
         EditorGUI.indentLevel = originalIndentLevel;
     }
+}
 }
